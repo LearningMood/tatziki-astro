@@ -1,0 +1,83 @@
+---
+title: "Catalogue Decathlon des sports nautiques"
+description: ""
+date: "2021-05-24T11:39:20"
+modified: "2021-06-27T07:28:09"
+slug: "catalogue-decathlon-des-sports-nautiques"
+draft: false
+featured: false
+thumbnail: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire.jpg"
+thumbnail_alt: "Charlotte CASTERS - Tatziki - Sommaire Catalogue DECATHLON Sports nautiques -2021"
+thumbnail_sizes:
+  medium: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-300x214.jpg"
+  large: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-1024x730.jpg"
+  thumbnail: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-150x150.jpg"
+  medium_large: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-768x548.jpg"
+  1536x1536: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-1536x1096.jpg"
+  bandeau_home: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-1200x856.jpg"
+  vignette: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-380x271.jpg"
+  full: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire.jpg"
+categories:
+  - "Direction artistique"
+tags:
+  - "DECATHLON"
+  - "Illustrator"
+  - "InDesign"
+  - "Photoshop"
+acf_placeholder:
+  couleur: "#3085a3"
+  has_content: false
+  needs_migration: true
+images_to_migrate:
+  -
+    type: "featured"
+    url: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire.jpg"
+    alt: "Charlotte CASTERS - Tatziki - Sommaire Catalogue DECATHLON Sports nautiques -2021"
+  -
+    type: "featured_medium"
+    url: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-300x214.jpg"
+    alt: "Charlotte CASTERS - Tatziki - Sommaire Catalogue DECATHLON Sports nautiques -2021"
+  -
+    type: "featured_large"
+    url: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-1024x730.jpg"
+    alt: "Charlotte CASTERS - Tatziki - Sommaire Catalogue DECATHLON Sports nautiques -2021"
+  -
+    type: "featured_thumbnail"
+    url: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-150x150.jpg"
+    alt: "Charlotte CASTERS - Tatziki - Sommaire Catalogue DECATHLON Sports nautiques -2021"
+  -
+    type: "featured_medium_large"
+    url: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-768x548.jpg"
+    alt: "Charlotte CASTERS - Tatziki - Sommaire Catalogue DECATHLON Sports nautiques -2021"
+  -
+    type: "featured_1536x1536"
+    url: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-1536x1096.jpg"
+    alt: "Charlotte CASTERS - Tatziki - Sommaire Catalogue DECATHLON Sports nautiques -2021"
+  -
+    type: "featured_bandeau_home"
+    url: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-1200x856.jpg"
+    alt: "Charlotte CASTERS - Tatziki - Sommaire Catalogue DECATHLON Sports nautiques -2021"
+  -
+    type: "featured_vignette"
+    url: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire-380x271.jpg"
+    alt: "Charlotte CASTERS - Tatziki - Sommaire Catalogue DECATHLON Sports nautiques -2021"
+  -
+    type: "featured_full"
+    url: "https://www.tatziki.com/bibliotheque/2021/05/Tatziki-Charlotte-CASTERS-DECATHLON-catalogue-Sommaire.jpg"
+    alt: "Charlotte CASTERS - Tatziki - Sommaire Catalogue DECATHLON Sports nautiques -2021"
+---
+
+## Objectifs du projet
+
+<!-- TODO: Ajouter les objectifs depuis ACF -->
+- Objectif 1
+- Objectif 2
+- Objectif 3
+
+## Galerie
+
+<!-- TODO: Ajouter les images du projet -->
+
+## Voir le projet
+
+[Visiter le site](https://www.tatziki.com/catalogue-decathlon-des-sports-nautiques/)
