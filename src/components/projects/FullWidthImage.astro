@@ -1,0 +1,97 @@
+---
+export interface Props {
+  src: string;
+  alt?: string;
+  caption?: string;
+  height?: string;
+  parallax?: boolean;
+}
+
+const { src, alt = '', caption, height = 'auto', parallax = false } = Astro.props;
+---
+
+<figure class={`full-width-image ${parallax ? 'parallax' : ''}`} style={`--height: ${height}`}>
+  <div class="image-container">
+    <img src={src} alt={alt} loading="lazy" />
+  </div>
+  {caption && (
+    <figcaption>
+      <span>{caption}</span>
+    </figcaption>
+  )}
+</figure>
+
+<style lang="scss">
+  .full-width-image {
+    margin: 4rem calc(-50vw + 50%);
+    width: 100vw;
+    position: relative;
+    
+    @media (min-width: 1400px) {
+      margin-left: calc(-700px + 50%);
+      margin-right: calc(-700px + 50%);
+      width: 1400px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+  }
+  
+  .image-container {
+    height: var(--height);
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+  
+  .parallax .image-container {
+    height: 70vh;
+    position: relative;
+    overflow: hidden;
+    
+    img {
+      position: absolute;
+      top: -20%;
+      height: 120%;
+      width: 100%;
+      object-fit: cover;
+      will-change: transform;
+    }
+  }
+  
+  figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    color: white;
+    padding: 2rem;
+    
+    span {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  // Effet parallax optionnel
+  const parallaxImages = document.querySelectorAll('.parallax img');
+  
+  if (parallaxImages.length > 0) {
+    window.addEventListener('scroll', () => {
+      parallaxImages.forEach(img => {
+        const rect = img.getBoundingClientRect();
+        const speed = 0.5;
+        const yPos = rect.top * speed;
+        img.style.transform = `translateY(${yPos}px)`;
+      });
+    });
+  }
+</script>

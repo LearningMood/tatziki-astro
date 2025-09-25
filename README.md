@@ -41,3 +41,33 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+<!-- CLAUDE STRUCTURE -->
+1. Structure de projet recommandée
+tatziki-astro/
+├── src/
+│   ├── content/
+│   │   ├── config.ts          # Configuration des collections
+│   │   └── projects/          # Vos fichiers .md migrés
+│   │       ├── creation-du-site-du-bidassoa-surf-club.md
+│   │       └── ...
+│   ├── pages/
+│   │   ├── index.astro        # Page d'accueil
+│   │   ├── about.astro        # Page présentation
+│   │   └── projects/
+│   │       ├── index.astro    # Liste des projets (optionnel)
+│   │       └── [slug].astro   # Template projet dynamique
+│   ├── components/
+│   │   ├── ProjectCard.astro  # Carte projet pour la home
+│   │   ├── ProjectGrid.astro  # Grille de projets
+│   │   ├── Layout.astro       # Layout principal
+│   │   └── SEO.astro         # Composant SEO
+│   ├── styles/
+│   │   └── global.css
+│   └── assets/
+│       └── images/            # Images locales (plus tard)
+├── public/
+│   └── placeholder.jpg        # Image placeholder temporaire
+├── astro.config.mjs
+├── package.json
+└── tsconfig.json

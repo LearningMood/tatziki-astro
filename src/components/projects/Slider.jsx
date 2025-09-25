@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './Slider.scss';
+// import './Slider.scss';
 
 export default function Slider({ 
   images, 

@@ -1,5 +1,4 @@
 ---
-// src/components/ImageGrid.astro
 const { images } = Astro.props; // images = [{src, alt, widths?}]
 ---
 <style>
@@ -21,7 +20,7 @@ const { images } = Astro.props; // images = [{src, alt, widths?}]
 <div class="grid">
   {images.map(img => (
     <picture>
-      <!-- webp / fallback -->
+      {/* <!-- webp / fallback --> */}
       <source srcset={`${img.src}.webp`} type="image/webp" />
       <img
         src={img.src}

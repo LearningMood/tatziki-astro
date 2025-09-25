@@ -1,0 +1,97 @@
+---
+title: "Projet avec tous les composants"
+description: "Un projet qui utilise des composants personnalisés"
+date: 2024-01-15
+thumbnail: "https://example.com/image.jpg"
+categories: ["Design", "Web"]
+couleur: "#82e05dff"
+---
+
+import ModularGrid from '../../components/projects/ModularGrid.astro';
+import FullWidthImage from '../../components/projects/FullWidthImage.astro';
+import BeforeAfter from '../../components/projects/BeforeAfter.jsx';
+import Slider from '../../components/projects/Slider.jsx';
+import VideoPlayer from '../../components/projects/VideoPlayer.astro';
+
+## Introduction
+
+Texte d'introduction du projet...
+
+<FullWidthImage
+  src="/images/hero.jpg"
+  alt="Vue d'ensemble"
+  caption="Vue d'ensemble du projet"
+  height="70vh"
+  parallax={true}
+/>
+
+## Grille modulaire
+
+<ModularGrid
+  items={[
+    {
+      type: 'image',
+      content: { src: '/images/01.jpg', alt: 'Image 1' },
+      span: '1/7'
+    },
+    {
+      type: 'text',
+      content: '<h3>Concept</h3><p>Description du concept...</p>',
+      span: '7/13'
+    },
+    {
+      type: 'image',
+      content: { src: '/images/02.jpg', alt: 'Image 2' },
+      span: '1/5',
+      rowSpan: 2
+    },
+    {
+      type: 'image',
+      content: { src: '/images/03.jpg', alt: 'Image 3' },
+      span: '5/9'
+    },
+    {
+      type: 'video',
+      content: { 
+        src: '/videos/demo.mp4',
+        poster: '/images/poster.jpg',
+        autoplay: true,
+        loop: true,
+        muted: true
+      },
+      span: '9/13'
+    }
+  ]}
+  gap="1.5rem"
+/>
+
+## Transformation
+
+<BeforeAfter 
+  before="/images/before.jpg"
+  after="/images/after.jpg"
+  alt="Transformation du design"
+  client:visible
+/>
+
+## Galerie
+
+<Slider
+  images={[
+    { src: '/images/slide1.jpg', alt: 'Slide 1', caption: 'Première étape' },
+    { src: '/images/slide2.jpg', alt: 'Slide 2', caption: 'Développement' },
+    { src: '/images/slide3.jpg', alt: 'Slide 3', caption: 'Résultat final' }
+  ]}
+  autoplay={true}
+  duration={4000}
+  showThumbs={true}
+  client:visible
+/>
+
+## Vidéo de présentation
+
+<VideoPlayer
+  src="/videos/presentation.mp4"
+  poster="/images/video-poster.jpg"
+  aspectRatio="21/9"
+/>

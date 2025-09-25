@@ -1,0 +1,83 @@
+---
+title: "Exemple de projet avec composants"
+description: "Un projet qui utilise des composants personnalisés"
+date: 2024-01-15
+thumbnail: "/projets/bidassoa-surf-club/gallery-10.jpg"
+categories: ["Design", "Web"]
+couleur: "#e74c3c"
+---
+
+import Gallery from '../../components/projects/Gallery.astro';
+import BeforeAfter from '../../components/projects/BeforeAfter.astro';
+
+import { Image } from 'astro:assets';
+import heroImage from '../../assets/projets/bidassoa-surf-club/hero-bidassoa-surf-club.jpg';
+import beforeImg from '../../assets/projets/bidassoa-surf-club/gallery-09.jpg';
+import afterImg from '../../assets/projets/bidassoa-surf-club/gallery-10.jpg';
+import OptimizedImage from '../../components/OptimizedImage.astro';
+
+import LocalGallery from '../../components/projects/LocalGallery.astro';
+
+## test image optimisée
+
+<Image 
+  src={heroImage} 
+  alt="Bidassoa Surf Club"
+  width={1600}
+  height={900}
+  quality={90}
+/>
+
+{/* <!-- Ou avec le composant helper --> */}
+<OptimizedImage 
+  src="bidassoa-surf-club/gallery-01.jpg"
+  alt="Galerie image 1"
+  sizes="(max-width: 768px) 100vw, 50vw"
+/>
+
+
+## À propos du projet
+
+Voici un exemple de projet utilisant des composants MDX personnalisés.
+
+## Local gallery test
+
+<LocalGallery 
+  projectFolder="bidassoa-surf-club"
+  images={[
+    { filename: "gallery-01.jpg", alt: "Avant" },
+    { filename: "gallery-03.jpg", alt: "Après" },
+    { filename: "gallery-04.jpg", alt: "Après" },
+    { filename: "gallery-05.jpg", alt: "Après" }
+  ]}
+  columns={2} 
+/>
+
+## Galerie d'images
+
+<Gallery 
+  images={[
+    { src: "https://picsum.photos/400/300?random=1", alt: "Image 1", caption: "Première image" },
+    { src: "https://picsum.photos/400/300?random=2", alt: "Image 2" },
+    { src: "https://picsum.photos/400/300?random=3", alt: "Image 3" }
+  ]}
+  columns={3}
+/>
+
+## Comparaison avant/après NOK
+
+<BeforeAfter 
+  before={beforeImg.src}
+  after={afterImg.src}
+  alt="Transformation du design"
+/>
+## ici ok
+<BeforeAfter 
+  before="https://picsum.photos/800/600?random=4"
+  after="https://picsum.photos/800/600?random=5"
+  alt="Transformation du design"
+/>
+
+## Détails techniques
+
+Le projet a été réalisé avec les technologies suivantes...

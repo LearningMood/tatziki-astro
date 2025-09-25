@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+
+export interface Props {
+  src: string; // ex: "bidassoa-surf-club/gallery-09.jpg"
+  alt: string;
+  width?: number;
+  height?: number;
+  loading?: 'eager' | 'lazy';
+  class?: string;
+  sizes?: string;
+}
+
+const { 
+  src, 
+  alt, 
+  width,
+  height,
+  loading = 'lazy',
+  class: className,
+  sizes
+} = Astro.props;
+
+// Importer l'image dynamiquement
+const images = import.meta.glob('/src/assets/projets/**/*.{jpg,jpeg,png,webp}');
+const imagePath = `/src/assets/projets/${src}`;
+const imageModule = await images[imagePath]?.();
+---
+
+{imageModule ? (
+  <Image 
+    src={imageModule.default}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    class={className}
+    sizes={sizes}
+    quality={85}
+  />
+) : (
+ 
+  <img 
+    src={`/projets/${src}`} 
+    alt={alt} 
+    loading={loading} 
+    class={className} 
+    width={width}
+    height={height}
+  />
+)}

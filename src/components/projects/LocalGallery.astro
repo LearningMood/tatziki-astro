@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+
+export interface Props {
+  projectFolder: string;
+  images: Array<{
+    filename: string;
+    alt?: string;
+    caption?: string;
+  }>;
+  columns?: number;
+}
+
+const { projectFolder, images, columns = 3 } = Astro.props;
+
+// Import dynamique de toutes les images
+const imageImports = import.meta.glob('/src/assets/projets/**/*.{jpg,jpeg,png,webp}');
+---
+
+<div class="gallery" style={`--columns: ${columns}`}>
+  {await Promise.all(images.map(async (item) => {
+    const imagePath = `/src/assets/projets/${projectFolder}/${item.filename}`;
+    const imageModule = await imageImports[imagePath]?.();
+    
+    if (!imageModule) {
+      console.warn(`Image non trouvée: ${imagePath}`);
+      return null;
+    }
+    
+    return (
+      <figure class="gallery-item">
+        <Image 
+          src={imageModule.default}
+          alt={item.alt || ''}
+          loading="lazy"
+          widths={[400, 800, 1200]}
+          sizes={`(max-width: 768px) 100vw, ${100/columns}vw`}
+        />
+        {item.caption && <figcaption>{item.caption}</figcaption>}
+      </figure>
+    );
+  }))}
+</div>
+

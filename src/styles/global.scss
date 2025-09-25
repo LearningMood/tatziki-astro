@@ -10,9 +10,10 @@
 // @use 'base/layout';
 
 // 3. Composants
+ @use 'components/beforeafter';
 // @use 'components/buttons';
 @use 'components/cards';
-// @use 'grille/grid';
+@use 'grille/grid';
 
 // 4. Sections
 @use 'sections/nav';
