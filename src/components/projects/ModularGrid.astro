@@ -1,0 +1,122 @@
+---
+export interface Props {
+  items: Array<{
+    type: 'image' | 'text' | 'video';
+    content: any;
+    span?: string; // ex: "1/3", "2/2", "1/2"
+    rowSpan?: number;
+  }>;
+  gap?: string;
+  minItemWidth?: string;
+}
+
+const { 
+  items, 
+  gap = '1rem',
+  minItemWidth = '300px'
+} = Astro.props;
+---
+
+<div class="modular-grid" style={`--gap: ${gap}; --min-width: ${minItemWidth}`}>
+  {items.map((item, index) => {
+    const [colStart, colEnd] = item.span ? item.span.split('/') : ['auto', 'auto'];
+    const gridStyle = {
+      gridColumn: item.span ? `${colStart} / ${colEnd}` : 'auto',
+      gridRow: item.rowSpan ? `span ${item.rowSpan}` : 'auto'
+    };
+    
+    return (
+      <div class="grid-item" style={Object.entries(gridStyle).map(([k,v]) => `${k}: ${v}`).join('; ')}>
+        {item.type === 'image' && (
+          <figure class="grid-image">
+            <img src={item.content.src} alt={item.content.alt || ''} loading="lazy" />
+            {item.content.caption && <figcaption>{item.content.caption}</figcaption>}
+          </figure>
+        )}
+        
+        {item.type === 'text' && (
+          <div class="grid-text">
+            <div set:html={item.content} />
+          </div>
+        )}
+        
+        {item.type === 'video' && (
+          <div class="grid-video">
+            <video 
+              src={item.content.src} 
+              controls={item.content.controls !== false}
+              autoplay={item.content.autoplay}
+              muted={item.content.muted || item.content.autoplay}
+              loop={item.content.loop}
+              poster={item.content.poster}
+            />
+          </div>
+        )}
+      </div>
+    );
+  })}
+</div>
+
+<style lang="scss">
+  .modular-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
+    gap: var(--gap);
+    margin: 3rem 0;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(12, 1fr);
+    }
+  }
+  
+  .grid-item {
+    overflow: hidden;
+    border-radius: 8px;
+    
+    @media (max-width: 767px) {
+      grid-column: span 12 !important;
+    }
+  }
+  
+  .grid-image {
+    margin: 0;
+    height: 100%;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    figcaption {
+      padding: 0.5rem;
+      font-size: 0.875rem;
+      background: rgba(0,0,0,0.05);
+    }
+  }
+  
+  .grid-text {
+    padding: 1.5rem;
+    background: var(--project-color, #f5f5f5);
+    color: white;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    
+    :global(h3) {
+      margin-top: 0;
+    }
+  }
+  
+  .grid-video {
+    position: relative;
+    height: 100%;
+    
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+</style>

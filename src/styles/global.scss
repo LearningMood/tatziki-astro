@@ -1,0 +1,51 @@
+// # Point d'entrée principal
+
+// 1. Variables et configuration
+@use 'variables';
+@use 'mixins';
+
+// 2. Base (ordre useant)
+@use 'base/reset';
+// @use 'base/typography';
+// @use 'base/layout';
+
+// 3. Composants
+// @use 'components/buttons';
+@use 'components/cards';
+// @use 'grille/grid';
+
+// 4. Sections
+@use 'sections/nav';
+// @use 'sections/hero';
+// @use 'sections/projects';
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: var(--pale);
+}
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .hero {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }

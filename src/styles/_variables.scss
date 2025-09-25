@@ -1,0 +1,41 @@
+// Variables SCSS pour la compilation (valeurs statiques)
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+$grid-columns: 12;
+$container-max: 1400px;
+
+// CSS custom properties pour le theming dynamique
+:root {
+  // Couleurs - modifiables par projet
+  --color-primary: #3085a3;
+  --color-secondary: #e74c3c;
+  --color-text: #333;
+  --color-bg: #fff;
+  --pale: #eee;
+  
+  // Espacements - cohérence
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  
+  // Typographie
+  --font-body: system-ui, -apple-system, sans-serif;
+  --font-display: 'Georgia', serif;
+  
+  // Animations
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+}
+
+// Mixins utilisant les deux
+@mixin container {
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+  
+  @media (max-width: $breakpoint-mobile) {
+    padding: 0 var(--space-md);
+  }
+}

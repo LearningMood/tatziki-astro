@@ -1,6 +1,6 @@
 ---
 title: "Projet SUBEA & PADI"
-description: "SUBEA &#038; PADI s&rsquo;engage dans une démarche commune de récyclage et réduction des déchets. De nouvelles et stimulantes opportunités à présenter et mettre en avant&#8230;"
+description: "SUBEA & PADI s'engage dans une démarche commune de récyclage et réduction des déchets. De nouvelles et stimulantes opportunités à présenter et mettre en avant...;"
 date: "2023-09-18T15:18:48"
 modified: "2023-09-18T20:57:14"
 slug: "projet-subea-padi"
