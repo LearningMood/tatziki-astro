@@ -1,0 +1,147 @@
+---
+import Layout from '../../components/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+const { title, description, thumbnail, categories, couleur } = project.data;
+---
+
+<Layout title={title} description={description}>
+  <div class="project-page" style={`--project-color: ${couleur || '#3085a3'}`}>
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Accueil</a> / <a href="/projects">Projets</a> / <span>{title}</span>
+      </nav>
+      
+      <header class="project-header">
+        <h1>{title}</h1>
+        {description && <p class="lead">{description}</p>}
+        
+        {categories && categories.length > 0 && (
+          <div class="tags">
+            {categories.map(cat => (
+              <span class="tag">{cat}</span>
+            ))}
+          </div>
+        )}
+      </header>
+      
+      {thumbnail && thumbnail !== '/placeholder.jpg' && (
+        <div class="hero-banner">
+          <img src={thumbnail} alt={title} />
+        </div>
+      )}
+      
+      <div class="content">
+        <Content />
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .project-page {
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .breadcrumb {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  
+  .breadcrumb a {
+    color: var(--project-color);
+    text-decoration: none;
+  }
+  
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+  
+  .project-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    color: var(--project-color);
+    margin-bottom: 1rem;
+  }
+  
+  .lead {
+    font-size: 1.25rem;
+    color: #666;
+    max-width: 60ch;
+    margin: 0 auto 1.5rem;
+  }
+  
+  .tags {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .tag {
+    padding: 0.5rem 1rem;
+    background: var(--project-color);
+    color: white;
+    border-radius: 25px;
+    font-size: 0.875rem;
+  }
+  
+  .hero-banner {
+    margin-bottom: 3rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  .hero-banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+  
+  .content :global(h2) {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: var(--project-color);
+  }
+  
+  .content :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .content :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+export interface Props {
+  before: string;
+  after: string;
+  alt?: string;
+}
+
+const { before, after, alt = "Comparaison avant/après" } = Astro.props;
+const id = Math.random().toString(36).substring(7);
+---
+
+<div class="before-after" data-id={id}>
+  <div class="before-after-container">
+    <div class="image-container">
+      <img src={before} alt={`${alt} - Avant`} class="before-image" />
+      <img src={after} alt={`${alt} - Après`} class="after-image" />
+      <div class="slider-line">
+        <div class="slider-handle">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path d="M8 12L4 8v8l4-4zm8 0l4-4v8l-4-4z" fill="white"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ id }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector(`[data-id="${id}"] .before-after-container`);
+    const slider = container.querySelector('.slider-line');
+    const afterImage = container.querySelector('.after-image');
+    
+    let isActive = false;
+    
+    const updateSlider = (x) => {
+      const rect = container.getBoundingClientRect();
+      const percent = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+      slider.style.left = percent + '%';
+      afterImage.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+    };
+    
+    container.addEventListener('mousedown', (e) => {
+      isActive = true;
+      updateSlider(e.clientX);
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+      if (isActive) updateSlider(e.clientX);
+    });
+    
+    document.addEventListener('mouseup', () => {
+      isActive = false;
+    });
+    
+    // Support tactile
+    container.addEventListener('touchstart', (e) => {
+      isActive = true;
+      updateSlider(e.touches[0].clientX);
+    });
+    
+    document.addEventListener('touchmove', (e) => {
+      if (isActive) updateSlider(e.touches[0].clientX);
+    });
+    
+    document.addEventListener('touchend', () => {
+      isActive = false;
+    });
+  });
+</script>
+
+<style>
+  .before-after {
+    margin: 2rem 0;
+  }
+  
+  .before-after-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: ew-resize;
+    user-select: none;
+  }
+  
+  .image-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .before-image,
+  .after-image {
+    width: 100%;
+    display: block;
+  }
+  
+  .after-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    clip-path: inset(0 50% 0 0);
+  }
+  
+  .slider-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: white;
+    transform: translateX(-50%);
+    cursor: ew-resize;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+  
+  .slider-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background: var(--project-color, #3085a3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+</style>
