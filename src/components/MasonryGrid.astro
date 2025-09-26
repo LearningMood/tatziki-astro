@@ -1,0 +1,73 @@
+---
+const { projects } = Astro.props;
+
+// Patterns prédéfinis pour variation -->
+const sizePatterns = {
+  small: { cols: 4, rows: 6 }, //+2 pourle texte ?
+  medium: { cols: 6, rows: 8 },
+  large: { cols: 8, rows: 10 },
+  tall: { cols: 6, rows: 16 },
+  wide: { cols: 12, rows: 7 },
+  featured: { cols: 10, rows: 12 }
+};
+
+ // Assigner des tailles de façon pseudo-aléatoire mais équilibrée -->
+const sizes = ['small', 'medium', 'large', 'tall', 'wide', 'medium', 'small', 'featured'];
+let sizeIndex = 0;
+const projectsWithGrid = projects.map((project, index) => {
+  // Utiliser la taille définie ou en assigner une
+  const gridSize = project.data.gridSize || sizes[sizeIndex % sizes.length];
+  const span = project.data.gridSpan || sizePatterns[gridSize];
+  sizeIndex++;
+  
+  return {
+    ...project,
+    gridSpan: span,
+    gridSize
+  };
+});
+---
+<div class="masonry-grid">
+  {projectsWithGrid.map((project) => {
+    const { slug } = project;
+    const { title, thumbnail, categories, couleur } = project.data;
+    const { gridSpan, gridSize } = project;
+    
+    return (
+      <article 
+        class={`grid-item size-${gridSize}`}
+        style={`
+          --cols: ${gridSpan.cols};
+          --rows: ${gridSpan.rows};
+          --color: ${couleur || '#3085a3'};
+        `}
+      >
+        <a href={`/projects/${slug}`}>
+          <div class="item-content">
+            <div class="item-image">
+              <img 
+                src={thumbnail} 
+                alt={title}
+                loading="lazy"
+              />
+            </div>
+            <div class="item-overlay">
+              <span class="item-cta">Voir le projet</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>{title}</h3>
+            {categories && categories.length > 0 && (
+              <div class="categories">
+                {categories.slice(0, 2).map(cat => (
+                  <span class="category">{cat}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        </a>
+      </article>
+    );
+  })}
+</div>
+

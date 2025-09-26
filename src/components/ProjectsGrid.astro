@@ -1,0 +1,45 @@
+---
+// LE PARENT
+const { projects } = Astro.props;
+---
+
+<div class="projects-grid">
+  {projects.map((project) => {
+    const { slug } = project;
+    const { title, thumbnail, categories, couleur } = project.data;
+    const imageUrl = thumbnail?.startsWith('http') ? thumbnail : '/placeholder.jpg';
+    
+    return (
+      <article 
+        class="project-card" 
+        style={`--project-color: ${couleur || '#3085a3'}`}
+      >
+        <a href={`/projects/${slug}`}>
+          <div class="project-thumb">
+            <img 
+              src={imageUrl} 
+              alt={title}
+              loading="lazy"
+              width="400"
+              height="300"
+            />
+            <div class="overlay">
+              <span class="view-project">Voir le projet</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>{title}</h3>
+            {categories && categories.length > 0 && (
+              <div class="categories">
+                {categories.slice(0, 2).map(cat => (
+                  <span class="category">{cat}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        </a>
+      </article>
+    );
+  })}
+</div>
+

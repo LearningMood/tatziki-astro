@@ -23,6 +23,13 @@ $container-max: 1400px;
   // Typographie
   --font-body: system-ui, -apple-system, sans-serif;
   --font-display: 'Georgia', serif;
+
+  // Radius
+  --radius: 4px;
+
+  // Box Shadow
+  --box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  --box-shadow-hover: box-shadow: 0 12px 24px rgba(0,0,0,0.15);
   
   // Animations
   --transition-fast: 0.2s ease;

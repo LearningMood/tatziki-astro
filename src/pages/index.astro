@@ -1,7 +1,8 @@
-<!-- index.astro -->
+<!-- Ma HOME -->
 ---
 import Layout from '../components/Layout.astro';
-import ProjectGrid from '../components/ProjectGrid.astro';
+import ProjectsGrid from '../components/ProjectsGrid.astro';
+import MasonryGrid from '../components/MasonryGrid.astro';
 import { getCollection } from 'astro:content';
 
 const projects = await getCollection('projects', ({ data }) => {
@@ -17,25 +18,12 @@ projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
       <h1>Portfolio</h1>
       <p>Design graphique & Développement web</p>
     </header>
-    
-    <ProjectGrid projects={projects} />
+   
+  </div>
+  <div class="container--max">
+
+    <MasonryGrid projects={projects} />
+    <hr>
+    <ProjectsGrid projects={projects} />
   </div>
 </Layout>
-
-<style>
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  .hero {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-  
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-  }
-</style>
