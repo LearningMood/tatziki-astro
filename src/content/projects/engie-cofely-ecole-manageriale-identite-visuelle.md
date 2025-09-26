@@ -13,12 +13,11 @@ categories:
 tags:
   - "ENGIE Cofely"
   - "Illustrator"
-acf_placeholder:
-  couleur: "#3085a3"
-# gridSize: "wide"  # ou "small", "medium", "large", "tall", "wide"
-gridSpan:
-  cols: 10  # Sur 18 colonnes
-  rows: 6   # Hauteur en unités de grille
+couleur: "#3085a3"
+gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10
+#   rows: 8
 ---
 
 ## Objectifs du projet

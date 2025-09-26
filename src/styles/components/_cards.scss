@@ -75,28 +75,14 @@
   .project-info {
     padding: 1.5rem;
   }
-  
-  h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.25rem;
-    color: #333;
-  }
+
   
   .categories {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
   }
-  
-  .category {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.75rem;
-    background: var(--project-color);
-    color: white;
-    border-radius: 20px;
-    opacity: 0.8;
-  }
-  
+    
   a {
     text-decoration: none;
     color: inherit;

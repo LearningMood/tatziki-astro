@@ -6,11 +6,14 @@
 
 // 2. Base (ordre useant)
 @use 'base/reset';
-// @use 'base/typography';
+@use 'typo/typo-general';
+@use 'typo/titres';
+@use 'typo/textes';
 // @use 'base/layout';
 
 @use 'container';
 @use 'grille/grid';
+@use 'grille/adaptative-mansory';
 @use 'grille/mansory';
 
 // 3. Composants

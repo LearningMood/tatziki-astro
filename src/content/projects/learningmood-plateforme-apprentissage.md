@@ -8,13 +8,6 @@ draft: false
 featured: false
 thumbnail: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured.jpg"
 thumbnail_alt: "Tatziki - LeaningMood"
-thumbnail_sizes:
-  vignette: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured-380x285.jpg"
-  thumbnail: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured-150x150.jpg"
-  medium: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured-300x225.jpg"
-  medium_large: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured-768x576.jpg"
-  large: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured-1024x768.jpg"
-  full: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured.jpg"
 categories:
   - "Démarche UX"
   - "Développement front-end"
@@ -26,39 +19,11 @@ tags:
   - "Html5"
   - "Php"
   - "Worpress"
-acf_placeholder:
-  couleur: "#3085a3"
-  has_content: false
-  needs_migration: true
-images_to_migrate:
-  -
-    type: "featured"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured.jpg"
-    alt: "Tatziki - LeaningMood"
-  -
-    type: "featured_vignette"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured-380x285.jpg"
-    alt: "Tatziki - LeaningMood"
-  -
-    type: "featured_thumbnail"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured-150x150.jpg"
-    alt: "Tatziki - LeaningMood"
-  -
-    type: "featured_medium"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured-300x225.jpg"
-    alt: "Tatziki - LeaningMood"
-  -
-    type: "featured_medium_large"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured-768x576.jpg"
-    alt: "Tatziki - LeaningMood"
-  -
-    type: "featured_large"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured-1024x768.jpg"
-    alt: "Tatziki - LeaningMood"
-  -
-    type: "featured_full"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Tatziki-LearningMood-featured.jpg"
-    alt: "Tatziki - LeaningMood"
+couleur: "#3085a3"
+gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10
+#   rows: 8
 ---
 
 ## À propos du projet

@@ -14,16 +14,11 @@ categories:
 tags:
   - "Illustrator"
   - "Photoshop"
-acf_placeholder:
-  couleur: "#3085a3"
-  has_content: false
-  needs_migration: true
-images_to_migrate:
-  -
-    type: "featured"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/LOreal_Digitall-charte.jpg"
-    alt: "Tatziki - L'Oréal Digitall"
-
+couleur: "#3085a3"
+gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10
+#   rows: 8
 ---
 
 ## Objectifs du projet

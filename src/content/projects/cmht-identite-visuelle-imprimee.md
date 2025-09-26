@@ -4,18 +4,16 @@ description: "Réalisation des supports de communication imprimés du Centre Nau
 date: "2019-10-14T02:58:58"
 modified: "2019-10-14T03:07:31"
 slug: "communication-imprimee-du-cmht"
-draft: false
-featured: false
 thumbnail: "https://www.tatziki.com/bibliotheque/2019/10/Tatziki-dépliant-CMHT-03.jpg"
 thumbnail_alt: "Tatziki - dépliant Centre Maritime Hendaye Txingudi"
 categories:
   - "Direction artistique"
   - "Photographie"
-acf_placeholder:
-# gridSize: "large"  # ou "small", "medium", "large", "tall", "wide"
-gridSpan:
-  cols: 8  # Sur 18 colonnes
-  rows: 8 
+couleur: "#3085a3"
+gridSize: "portrait"  # square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 8 
+#   rows: 8 
 ---
 
 ## À propos du projet

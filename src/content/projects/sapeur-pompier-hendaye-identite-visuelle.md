@@ -8,13 +8,6 @@ draft: false
 featured: false
 thumbnail: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant.jpg"
 thumbnail_alt: "Tatziki - logo Sapeur Pompier Hendaye Photo @AntonRoman"
-thumbnail_sizes:
-  medium: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant-215x300.jpg"
-  large: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant-735x1024.jpg"
-  thumbnail: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant-150x150.jpg"
-  medium_large: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant-768x1070.jpg"
-  vignette: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant-380x530.jpg"
-  full: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant.jpg"
 categories:
   - "Direction artistique"
   - "Illustration"
@@ -22,39 +15,11 @@ tags:
   - "Association des Sapeurs-Pompier"
   - "Illustrator"
   - "Photoshop"
-acf_placeholder:
-  couleur: "#3085a3"
-  has_content: false
-  needs_migration: true
-images_to_migrate:
-  -
-    type: "featured"
-    url: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant.jpg"
-    alt: "Tatziki - logo Sapeur Pompier Hendaye Photo @AntonRoman"
-  -
-    type: "featured_medium"
-    url: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant-215x300.jpg"
-    alt: "Tatziki - logo Sapeur Pompier Hendaye Photo @AntonRoman"
-  -
-    type: "featured_large"
-    url: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant-735x1024.jpg"
-    alt: "Tatziki - logo Sapeur Pompier Hendaye Photo @AntonRoman"
-  -
-    type: "featured_thumbnail"
-    url: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant-150x150.jpg"
-    alt: "Tatziki - logo Sapeur Pompier Hendaye Photo @AntonRoman"
-  -
-    type: "featured_medium_large"
-    url: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant-768x1070.jpg"
-    alt: "Tatziki - logo Sapeur Pompier Hendaye Photo @AntonRoman"
-  -
-    type: "featured_vignette"
-    url: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant-380x530.jpg"
-    alt: "Tatziki - logo Sapeur Pompier Hendaye Photo @AntonRoman"
-  -
-    type: "featured_full"
-    url: "https://www.tatziki.com/bibliotheque/2020/05/@tatziki-bandeau-Sapeur-Pompier-autocollant.jpg"
-    alt: "Tatziki - logo Sapeur Pompier Hendaye Photo @AntonRoman"
+couleur: "#3085a3"
+gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10
+#   rows: 8
 ---
 
 ## Objectifs du projet

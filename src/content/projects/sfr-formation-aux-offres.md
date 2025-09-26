@@ -13,13 +13,11 @@ categories:
 tags:
   - "Cegos"
   - "SFR"
-acf_placeholder:
-  couleur: "#3085a3"
-# gridSize: "wide"  # ou "small", "medium", "large", "tall", "wide"
-# Ou plus précis :
-gridSpan:
-  cols: 9  # Sur 18 colonnes
-  rows: 7   
+couleur: "#3085a3"
+gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10
+#   rows: 8
 ---
 
 ## Objectifs du projet

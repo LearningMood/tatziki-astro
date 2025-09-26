@@ -11,12 +11,11 @@ thumbnail_alt: "Développement web du site de l'école de surf d'hendaye Onaka "
 categories:
   - "Développement front-end"
   - "Wedesign"
-acf_placeholder:
-  couleur: "#3085a3"
-# gridSize: "large"  # ou "small", "medium", "large", "tall", "wide"
-gridSpan:
-  cols: 12 
-  rows: 6 
+couleur: "#3085a3"
+gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10
+#   rows: 8
 ---
 
 ## Objectifs du projet

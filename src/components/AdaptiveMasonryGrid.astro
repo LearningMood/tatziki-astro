@@ -1,0 +1,164 @@
+---
+import { getImage } from "astro:assets";
+
+const { projects } = Astro.props;
+
+// Patterns plus variés pour éviter la répétition
+const patterns = {
+    landscape: [
+        { cols: 10, rows: 5 }, // très large
+        { cols: 8, rows: 4 }, // large
+        { cols: 9, rows: 6 }, // large moyen
+        { cols: 12, rows: 6 }, // extra large
+        { cols: 7, rows: 4 }, // moyennement large
+    ],
+    portrait: [
+        { cols: 5, rows: 10 }, // très vertical
+        { cols: 4, rows: 8 }, // vertical
+        { cols: 6, rows: 11 }, // grand vertical
+        { cols: 5, rows: 9 }, // vertical moyen
+        { cols: 4, rows: 7 }, // petit vertical
+    ],
+    square: [
+        { cols: 6, rows: 6 }, // carré moyen
+        { cols: 8, rows: 8 }, // grand carré
+        { cols: 4, rows: 4 }, // petit carré
+        { cols: 7, rows: 7 }, // carré intermédiaire
+        { cols: 5, rows: 5 }, // carré compact
+    ],
+    featured: [
+        { cols: 14, rows: 10 }, // très grand
+        { cols: 12, rows: 8 }, // grand featured
+        { cols: 10, rows: 9 }, // featured moyen
+    ],
+};
+
+// Fonction pour déterminer le ratio (côté serveur avec dimensions d'image)
+async function getImageRatio(imagePath) {
+    try {
+        // Si vous utilisez des images externes, utilisez des dimensions par défaut
+        // Pour des images locales, vous pouvez utiliser getImage d'Astro
+
+        // Méthode simplifiée : analyser le nom du fichier si vous avez une convention
+        // ex: hero-16x9.jpg, portrait-3x4.jpg
+
+        // Ou stocker les ratios dans le frontmatter
+        return "landscape"; // Par défaut
+    } catch {
+        return "square"; // Fallback
+    }
+}
+
+// Algorithme de distribution amélioré
+function assignVariedSizes(projects) {
+    const sizes = [];
+    let lastPattern = null;
+    let patternUsageCount = {};
+
+    for (let i = 0; i < projects.length; i++) {
+        const project = projects[i];
+
+        // Déterminer le type selon le ratio ou le type défini
+        let ratioType = project.data.imageRatio || "square";
+
+        // Pour les premiers projets, possibilité de featured
+        if (i < 3 && Math.random() > 0.7) {
+            ratioType = "featured";
+            console.log("ratio featureed");
+        }
+
+        // Éviter la répétition du même pattern
+        let availablePatterns = [...patterns[ratioType]];
+
+        // Filtrer les patterns trop utilisés récemment
+        availablePatterns = availablePatterns.filter((p) => {
+            const key = `${p.cols}x${p.rows}`;
+            const usage = patternUsageCount[key] || 0;
+            return usage < 2; // Max 2 fois le même pattern
+        });
+
+        // Si tous les patterns sont trop utilisés, réinitialiser
+        if (availablePatterns.length === 0) {
+            availablePatterns = [...patterns[ratioType]];
+            patternUsageCount = {};
+        }
+
+        // Sélection avec variation
+        let selectedPattern;
+        do {
+            const randomIndex = Math.floor(
+                Math.random() * availablePatterns.length,
+            );
+            selectedPattern = availablePatterns[randomIndex];
+        } while (
+            lastPattern &&
+            Math.abs(selectedPattern.cols - lastPattern.cols) < 2 &&
+            Math.abs(selectedPattern.rows - lastPattern.rows) < 2 &&
+            availablePatterns.length > 1
+        );
+
+        // Enregistrer l'usage
+        const key = `${selectedPattern.cols}x${selectedPattern.rows}`;
+        patternUsageCount[key] = (patternUsageCount[key] || 0) + 1;
+
+        sizes.push(selectedPattern);
+        lastPattern = selectedPattern;
+    }
+
+    return sizes;
+}
+
+const projectsWithSizes = assignVariedSizes(projects);
+---
+
+<div class="adaptive-masonry-grid">
+    {
+        projects.map((project, index) => {
+            const size = projectsWithSizes[index];
+            const { slug } = project;
+            const { title, thumbnail, couleur, categories } = project.data;
+
+            // Classes pour animation décalée
+            const animationDelay = (index % 10) * 0.05;
+
+            return (
+                <article
+                    class={`grid-item`}
+                    style={`
+          --cols: ${size.cols};
+          --rows: ${size.rows};
+          --color: ${couleur};
+          --delay: ${animationDelay}s;
+        `}
+                    data-size={`${size.cols}x${size.rows}`}
+                >
+                    <a href={`/projects/${slug}`}>
+                        <div class="item-wrapper">
+                            <div class="item-image">
+                                <img
+                                    src={thumbnail}
+                                    alt={title}
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <div class="item-overlay">
+                                <span class="item-cta">Voir le projet</span>
+                            </div>
+                            <div class="project-info">
+                                <h3>{title}</h3>
+                                {categories && categories.length > 0 && (
+                                    <div class="categories">
+                                        {categories.slice(0, 2).map((cat) => (
+                                            <span class="category">{cat}</span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            );
+        })
+    }
+</div>

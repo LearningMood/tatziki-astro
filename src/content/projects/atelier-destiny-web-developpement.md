@@ -17,13 +17,11 @@ tags:
   - "CSS3"
   - "Html5"
   - "Php"
-acf_placeholder:
-  couleur: "#3085a3"
-# gridSize: "large"  # ou "small", "medium", "large", "tall", "wide"
-# Ou plus précis :
-gridSpan:
-  cols: 8  # Sur 18 colonnes
-  rows: 6 
+couleur: "#3085a3"
+gridSize: "wide"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 8 
+#   rows: 6 
 ---
 
 ## À propos du projet

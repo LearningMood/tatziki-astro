@@ -1,3 +1,5 @@
+@import url("https://use.typekit.net/yzs3igk.css");
+
 // Variables SCSS pour la compilation (valeurs statiques)
 $breakpoint-mobile: 768px;
 $breakpoint-tablet: 1024px;
@@ -7,9 +9,11 @@ $container-max: 1400px;
 // CSS custom properties pour le theming dynamique
 :root {
   // Couleurs - modifiables par projet
-  --color-primary: #3085a3;
+  --color-main: #0cb4ce;
   --color-secondary: #e74c3c;
   --color-text: #333;
+  --color-grey-dark: #515455;
+  --color-grey-medium: #889397;
   --color-bg: #fff;
   --pale: #eee;
   
@@ -21,8 +25,11 @@ $container-max: 1400px;
   --space-xl: 4rem;
   
   // Typographie
+  --font-titre: 'poppins', sans-serif;
+  --font-narrow: 'pt-sans-narrow', sans-serif;
   --font-body: system-ui, -apple-system, sans-serif;
   --font-display: 'Georgia', serif;
+  --font-taxo: 'zilla-slab', sans-serif;
 
   // Radius
   --radius: 4px;

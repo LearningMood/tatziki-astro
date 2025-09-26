@@ -32,10 +32,16 @@ images_to_migrate:
     alt: "Extrait Fête de la récup 2019 - Association Recyclarte Hendaye Tatziki"
 
 gridSize: "wide"  # ou "small", "medium", "large", "tall", "wide"
-# Ou plus précis :
 # gridSpan:
 #   cols: 10  # Sur 18 colonnes
-#   rows: 8   # Hauteur en unités de grille
+#   rows: 8 
+
+# 
+imageDimensions:
+  width: 1920
+  height: 1080
+# Ou directement
+imageRatio: "landscape"
 ---
 
 ## À propos du projet

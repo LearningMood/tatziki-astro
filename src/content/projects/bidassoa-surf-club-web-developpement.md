@@ -8,12 +8,6 @@ draft: false
 featured: false
 thumbnail: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online.jpg"
 thumbnail_alt: "Charlotte Caster Tatziki - webdesign Hendaye Bidassoa Surf Club"
-thumbnail_sizes:
-  thumbnail: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online-150x150.jpg"
-  medium: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online-300x222.jpg"
-  medium_large: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online-768x568.jpg"
-  vignette: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online-380x281.jpg"
-  full: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online.jpg"
 categories:
   - "Développement front-end"
   - "Direction artistique"
@@ -23,39 +17,11 @@ tags:
   - "Html5"
   - "Php"
   - "Worpress"
-acf_placeholder:
-  couleur: "#3085a3"
-images_to_migrate:
-  -
-    type: "featured"
-    url: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online.jpg"
-    alt: "Charlotte Caster Tatziki - webdesign Hendaye Bidassoa Surf Club"
-  -
-    type: "featured_thumbnail"
-    url: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online-150x150.jpg"
-    alt: "Charlotte Caster Tatziki - webdesign Hendaye Bidassoa Surf Club"
-  -
-    type: "featured_medium"
-    url: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online-300x222.jpg"
-    alt: "Charlotte Caster Tatziki - webdesign Hendaye Bidassoa Surf Club"
-  -
-    type: "featured_medium_large"
-    url: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online-768x568.jpg"
-    alt: "Charlotte Caster Tatziki - webdesign Hendaye Bidassoa Surf Club"
-  -
-    type: "featured_vignette"
-    url: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online-380x281.jpg"
-    alt: "Charlotte Caster Tatziki - webdesign Hendaye Bidassoa Surf Club"
-  -
-    type: "featured_full"
-    url: "https://www.tatziki.com/bibliotheque/2018/08/HBSC-fb-post-site-online.jpg"
-    alt: "Charlotte Caster Tatziki - webdesign Hendaye Bidassoa Surf Club"
-
-gridSize: "wide"  # ou "small", "medium", "large", "tall", "wide"
-# Ou plus précis :
+couleur: "#3085a3"
+gridSize: "wide"  # square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
 # gridSpan:
-#   cols: 10  # Sur 18 colonnes
-#   rows: 8   # Hauteur en unités de grille
+#   cols: 10
+#   rows: 8  
 ---
 
 ## Objectifs du projet

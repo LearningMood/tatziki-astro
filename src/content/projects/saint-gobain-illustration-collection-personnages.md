@@ -7,36 +7,16 @@ slug: "collection-de-personnages-saint-gobain"
 draft: false
 featured: false
 thumbnail: "https://www.tatziki.com/bibliotheque/2018/01/img_saintgobain02.jpg"
-thumbnail_alt: ""
-thumbnail_sizes:
-  thumbnail: "https://www.tatziki.com/bibliotheque/2018/01/img_saintgobain02-150x150.jpg"
-  medium: "https://www.tatziki.com/bibliotheque/2018/01/img_saintgobain02-300x250.jpg"
-  full: "https://www.tatziki.com/bibliotheque/2018/01/img_saintgobain02.jpg"
+thumbnail_alt: "Saint Gobain - Illustration colection personnages dispositif de formation"
 categories:
   - "Illustration"
 tags:
   - "Saint Gobain"
-acf_placeholder:
-  couleur: "#3085a3"
-  has_content: false
-  needs_migration: true
-images_to_migrate:
-  -
-    type: "featured"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/img_saintgobain02.jpg"
-    alt: ""
-  -
-    type: "featured_thumbnail"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/img_saintgobain02-150x150.jpg"
-    alt: ""
-  -
-    type: "featured_medium"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/img_saintgobain02-300x250.jpg"
-    alt: ""
-  -
-    type: "featured_full"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/img_saintgobain02.jpg"
-    alt: ""
+couleur: "#3085a3"
+gridSize: "wide"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10
+#   rows: 8
 ---
 
 ## Objectifs du projet

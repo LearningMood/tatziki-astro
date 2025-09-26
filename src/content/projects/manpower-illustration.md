@@ -8,31 +8,17 @@ draft: false
 featured: false
 thumbnail: "https://www.tatziki.com/bibliotheque/2018/01/Manpower-map-zoom02.jpg"
 thumbnail_alt: "Manpower - construction map zoom"
-thumbnail_sizes:
-  thumbnail: "https://www.tatziki.com/bibliotheque/2018/01/Manpower-map-zoom02-150x150.jpg"
-  medium: "https://www.tatziki.com/bibliotheque/2018/01/Manpower-map-zoom02-300x240.jpg"
-  medium_large: "https://www.tatziki.com/bibliotheque/2018/01/Manpower-map-zoom02-768x613.jpg"
-  large: "https://www.tatziki.com/bibliotheque/2018/01/Manpower-map-zoom02-1024x818.jpg"
-  full: "https://www.tatziki.com/bibliotheque/2018/01/Manpower-map-zoom02.jpg"
 categories:
   - "Illustration"
 tags:
   - "Korda &amp; Partners"
   - "Manpower"
   - "Illustrator"
-  - "Photoshop"
-acf_placeholder:
-  couleur: "#3085a3"
-images_to_migrate:
-  -
-    type: "featured"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Manpower-map-zoom02.jpg"
-    alt: "Manpower - construction map zoom"
-gridSize: "wide"  # ou "small", "medium", "large", "tall", "wide"
-# Ou plus précis :
+couleur: "#3085a3"
+gridSize: "portrait"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
 # gridSpan:
-#   cols: 10  # Sur 18 colonnes
-#   rows: 8   # Hauteur en unités de grille
+#   cols: 10
+#   rows: 8
 ---
 
 ## Objectifs du projet

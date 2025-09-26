@@ -20,10 +20,11 @@ tags:
   - "Worpress"
 acf_placeholder:
   couleur: "#3085a3"
-# gridSize: "large"  # ou "small", "medium", "large", "tall", "wide"
-gridSpan:
-  cols: 10 
-  rows: 8 
+gridSize: "portrait"  # square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10 
+#   rows: 8 
+
 ---
 
 ## Objectifs du projet

@@ -19,13 +19,11 @@ tags:
   - "Photoshop"
   - "PowerPoint"
   - "Sketch"
-acf_placeholder:
-  couleur: "#3085a3"
-gridSize: "medium"  # ou "small", "medium", "large", "tall", "wide"
-# Ou plus précis :
+couleur: "#3085a3"
+gridSize: "portrait"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
 # gridSpan:
-#   cols: 10  # Sur 18 colonnes
-#   rows: 8   # Hauteur en unités de grille
+#   cols: 10
+#   rows: 8
 ---
 
 ## Objectifs du projet

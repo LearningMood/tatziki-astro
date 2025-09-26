@@ -8,12 +8,6 @@ draft: false
 featured: false
 thumbnail: "https://www.tatziki.com/bibliotheque/2023/09/SUBEA-PADI-extrait-Tatziki-@Charlotte-CASTERS.jpg"
 thumbnail_alt: "Projet SUBEA - PADI illustration extrait"
-thumbnail_sizes:
-  medium: "https://www.tatziki.com/bibliotheque/2023/09/SUBEA-PADI-extrait-Tatziki-@Charlotte-CASTERS-300x300.jpg"
-  thumbnail: "https://www.tatziki.com/bibliotheque/2023/09/SUBEA-PADI-extrait-Tatziki-@Charlotte-CASTERS-150x150.jpg"
-  medium_large: "https://www.tatziki.com/bibliotheque/2023/09/SUBEA-PADI-extrait-Tatziki-@Charlotte-CASTERS-768x768.jpg"
-  vignette: "https://www.tatziki.com/bibliotheque/2023/09/SUBEA-PADI-extrait-Tatziki-@Charlotte-CASTERS-380x380.jpg"
-  full: "https://www.tatziki.com/bibliotheque/2023/09/SUBEA-PADI-extrait-Tatziki-@Charlotte-CASTERS.jpg"
 categories:
   - "Direction artistique"
   - "Illustration"
@@ -22,19 +16,12 @@ tags:
   - "SUBEA"
   - "Illustrator"
   - "Photoshop"
-acf_placeholder:
-  couleur: "#3085a3"
-images_to_migrate:
-  -
-    type: "featured"
-    url: "https://www.tatziki.com/bibliotheque/2023/09/SUBEA-PADI-extrait-Tatziki-@Charlotte-CASTERS.jpg"
-    alt: "Projet SUBEA - PADI illustration extrait"
+couleur: "#3085a3"
 
-gridSize: "wide"  # ou "small", "medium", "large", "tall", "wide"
-# Ou plus précis :
+gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
 # gridSpan:
-#   cols: 10  # Sur 18 colonnes
-#   rows: 8   # Hauteur en unités de grille
+#   cols: 10
+#   rows: 8
 ---
 
 ## À propos du projet

@@ -13,13 +13,11 @@ categories:
 tags:
   - "Flash"
   - "Photoshop"
-acf_placeholder:
-  couleur: "#3085a3"
-# gridSize: "large"  # ou "small", "medium", "large", "tall", "wide"
-
-gridSpan:
-  cols: 9  # Sur 18 colonnes
-  rows: 8   # Hauteur en unités de grille
+couleur: "#3085a3"
+gridSize: "square"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10
+#   rows: 8
 
 ---
 

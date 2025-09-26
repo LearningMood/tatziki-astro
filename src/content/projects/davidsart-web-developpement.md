@@ -10,12 +10,11 @@ thumbnail: "https://www.tatziki.com/bibliotheque/2018/01/bandeau-Davidsart.jpg"
 thumbnail_alt: "Tatziki - David's Art"
 categories:
   - "Développement front-end"
-acf_placeholder:
-  couleur: "#3085a3"
-# gridSize: "large"  # ou "small", "medium", "large", "tall", "wide"
-gridSpan:
-  cols: 12 
-  rows: 6 
+couleur: "#3085a3"
+gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10
+#   rows: 8
 ---
 
 ## Objectifs du projet

@@ -8,11 +8,6 @@ draft: false
 featured: false
 thumbnail: "https://www.tatziki.com/bibliotheque/2018/01/Groupama-interface.jpg"
 thumbnail_alt: "Charlotte Casters Groupama interface - map isométrqiue"
-thumbnail_sizes:
-  thumbnail: "https://www.tatziki.com/bibliotheque/2018/01/Groupama-interface-150x150.jpg"
-  medium: "https://www.tatziki.com/bibliotheque/2018/01/Groupama-interface-300x211.jpg"
-  medium_large: "https://www.tatziki.com/bibliotheque/2018/01/Groupama-interface-768x540.jpg"
-  full: "https://www.tatziki.com/bibliotheque/2018/01/Groupama-interface.jpg"
 categories:
   - "Direction artistique"
   - "Illustration"
@@ -22,31 +17,11 @@ tags:
   - "Knowledge-Players"
   - "Illustrator"
   - "Photoshop"
-acf_placeholder:
-  couleur: "#3085a3"
-  has_content: false
-  needs_migration: true
-images_to_migrate:
-  -
-    type: "featured"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Groupama-interface.jpg"
-    alt: "Charlotte Casters Groupama interface - map isométrqiue"
-  -
-    type: "featured_thumbnail"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Groupama-interface-150x150.jpg"
-    alt: "Charlotte Casters Groupama interface - map isométrqiue"
-  -
-    type: "featured_medium"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Groupama-interface-300x211.jpg"
-    alt: "Charlotte Casters Groupama interface - map isométrqiue"
-  -
-    type: "featured_medium_large"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Groupama-interface-768x540.jpg"
-    alt: "Charlotte Casters Groupama interface - map isométrqiue"
-  -
-    type: "featured_full"
-    url: "https://www.tatziki.com/bibliotheque/2018/01/Groupama-interface.jpg"
-    alt: "Charlotte Casters Groupama interface - map isométrqiue"
+couleur: "#3085a3"
+gridSize: "wide"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
+# gridSpan:
+#   cols: 10
+#   rows: 8
 ---
 
 ## Objectifs du projet
