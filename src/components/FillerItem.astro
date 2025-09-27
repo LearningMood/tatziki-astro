@@ -1,0 +1,226 @@
+---
+import IconSVG from './IconSVG.astro';
+
+export interface Props {
+  filler: any;
+  gridSpan: { cols: number; rows: number };
+  delay: number;
+}
+
+const { filler, gridSpan, delay } = Astro.props;
+
+// Construire les styles CSS
+const gradientColors = filler.colors?.gradient || ['#667eea', '#764ba2'];
+const textColor = filler.colors?.text || '#ffffff';
+
+const styles = `
+  --cols: ${gridSpan.cols};
+  --rows: ${gridSpan.rows};
+  --delay: ${delay}s;
+  --gradient-1: ${gradientColors[0]};
+  --gradient-2: ${gradientColors[1]};
+  --text-color: ${textColor};
+  ${filler.colors?.hover ? `
+    --hover-1: ${filler.colors.hover[0]};
+    --hover-2: ${filler.colors.hover[1]};
+  ` : ''}
+`;
+
+// Déterminer si c'est un lien
+const isLink = !!filler.link;
+const isExternal = filler.external;
+---
+
+<div 
+  class={`grid-item filler filler-${filler.type}`}
+  style={styles}
+  data-scroll-animate
+>
+  {isLink ? (
+    <a 
+      href={filler.link} 
+      class="filler-content"
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
+    >
+      <div class="filler-inner">
+        {filler.type === 'quote' && (
+          <>
+            <blockquote>{filler.content}</blockquote>
+            <cite>— {filler.author}</cite>
+          </>
+        )}
+        
+        {filler.type === 'stat' && (
+          <>
+            <span class="stat-number">{filler.number}</span>
+            <span class="stat-label">{filler.label}</span>
+          </>
+        )}
+        
+        {filler.type === 'skill' && (
+          <>
+            <IconSVG name={filler.icon} size={40} />
+            <span class="skill-title">{filler.title}</span>
+          </>
+        )}
+        
+        {filler.type === 'cta' && (
+          <>
+            <IconSVG name={filler.icon} size={32} />
+            <span class="cta-text">{filler.text}</span>
+            <span class="cta-arrow">→</span>
+          </>
+        )}
+        
+        {filler.type === 'social' && (
+          <>
+            <IconSVG name={filler.icon} size={36} />
+            <span class="social-name">{filler.platform}</span>
+          </>
+        )}
+        
+        {filler.type === 'status' && (
+          <>
+            <IconSVG name={filler.icon} size={28} />
+            <span class="status-text">{filler.text}</span>
+            {filler.subtext && (
+              <span class="status-subtext">{filler.subtext}</span>
+            )}
+          </>
+        )}
+      </div>
+    </a>
+  ) : (
+    <div class="filler-content">
+      <div class="filler-inner">
+        {/* <!-- Même contenu sans le <a> --> */}
+      </div>
+    </div>
+  )}
+</div>
+
+<style lang="scss">
+  .grid-item.filler {
+    grid-column: span var(--cols);
+    grid-row: span var(--rows);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, var(--gradient-1) 0%, var(--gradient-2) 100%);
+    color: var(--text-color);
+    
+    // Animation d'apparition
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 
+      opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+      background 0.3s ease;
+    
+    &.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: var(--delay);
+    }
+    
+    // Hover avec changement de gradient si défini
+    &:hover {
+      --gradient-1: var(--hover-1, var(--gradient-1));
+      --gradient-2: var(--hover-2, var(--gradient-2));
+      
+      .filler-inner {
+        transform: scale(1.05);
+      }
+      
+      .cta-arrow {
+        transform: translateX(5px);
+      }
+    }
+  }
+  
+  .filler-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    
+    &[href] {
+      cursor: pointer;
+    }
+  }
+  
+  .filler-inner {
+    text-align: center;
+    transition: transform 0.3s ease;
+    
+    blockquote {
+      margin: 0;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      font-weight: 500;
+      line-height: 1.4;
+      white-space: pre-line;
+    }
+    
+    cite {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+    
+    .stat-number {
+      display: block;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1;
+    }
+    
+    .stat-label {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+    
+    .skill-title,
+    .social-name {
+      display: block;
+      margin-top: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    
+    .cta-text {
+      display: block;
+      margin: 0.75rem 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      white-space: pre-line;
+    }
+    
+    .cta-arrow {
+      display: inline-block;
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .status-text {
+      display: block;
+      margin-top: 0.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .status-subtext {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+  }
+
+</style>

@@ -4,6 +4,7 @@ import Layout from '../components/Layout.astro';
 import ProjectsGrid from '../components/ProjectsGrid.astro';
 import MasonryGrid from '../components/MasonryGrid.astro';
 import MasonryGridPlus from '../components/MasonryGridPlus.astro';
+import MasonryGridPlusPlus from '../components/MasonryGridPlusPlus.astro';
 import { getCollection } from 'astro:content';
 
 const projects = await getCollection('projects', ({ data }) => {
@@ -22,7 +23,8 @@ projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
    
   </div>
   <div class="container">
-     <MasonryGridPlus projects={projects}/>
+     <MasonryGridPlusPlus projects={projects}/>
+     <!-- <MasonryGridPlus projects={projects}/> -->
 
     <!-- <MasonryGrid projects={projects} /> -->
 

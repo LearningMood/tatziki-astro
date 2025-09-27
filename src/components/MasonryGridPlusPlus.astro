@@ -1,4 +1,7 @@
 ---
+import { fillerConfig } from "../content/data-filler";
+import FillerItem from "./FillerItem.astro";
+
 const { projects, miniProjects = [] } = Astro.props;
 
 // Patterns pour projets principaux (sur 24 colonnes)
@@ -20,28 +23,10 @@ const fillerPatterns = [
     { cols: 5, rows: 4 },
 ];
 
-// Générer des mini-projets automatiques si non fournis
-const defaultMiniProjects = [
-    {
-        type: "quote",
-        content: "Digital Experte",
-        author: "",
-    },
-    { type: "stat", number: "130+", label: "Projets réalisés" },
-    { type: "skill", title: "Ingénierie pédagogique", icon: "🎨" },
-    { type: "text", content: "Mémoire de recherche sur les supports d'apprentissage en formation continue" },
-    { type: "stat", number: "22", label: "Années d'expérience" },
-    { type: "skill", title: "JS | React.js | Next.js", icon: "⚛️" },
-];
-
-const fillers = miniProjects.length > 0 ? miniProjects : defaultMiniProjects;
-
 // Distribuer les projets principaux
 const mainProjectsWithGrid = projects.map((project, index) => {
     const patterns = ["square", "wide", "tall", "large", "feat", "landscape"];
     const gridSize = project.data.gridSize || patterns[index % patterns.length];
-      // fallback en cas de clé inconnue
-  const gridSpan = mainPatterns[gridSize] || mainPatterns.square;
     return {
         ...project,
         gridSpan: mainPatterns[gridSize],
@@ -55,20 +40,27 @@ const allItems = [];
 let fillerIndex = 0;
 
 mainProjectsWithGrid.forEach((project, index) => {
-    allItems.push(project);
+    allItems.push({ ...project, type: "projet" });
 
-    // Ajouter un filler tous les 2-3 projets
-    if (index % 6 === 1 && fillerIndex < fillers.length) {
-        const pattern = fillerPatterns[fillerIndex % fillerPatterns.length];
+    // Ajouter un filler tous les 3 projets
+    if (index % 3 === 1 && fillerIndex < fillerConfig.items.length) {
+        const pattern =
+            fillerConfig.patterns[fillerIndex % fillerConfig.patterns.length];
         allItems.push({
             type: "filler",
-            content: fillers[fillerIndex],
+            data: fillerConfig.items[fillerIndex],
             gridSpan: pattern,
-            id: `filler-${fillerIndex}`,
         });
         fillerIndex++;
     }
 });
+
+// Juste après la boucle forEach
+console.log('Projets:', allItems.filter(i => i.type === 'projet').length);
+console.log('Fillers:', allItems.filter(i => i.type === 'filler').length);
+console.log('Premier filler:', allItems.find(i => i.type === 'filler'));
+
+
 ---
 
 <div class="masonry-grid">
@@ -116,56 +108,13 @@ mainProjectsWithGrid.forEach((project, index) => {
                     </article>
                 );
             } else {
-                // Mini-projet de remplissage
-                const { content, gridSpan, id } = item;
-
                 return (
-                    <div
-                        class={`grid-item filler filler-${content.type}`}
-                        style={`
-            --cols: ${gridSpan.cols};
-            --rows: ${gridSpan.rows};
-            --delay: ${(index % 10) * 0.1}s;
-          `}
-                        data-scroll-animate
-                        key={id}
-                    >
-                        <div class="filler-content">
-                            {content.type === "quote" && (
-                                <>
-                                    <blockquote>{content.content}</blockquote>
-                                    <cite>— {content.author}</cite>
-                                </>
-                            )}
-
-                            {content.type === "stat" && (
-                                <>
-                                    <span class="stat-number">
-                                        {content.number}
-                                    </span>
-                                    <span class="stat-label">
-                                        {content.label}
-                                    </span>
-                                </>
-                            )}
-
-                            {content.type === "skill" && (
-                                <>
-                                    <span class="skill-icon">
-                                        {content.icon}
-                                    </span>
-                                    <span class="skill-title">
-                                        {content.title}
-                                    </span>
-                                </>
-                            )}
-
-                            {content.type === "text" && (
-                                <p class="filler-text">{content.content}</p>
-                            )}
-                        </div>
-                    </div>
-                );
+                <FillerItem
+                    filler={item.data}
+                    gridSpan={item.gridSpan}
+                    delay={(index % 10) * 0.1}
+                />
+                )
             }
         })
     }
@@ -197,6 +146,3 @@ mainProjectsWithGrid.forEach((project, index) => {
         animateOnScroll();
     }
 </script>
-
-
-    

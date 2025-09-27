@@ -19,11 +19,12 @@
     }
 }
 
-article.grid-item {
+article.grid-item,
+.grid-item {
     grid-column: span var(--cols);
     grid-row: span var(--rows);
     position: relative;
-    overflow: hidden;
+    // overflow: hidden;
     // animation: fadeInUp 0.9s cubic-bezier(0.4, 0, 0.2, 1) var(--delay) both;
 
     // État initial (invisible)
@@ -191,21 +192,21 @@ a.item-projet {
 }
 
 // Variations de couleur pour éviter la monotonie
-.grid-item:nth-child(4n+1) {
-    --color-rgb: 224, 98, 98;
-}
+// .grid-item:nth-child(4n+1) {
+//     --color-rgb: 224, 98, 98;
+// }
 
-.grid-item:nth-child(4n+2) {
-    --color-rgb: 98, 182, 224;
-}
+// .grid-item:nth-child(4n+2) {
+//     --color-rgb: 98, 182, 224;
+// }
 
-.grid-item:nth-child(4n+3) {
-    --color-rgb: 98, 224, 158;
-}
+// .grid-item:nth-child(4n+3) {
+//     --color-rgb: 98, 224, 158;
+// }
 
-.grid-item:nth-child(4n+4) {
-    --color-rgb: 224, 182, 98;
-}
+// .grid-item:nth-child(4n+4) {
+//     --color-rgb: 224, 182, 98;
+// }
 
 a {
     text-decoration: none;
@@ -220,10 +221,10 @@ a {
     overflow: hidden;
     cursor: default;
     position: relative;
-    background: linear-gradient(135deg, #727db0 0%, #2c3f61 100%);
+    // background: linear-gradient(135deg, #ffffff 0%, #a7a7a7 100%);
     
     &.filler-quote {
-      background: linear-gradient(135deg, #e1ab93 0%, #a24551 100%);
+      background: linear-gradient(90deg, #ff976b 0%, #ff455e 100%);
     }
     
     &.filler-stat {
@@ -235,7 +236,8 @@ a {
     }
     
     &.filler-text {
-      background: linear-gradient(135deg, #ad7f8d 0%, hsl(51, 68%, 72%) 100%);
+      background: linear-gradient(0deg, #fae351 0%, #ff6b6b 140%);
+      background: tomato;
     }
     
     .filler-content {
@@ -320,10 +322,10 @@ a {
     }
   }
   
-  // Responsive pour les fillers
-  @media (max-width: 768px) {
-    .grid-item.filler {
-      grid-column: span 4 !important;
-      grid-row: span 4 !important;
+    // Responsive pour les fillers
+    @media (max-width: 768px) {
+        .grid-item.filler {
+            grid-column: span 6 !important;
+            grid-row: span 7 !important;
+        }
     }
-  }
