@@ -1,5 +1,4 @@
 // ===== CONFIGURATION DES FILLERS =====
-// src/data/fillers.js
 
 export const fillerConfig = {
   // Patterns de tailles disponibles

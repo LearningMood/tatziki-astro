@@ -46,6 +46,7 @@ const isExternal = filler.external;
       <div class="filler-inner">
         {filler.type === 'quote' && (
           <>
+          <h1></h1>
             <blockquote>{filler.content}</blockquote>
             <cite>— {filler.author}</cite>
           </>
@@ -95,6 +96,54 @@ const isExternal = filler.external;
     <div class="filler-content">
       <div class="filler-inner">
         {/* <!-- Même contenu sans le <a> --> */}
+              <div class="filler-inner">
+        {filler.type === 'quote' && (
+          <>
+          <h1></h1>
+            <blockquote>{filler.content}</blockquote>
+            <cite>— {filler.author}</cite>
+          </>
+        )}
+        
+        {filler.type === 'stat' && (
+          <>
+            <span class="stat-number">{filler.number}</span>
+            <span class="stat-label">{filler.label}</span>
+          </>
+        )}
+        
+        {filler.type === 'skill' && (
+          <>
+            <IconSVG name={filler.icon} size={40} />
+            <span class="skill-title">{filler.title}</span>
+          </>
+        )}
+        
+        {filler.type === 'cta' && (
+          <>
+            <IconSVG name={filler.icon} size={32} />
+            <span class="cta-text">{filler.text}</span>
+            <span class="cta-arrow">→</span>
+          </>
+        )}
+        
+        {filler.type === 'social' && (
+          <>
+            <IconSVG name={filler.icon} size={36} />
+            <span class="social-name">{filler.platform}</span>
+          </>
+        )}
+        
+        {filler.type === 'status' && (
+          <>
+            <IconSVG name={filler.icon} size={28} />
+            <span class="status-text">{filler.text}</span>
+            {filler.subtext && (
+              <span class="status-subtext">{filler.subtext}</span>
+            )}
+          </>
+        )}
+      </div>
       </div>
     </div>
   )}
