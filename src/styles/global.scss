@@ -13,13 +13,14 @@
 
 @use 'container';
 @use 'grille/grid';
-@use 'grille/adaptative-mansory';
+@use 'anim';
 @use 'grille/mansory';
 
 // 3. Composants
  @use 'components/beforeafter';
 // @use 'components/buttons';
 @use 'components/cards';
+@use 'hover';
 
 // 4. Sections
 @use 'sections/nav';

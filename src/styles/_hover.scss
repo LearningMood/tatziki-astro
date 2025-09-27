@@ -1,0 +1,41 @@
+figure.item-projet-image figcaption::before {
+    z-index: 1;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    content: '';
+    opacity: 0;
+    transition: opacity 0.4s, transform 0.4s;
+    display: block;
+    content: '';
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    transform: scale(0, 1)
+}
+
+figure.item-projet-image figcaption::after {
+    z-index: 1;
+    position: absolute;
+    display: block;
+    top: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    content: '';
+    opacity: 0;
+    transition: opacity 0.4s, transform 0.4s;
+    border-right: 1px solid #fff;
+    border-left: 1px solid #fff;
+    transform: scale(1, 0);
+    -webkit-transition: opacity 0.35s, transform 0.4s;
+    -moz-transition: opacity 0.4s, transform 0.4s;
+    -ms-transition: opacity 0.4s, transform 0.4s;
+    -o-transition: opacity 0.4s, transform 0.4s;
+}
+figure.item-projet-image:hover figcaption::before,
+figure.item-projet-image:hover figcaption::after {
+    opacity: 1;
+    transform: scale(1)
+}

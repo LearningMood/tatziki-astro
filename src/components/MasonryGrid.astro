@@ -1,23 +1,14 @@
 ---
-const { projects } = Astro.props;
+const { projects, miniProjects = [] } = Astro.props;
 
-// Patterns prédéfinis pour variation -->
-// const sizePatterns = {
-//   small: { cols: 4, rows: 6 }, //+2 pourle texte ?
-//   medium: { cols: 6, rows: 8 },
-//   large: { cols: 8, rows: 10 },
-//   tall: { cols: 6, rows: 16 },
-//   wide: { cols: 12, rows: 7 },
-//   featured: { cols: 10, rows: 12 },
-// };
 const sizePatterns = {
-  square: { cols: 6, rows: 6 }, //+2 pourle texte ?
-  portrait: { cols: 5, rows: 10 },
-  landscape: { cols: 10, rows: 5 },
-  wide: { cols: 6, rows: 6 },
-  tall: { cols: 12, rows: 12 },
+  square: { cols: 8, rows: 8 }, //+2 pourle texte ?
+  portrait: { cols: 7, rows: 10 },
+  landscape: { cols: 10, rows: 7 },
+  wide: { cols: 12, rows: 8 },
+  tall: { cols: 6, rows: 12 },
   feat: { cols: 12, rows: 9 },
-  mini: { cols: 4, rows: 4 },
+  mini: { cols: 5, rows: 6 },
 };
 
 // Assigner des tailles de façon pseudo-aléatoire mais équilibrée -->
@@ -33,24 +24,25 @@ const sizes = [
 let sizeIndex = 0;
 const projectsWithGrid = projects.map((project, index) => {
   // Utiliser la taille définie ou en assigner une
-  const gridSize = project.data.gridSize || sizes[sizeIndex % sizes.length];
+  const gridSize = project.data.gridSize || "landscape";
   const span = project.data.gridSpan || sizePatterns[gridSize];
   sizeIndex++;
 
   return {
     ...project,
-    gridSpan: span,
     gridSize,
+    gridSpan: span,
+    animationDelay: (index % 10) * 0.1 // Délai en cascade, reset tous les 10
   };
 });
 ---
 
 <div class="masonry-grid">
   {
-    projectsWithGrid.map((project) => {
+    projectsWithGrid.map((project, index) => {
       const { slug } = project;
       const { title, thumbnail, categories, couleur } = project.data;
-      const { gridSpan, gridSize } = project;
+      const { gridSpan, gridSize, animationDelay  } = project;
 
       return (
         <article
@@ -59,15 +51,17 @@ const projectsWithGrid = projects.map((project, index) => {
           --cols: ${gridSpan.cols};
           --rows: ${gridSpan.rows};
           --color: ${couleur || "#3085a3"};
+          --delay: ${animationDelay}s;
         `}
+        data-scroll-animate
         >
           <a href={`/projects/${slug}`} class="item-projet">
-            <div class="item-projet-image">
+            <figure class="item-projet-image">
               <img src={thumbnail} alt={title} loading="lazy" />
-              <div class="item-overlay">
+              <figcaption class="item-overlay">
                 <span class="item-cta">Voir le projet</span>
-              </div>
-            </div>
+              </figcaption>
+            </figure>
 
             <div class="item-projet-info">
               <h3>{title}</h3>
@@ -85,3 +79,35 @@ const projectsWithGrid = projects.map((project, index) => {
     })
   }
 </div>
+<script>
+  // Observer pour déclencher l'animation au scroll
+  const animateOnScroll = () => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Ajouter la classe qui déclenche l'animation
+            entry.target.classList.add('is-visible');
+            // Arrêter d'observer cet élément (animation unique)
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Se déclenche quand 10% de l'élément est visible
+        rootMargin: '50px' // Commence un peu avant d'être visible
+      }
+    );
+    
+    // Observer tous les éléments avec l'attribut data-scroll-animate
+    const elements = document.querySelectorAll('[data-scroll-animate]');
+    elements.forEach(el => observer.observe(el));
+  };
+  
+  // Lancer quand le DOM est prêt
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', animateOnScroll);
+  } else {
+    animateOnScroll();
+  }
+</script>

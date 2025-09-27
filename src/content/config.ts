@@ -14,14 +14,6 @@ const projects = defineCollection({
       cols: z.number().default(6), // Sur 18 colonnes
       rows: z.number().default(6)  // Nombre de rangées
     }).optional(),
-
-    // Nouveau : ratio de l'image pour adaptation automatique
-    // imageRatio: z.enum(['landscape', 'portrait', 'square']).optional(),
-    // // Ou plus précis
-    // imageDimensions: z.object({
-    //   width: z.number(),
-    //   height: z.number()
-    // }).optional(),
     
     couleur: z.string().default('#3085a3'),
     categories: z.array(z.string()).default([]),

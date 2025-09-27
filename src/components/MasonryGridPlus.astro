@@ -1,0 +1,427 @@
+---
+const { projects, miniProjects = [] } = Astro.props;
+
+// Patterns pour projets principaux (sur 24 colonnes)
+const mainPatterns = {
+    square: { cols: 8, rows: 8 }, //+2 pourle texte ?
+    portrait: { cols: 7, rows: 10 },
+    landscape: { cols: 10, rows: 7 },
+    wide: { cols: 12, rows: 8 },
+    tall: { cols: 6, rows: 12 },
+    feat: { cols: 12, rows: 9 },
+};
+
+// Mini-projets de remplissage
+const fillerPatterns = [
+    { cols: 4, rows: 4 },
+    { cols: 5, rows: 5 },
+    { cols: 4, rows: 5 },
+    { cols: 5, rows: 4 },
+];
+
+// Générer des mini-projets automatiques si non fournis
+const defaultMiniProjects = [
+    {
+        type: "quote",
+        content: "La créativité\nc'est l'intelligence\nqui s'amuse",
+        author: "Einstein",
+    },
+    { type: "stat", number: "50+", label: "Projets réalisés" },
+    { type: "skill", title: "Design System", icon: "🎨" },
+    { type: "text", content: "Disponible pour\nvos projets" },
+    { type: "stat", number: "8", label: "Années d'expérience" },
+    { type: "skill", title: "React / Astro", icon: "⚛️" },
+];
+
+const fillers = miniProjects.length > 0 ? miniProjects : defaultMiniProjects;
+
+// Distribuer les projets principaux
+const mainProjectsWithGrid = projects.map((project, index) => {
+    const patterns = ["square", "wide", "tall", "large", "feat", "landscape"];
+    const gridSize = project.data.gridSize || patterns[index % patterns.length];
+    return {
+        ...project,
+        gridSpan: mainPatterns[gridSize],
+        gridSize,
+        type: "main",
+    };
+});
+
+// Intercaler des mini-projets (environ 1 pour 3 principaux)
+const allItems = [];
+let fillerIndex = 0;
+
+mainProjectsWithGrid.forEach((project, index) => {
+    allItems.push(project);
+
+    // Ajouter un filler tous les 2-3 projets
+    if (index % 6 === 1 && fillerIndex < fillers.length) {
+        const pattern = fillerPatterns[fillerIndex % fillerPatterns.length];
+        allItems.push({
+            type: "filler",
+            content: fillers[fillerIndex],
+            gridSpan: pattern,
+            id: `filler-${fillerIndex}`,
+        });
+        fillerIndex++;
+    }
+});
+---
+
+<div class="masonry-grid">
+    {
+        allItems.map((item, index) => {
+            if (item.type === "main") {
+                // Projet principal
+                const { slug } = item;
+                const { title, thumbnail, couleur, categories } = item.data;
+                const { gridSpan, gridSize } = item;
+
+                return (
+                    <article
+                        class={`grid-item project size-${gridSize}`}
+                        style={`
+            --cols: ${gridSpan.cols};
+            --rows: ${gridSpan.rows};
+            --color: ${couleur || "#3085a3"};
+            --delay: ${(index % 10) * 0.1}s;
+          `}
+                        data-scroll-animate
+                    >
+                        <a href={`/projects/${slug}`}>
+                            <figure class="item-projet-image">
+                                <img
+                                    src={thumbnail}
+                                    alt={title}
+                                    loading="lazy"
+                                />
+                                <figcaption class="item-overlay">
+                                    <span class="item-cta">Voir le projet</span>
+                                </figcaption>
+                            </figure>
+                            <div class="item-projet-info">
+                                <h3>{title}</h3>
+                                {categories && categories.length > 0 && (
+                                    <div class="categories">
+                                        {categories.slice(0, 2).map((cat) => (
+                                            <span class="category">{cat}</span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </a>
+                    </article>
+                );
+            } else {
+                // Mini-projet de remplissage
+                const { content, gridSpan, id } = item;
+
+                return (
+                    <div
+                        class={`grid-item filler filler-${content.type}`}
+                        style={`
+            --cols: ${gridSpan.cols};
+            --rows: ${gridSpan.rows};
+            --delay: ${(index % 10) * 0.1}s;
+          `}
+                        data-scroll-animate
+                        key={id}
+                    >
+                        <div class="filler-content">
+                            {content.type === "quote" && (
+                                <>
+                                    <blockquote>{content.content}</blockquote>
+                                    <cite>— {content.author}</cite>
+                                </>
+                            )}
+
+                            {content.type === "stat" && (
+                                <>
+                                    <span class="stat-number">
+                                        {content.number}
+                                    </span>
+                                    <span class="stat-label">
+                                        {content.label}
+                                    </span>
+                                </>
+                            )}
+
+                            {content.type === "skill" && (
+                                <>
+                                    <span class="skill-icon">
+                                        {content.icon}
+                                    </span>
+                                    <span class="skill-title">
+                                        {content.title}
+                                    </span>
+                                </>
+                            )}
+
+                            {content.type === "text" && (
+                                <p class="filler-text">{content.content}</p>
+                            )}
+                        </div>
+                    </div>
+                );
+            }
+        })
+    }
+</div>
+
+<script>
+    // Animation au scroll (même que précédemment)
+    const animateOnScroll = () => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: "50px" },
+        );
+
+        document.querySelectorAll("[data-scroll-animate]").forEach((el) => {
+            observer.observe(el);
+        });
+    };
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", animateOnScroll);
+    } else {
+        animateOnScroll();
+    }
+</script>
+
+<style lang="scss">
+    .masonry-grid-24 {
+        display: grid;
+        grid-template-columns: repeat(24, 1fr);
+        grid-auto-rows: 15px;
+        gap: 1rem;
+        padding: 2rem;
+        grid-auto-flow: dense; // Comble les trous automatiquement
+
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(8, 1fr);
+            gap: 0.75rem;
+            padding: 1rem;
+        }
+
+        @media (min-width: 769px) and (max-width: 1200px) {
+            grid-template-columns: repeat(16, 1fr);
+        }
+    }
+
+    .grid-item {
+        grid-column: span var(--cols);
+        grid-row: span var(--rows);
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+            opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: var(--delay);
+        }
+    }
+
+    // Projets principaux
+    .grid-item.project {
+        display: flex;
+        flex-direction: column;
+
+        a {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .item-image {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #f5f5f5;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.6s ease;
+            }
+        }
+
+        .item-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                color-mix(in srgb, var(--color) 90%, transparent),
+                color-mix(in srgb, var(--color) 70%, transparent)
+            );
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease;
+
+            .item-cta {
+                color: white;
+                font-weight: 600;
+                padding: 0.75rem 1.5rem;
+                border: 2px solid white;
+                border-radius: 30px;
+                transform: translateY(10px);
+                opacity: 0;
+                transition: all 0.4s ease 0.1s;
+            }
+        }
+
+        &:hover {
+            .item-image img {
+                transform: scale(1.1);
+            }
+
+            .item-overlay {
+                opacity: 1;
+
+                .item-cta {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+        }
+
+        .item-info {
+            padding: 1rem 0;
+            min-height: 60px;
+
+            h3 {
+                margin: 0 0 0.5rem 0;
+                font-size: 1.1rem;
+                font-weight: 600;
+            }
+        }
+    }
+
+    // Mini-projets de remplissage
+    .grid-item.filler {
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: default;
+        position: relative;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        &.filler-quote {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        &.filler-stat {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        &.filler-skill {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        &.filler-text {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .filler-content {
+            padding: 1.5rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            blockquote {
+                margin: 0;
+                font-size: clamp(0.9rem, 2vw, 1.1rem);
+                font-weight: 500;
+                line-height: 1.4;
+                white-space: pre-line;
+            }
+
+            cite {
+                margin-top: 0.5rem;
+                font-size: 0.875rem;
+                opacity: 0.9;
+                font-style: normal;
+            }
+
+            .stat-number {
+                font-size: clamp(2rem, 4vw, 3rem);
+                font-weight: 700;
+                display: block;
+                line-height: 1;
+            }
+
+            .stat-label {
+                font-size: 0.9rem;
+                opacity: 0.95;
+                margin-top: 0.5rem;
+                display: block;
+            }
+
+            .skill-icon {
+                font-size: 2rem;
+                display: block;
+                margin-bottom: 0.5rem;
+            }
+
+            .skill-title {
+                font-weight: 600;
+                font-size: 1rem;
+            }
+
+            .filler-text {
+                font-size: 1.1rem;
+                font-weight: 500;
+                white-space: pre-line;
+                margin: 0;
+            }
+        }
+
+        // Effet de texture/pattern optionnel
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.03) 10px,
+                rgba(255, 255, 255, 0.03) 20px
+            );
+            z-index: 1;
+        }
+    }
+
+    // Responsive pour les fillers
+    @media (max-width: 768px) {
+        .grid-item.filler {
+            grid-column: span 4 !important;
+            grid-row: span 4 !important;
+        }
+    }
+</style>
