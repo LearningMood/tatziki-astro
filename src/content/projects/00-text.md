@@ -16,7 +16,7 @@ gridSize: "square"  #square",  "portrait",  "landscape",  "wide",  "tall",  "fea
 # gridSpan:
 #   cols: 10
 #   rows: 8
-banner: "/assets/proj/hero.jpg"
+banner: "/src/assets/proj/hero.jpg"
 images:
   - src: "/assets/proj/01.jpg"
   - src: "/assets/proj/02.jpg"
@@ -42,6 +42,4 @@ componentsOrder:
   - content
 
 ---
-## Introduction
-
-Texte d'introduction du projet...
+### Hello

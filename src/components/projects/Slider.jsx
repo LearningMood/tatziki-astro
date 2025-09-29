@@ -1,5 +1,20 @@
 import { useState, useEffect } from 'react';
 // import './Slider.scss';
+// Anciennement dans frontmatter
+// ## Galerie
+
+// <Slider
+//   images={[
+//     { src: '/projets/areva/slide1.jpg', alt: 'Slide 1', caption: 'Première étape' },
+//     { src: '/projets/areva/slide2.jpg', alt: 'Slide 2', caption: 'Développement' },
+//     { src: '/projets/areva/slide3.jpg', alt: 'Slide 3', caption: 'Résultat final' }
+//   ]}
+//   autoplay={true}
+//   duration={4000}
+//   showThumbs={true}
+//   client:visible
+// />
+
 
 export default function Slider({ 
   images, 
@@ -32,7 +47,7 @@ export default function Slider({
   };
 
   return (
-    <div className="slider-react">
+    <div className="container slider-react">
       <div className="slider-main">
         <div 
           className={`slider-track ${fade ? 'fade' : 'slide'}`}

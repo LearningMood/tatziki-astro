@@ -9,7 +9,7 @@ const { before, after, alt = "Comparaison avant/après" } = Astro.props;
 const id = Math.random().toString(36).substring(7);
 ---
 
-<div class="before-after" data-id={id}>
+<section class="container before-after" data-id={id}>
   <div class="before-after-container">
     <div class="image-container">
       <img src={before} alt={`${alt} - Avant`} class="before-image" />
@@ -23,7 +23,7 @@ const id = Math.random().toString(36).substring(7);
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <script define:vars={{ id }}>
   document.addEventListener('DOMContentLoaded', () => {

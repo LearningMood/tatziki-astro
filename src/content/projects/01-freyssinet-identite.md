@@ -23,6 +23,18 @@ objectifs:
   - "Augmenter le taux de conversion de 25%"
   - "Intégrer un système de design cohérent"
 
+images:
+  - src: "/src/assets/projets/saint-gobain/saint-gobain-illustration-tatziki-01.jpg"
+    alt: "Description"
+    caption: "une légende associée à cette image"
+   
+  - src: "/src/assets/projets/areva/areva-story-sketch.gif" # "type" absent → fallback "normal"
+
+beforeAfter:
+  before: "/src/assets/projets/saint-gobain/saint-gobain-illustration-tatziki-before-after-01.jpg"
+  after: "/src/assets/projets/saint-gobain/saint-gobain-illustration-tatziki-before-after-02.jpg"
+
+showSlider: true
 links:
   - title: "Voir le site"
     url: "https://www.tatziki.com/presentation-freyssinet/"
@@ -38,6 +50,9 @@ componentsOrder:
   - slider
   - content
 ---
+
+## Hello content
+
 
 
 

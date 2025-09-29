@@ -7,15 +7,13 @@ import Layout from "../../components/Layout.astro";
 // components
 import HeroBanner from "../../components/projects/HeroBanner.astro";
 import Objectifs from "../../components/projects/Objectifs.astro";
-import BeforeAfter from '../../components/projects/BeforeAfter';
-import Slider from '../../components/projects/Slider';
+import BeforeAfter from "../../components/projects/BeforeAfter.astro";
+import Slider from "../../components/projects/Slider";
 import Links from "../../components/projects/Links.astro";
 
 // import ProjectGrid from '../../components/projects/ProjectGrid.astro';
 
 import { getCollection } from "astro:content";
-
-
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -24,7 +22,6 @@ export async function getStaticPaths() {
     props: { project },
   }));
 }
-
 
 const {
   title,
@@ -38,78 +35,171 @@ const {
   beforeAfter,
   showSlider,
   links,
-  componentsOrder = ['hero','content']
+  componentsOrder = ["hero", "content"],
 } = data;
 
 // helper safe
-function hasImages(arr){ return Array.isArray(arr) && arr.length > 0; }
-
+function hasImages(arr) {
+  return Array.isArray(arr) && arr.length > 0;
+}
 ---
 
 <Layout title={title} description={description}>
-  <article class="project-page" style={`--project-color: ${couleur || "#F0F"}`} aria-label={title}>
+  <article
+    class="project-page"
+    style={`--project-color: ${couleur || "#F0F"}`}
+    aria-label={title}
+  >
     <nav class="breadcrumb">
       <a href="/">Accueil</a> / <a href="/projects">Portfolio</a> / <span
         >{title}</span
       >
     </nav>
 
-    {componentsOrder.map((key) => {
-      switch (key) {
-        case 'hero':
-          // render hero only if banner or at least one image
-          return (HeroBanner || hasImages(images))
-            ? <HeroBanner image={hero || images[0].src} title={title} categories={categories} description={description}/>
-            : null;
+    {
+      componentsOrder.map((key) => {
+        switch (key) {
+          case "hero":
+            // render hero only if banner or at least one image
+            return HeroBanner || hasImages(images) ? (
+              <HeroBanner
+                image={hero || images[0].src}
+                title={title}
+                categories={categories}
+                description={description}
+              />
+            ) : null;
 
-        case 'objectifs':
-          return (objectifs && objectifs.length)
-            ? <Objectifs objectifs={objectifs} />
-            : null;
+          case "objectifs":
+            return objectifs && objectifs.length ? (
+              <Objectifs objectifs={objectifs} />
+            ) : null;
 
+          case "beforeAfter":
+            // beforeAfter peut être un objet {before, after} dans le frontmatter
+            return beforeAfter && beforeAfter.before && beforeAfter.after ? (
+              /* lazy-load car souvent lourd */ <BeforeAfter
+                client:visible
+                before={beforeAfter.before}
+                after={beforeAfter.after}
+                alt={title}
+                // alt="Transformation du design"
+              />
+            ) : null;
 
+          case "slider":
+            // soit frontmatter (images[]) soit showSlider flag
+            return showSlider && hasImages(images) ? (
+              <Slider
+                images={[
+                  {
+                    src: "/projets/areva/slide1.jpg",
+                    alt: "Slide 1",
+                    caption: "Première étape",
+                  },
+                  {
+                    src: "/projets/areva/slide2.jpg",
+                    alt: "Slide 2",
+                    caption: "Développement",
+                  },
+                  {
+                    src: "/projets/areva/slide3.jpg",
+                    alt: "Slide 3",
+                    caption: "Résultat final",
+                  },
+                ]}
+                autoplay={true}
+                duration={4000}
+                showThumbs={true}
+                client:visible
+                client:visible
+                images={images}
+              />
+            ) : null;
 
-        case 'beforeAfter':
-          // beforeAfter peut être un objet {before, after} dans le frontmatter
-          return (beforeAfter && beforeAfter.before && beforeAfter.after)
-            ? /* lazy-load car souvent lourd */ <BeforeAfter client:visible before={beforeAfter.before} after={beforeAfter.after} alt={title} />
-            : null;
+          case "links":
+            return links ? <Links href={links} /> : null;
 
-        case 'slider':
-          // soit frontmatter (images[]) soit showSlider flag
-          return (showSlider && hasImages(images))
-            ? <Slider client:visible images={images} />
-            : null;
-
-        case 'links':
-          return link ? <Links href={ink} /> : null;
-
-        case 'content':
-        default:
-          // contenu MDX/Markdown (le corps du fichier)
-          return <section class="project-body"><Content /></section>;
-      }
-    })}
-
-      <header class="project-header">
-        <div class="container">
-          <h1>{title}</h1>
-          {description && <p class="lead">{description}</p>}
-          {
-            categories && categories.length > 0 && (
-              <div class="categories">
-                {categories.map((cat) => (
-                  <span class="category">{cat}</span>
-                ))}
-              </div>
-            )
-          }
-        </div>
-      </header>
+          case "content":
+          default:
+            // contenu MDX/Markdown (le corps du fichier)
+            return (
+              <section class="project-body">
+                <Content />
+              </section>
+            );
+        }
+      })
+    }
 
 
     <main class="projet-content">
-
-        <Content />
-  </main>
+      <Content />
+    </main>
+  </article>
 </Layout>
+
+<!-- TODO Anciennement dans frontmatter -->
+<!-- ## Vidéo de présentation
+
+<VideoPlayer
+  src="/videos/presentation.mp4"
+  poster="/images/video-poster.jpg"
+  aspectRatio="21/9"
+/> -->
+
+<!-- TODO -->
+ <!-- ## Grille modulaire
+
+<ModularGrid
+  items={[
+    {
+      type: 'image',
+      content: { src: '/images/01.jpg', alt: 'Image 1' },
+      span: '1/7'
+    },
+    {
+      type: 'text',
+      content: '<h3>Concept</h3><p>Description du concept...</p>',
+      span: '7/13'
+    },
+    {
+      type: 'image',
+      content: { src: '/images/02.jpg', alt: 'Image 2' },
+      span: '1/5',
+      rowSpan: 2
+    },
+    {
+      type: 'image',
+      content: { src: '/images/03.jpg', alt: 'Image 3' },
+      span: '5/9'
+    },
+    {
+      type: 'video',
+      content: { 
+        src: '/videos/demo.mp4',
+        poster: '/images/poster.jpg',
+        autoplay: true,
+        loop: true,
+        muted: true
+      },
+      span: '9/13'
+    }
+  ]}
+  gap="1.5rem"
+/> -->
+
+
+
+<!-- TODO -->
+ <!-- ## Introduction
+
+Texte d'introduction du projet...
+
+<FullWidthImage
+  src="/images/hero.jpg"
+  alt="Vue d'ensemble"
+  caption="Vue d'ensemble du projet"
+  height="70vh"
+  parallax={true}
+/> -->
