@@ -24,12 +24,12 @@ gridSize: "wide"  # square",  "portrait",  "landscape",  "wide",  "tall",  "feat
 #   rows: 8  
 ---
 
-## Objectifs du projet
+## Les objectifs
 
-<!-- TODO: Ajouter les objectifs depuis ACF -->
-- Objectif 1
-- Objectif 2
-- Objectif 3
+- Création sur mesure d'un thème adapté aux activités et à l'esprit d'un club de surf
+- Fournir des informations claires et aisément administrables
+- Mettre en avant le dynamisme du club et de ses membres en proposant des rubriques évolutives
+- Concevoir la maquette des publications événementielles du club
 
 ## Galerie
 
@@ -37,4 +37,4 @@ gridSize: "wide"  # square",  "portrait",  "landscape",  "wide",  "tall",  "feat
 
 ## Voir le projet
 
-[Visiter le site](https://www.tatziki.com/creation-du-site-du-bidassoa-surf-club/)
+[Visiter le site](https://www.hendayebidassoasurfclub.com/)

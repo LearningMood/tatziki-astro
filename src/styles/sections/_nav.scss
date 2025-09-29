@@ -2,7 +2,22 @@
 nav {
     display: flex;
     gap: 1rem;
+    background: #000;
+    color: #fff;
+    padding: 1rem 3rem;
 }
 
-// nav.breadcrumb {
-// }
+nav.breadcrumb {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  nav.breadcrumb a {
+    color: var(--project-color);
+    text-decoration: none;
+  }
+
+  nav.breadcrumb a:hover {
+    text-decoration: underline;
+  }

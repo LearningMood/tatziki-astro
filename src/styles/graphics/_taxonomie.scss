@@ -1,0 +1,35 @@
+// Le bloc parent
+.bloc-categories {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.tax {
+    font-family: var(--font-taxo);
+    font-size: .9rem;
+}
+
+.tax-categories {
+    font-family: var(--font-taxo);
+    font-size: 0.9rem;
+    color: var(--color-grey-medium);
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tag {
+    padding: 0.5rem 1rem;
+    background: var(--project-color);
+    color: white;
+    border-radius: 25px;
+    font-size: 0.875rem;
+}
+
+.tax--category {
+    color: var(--color-grey-medium);
+}

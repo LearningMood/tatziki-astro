@@ -1,7 +1,7 @@
 ---
 title: "Projet avec tous les composants"
 description: "Un projet qui utilise des composants personnalisés"
-date: 2024-01-25
+date: "2024-01-25"
 thumbnail: "/projets/showroom-cofely/Cofely-Dashboard.jpg"
 categories: ["Design", "Web"]
 couleur: "#487961ff"
@@ -9,6 +9,33 @@ gridSize: "feat"  # "square",  "portrait",  "landscape",  "wide",  "tall",  "fea
 # gridSpan:
 #   cols: 10  # Sur 18 colonnes
 #   rows: 8   # Hauteur en unités de grille
+hero: "/images/projets/hero-saint-gobain-illustration-tatziki.jpg"
+images:
+  - src: "/images/areva/01.jpg"
+    alt: "Description"
+    caption: "une légende associée à cette image"
+   
+  - src: "/images/02.jpg" # "type" absent → fallback "normal"
+
+objectifs:
+  - "Moderniser l'identité visuelle de la marque"
+  - "Améliorer l'expérience utilisateur sur mobile"
+  - "Augmenter le taux de conversion de 25%"
+  - "Intégrer un système de design cohérent"
+
+links:
+  - title: "Voir le site"
+    url: "https://exemple.com"
+    type: "external"
+  - title: "Étude de cas complète"
+    url: "/case-study/nom-projet"
+    type: "internal"
+componentsOrder:
+  - hero
+  - objectifs
+  - beforeAfter
+  - slider
+  - content
 
 ---
 
@@ -83,9 +110,9 @@ Texte d'introduction du projet...
 
 <Slider
   images={[
-    { src: '/images/slide1.jpg', alt: 'Slide 1', caption: 'Première étape' },
-    { src: '/images/slide2.jpg', alt: 'Slide 2', caption: 'Développement' },
-    { src: '/images/slide3.jpg', alt: 'Slide 3', caption: 'Résultat final' }
+    { src: '/projets/areva/slide1.jpg', alt: 'Slide 1', caption: 'Première étape' },
+    { src: '/projets/areva/slide2.jpg', alt: 'Slide 2', caption: 'Développement' },
+    { src: '/projets/areva/slide3.jpg', alt: 'Slide 3', caption: 'Résultat final' }
   ]}
   autoplay={true}
   duration={4000}

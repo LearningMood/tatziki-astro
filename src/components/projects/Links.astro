@@ -1,0 +1,16 @@
+---
+const { links } = Astro.props;
+---
+
+{
+    links && (
+        <div class="projet-link">
+            <h2>Les liens associés au projet :</h2>
+            <div class="hero-categories">
+                {links.map((link) => (
+                    <a href={link}>{link.title}</a>
+                ))}
+            </div>
+        </div>
+    )
+}

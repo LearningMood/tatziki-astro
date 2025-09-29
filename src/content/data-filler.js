@@ -18,7 +18,7 @@ export const fillerConfig = {
       content: 'La créativité\nc\'est l\'intelligence\nqui s\'amuse',
       author: 'Einstein',
       colors: {
-        gradient: ['#f093fb', '#f5576c'],
+        gradient: ['#a36c94ff', '#76363eff'],
         text: '#ffffff'
       }
     },
@@ -28,7 +28,7 @@ export const fillerConfig = {
       number: '50+',
       label: 'Projets réalisés',
       colors: {
-        gradient: ['#4facfe', '#00f2fe'],
+        gradient: ['#4d5f6eff', '#00f2fe'],
         text: '#ffffff'
       }
     },

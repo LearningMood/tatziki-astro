@@ -1,11 +1,10 @@
 ---
-title: "Présentation Freyssinet"
-description: "Création de la carte de vœux numérique de Freyssinnet"
-date: "2012-01-08"
+title: "Titre du projet"
+description: "Un projet qui utilise des composants personnalisés"
+date: "2025-09-29"
 slug: "presentation-freyssinet"
-thumbnail: "https://www.tatziki.com/bibliotheque/2018/01/Freysinet-bandeau.jpg"
+thumbnail: "/src/assets/projets/areva/areva-extrait.jpg"
 thumbnail_alt: "Événementiel - acarte de vœux numérique pour Freyssinet"
-hero: "https://www.tatziki.com/bibliotheque/2018/01/Freysinet-bandeau.jpg"
 categories:
   - "Animation"
   - "Direction artistique"
@@ -17,27 +16,32 @@ gridSize: "square"  #square",  "portrait",  "landscape",  "wide",  "tall",  "fea
 # gridSpan:
 #   cols: 10
 #   rows: 8
+banner: "/assets/proj/hero.jpg"
+images:
+  - src: "/assets/proj/01.jpg"
+  - src: "/assets/proj/02.jpg"
 objectifs:
-  - "Moderniser l'identité visuelle de la marque"
-  - "Améliorer l'expérience utilisateur sur mobile"
-  - "Augmenter le taux de conversion de 25%"
-  - "Intégrer un système de design cohérent"
-
+  - "Objectif 1"
+  - "Objectif 2"
+beforeAfter:
+  before: "/assets/proj/before.jpg"
+  after: "/assets/proj/after.jpg"
+showSlider: true
 links:
   - title: "Voir le site"
-    url: "https://www.tatziki.com/presentation-freyssinet/"
+    url: "https://exemple.com"
     type: "external"
   - title: "Étude de cas complète"
     url: "/case-study/nom-projet"
     type: "internal"
-
 componentsOrder:
   - hero
   - objectifs
   - beforeAfter
   - slider
   - content
+
 ---
+## Introduction
 
-
-
+Texte d'introduction du projet...

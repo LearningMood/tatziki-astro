@@ -1,0 +1,50 @@
+---
+const { image, title, categories, description } = Astro.props;
+---
+
+<header class="project-header">
+  <div class="container">
+    <h1>{title}</h1>
+    <p class="lead">{description}</p>
+    {
+      categories && (
+        <div class="bloc-categories">
+          {categories.map((cat) => (
+            <span class="tax tax--category">{cat}</span>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</header>
+
+<div class="hero-banner" data-parallax>
+  <div class="hero-image">
+    <img src={image} alt={title} />
+  </div>
+  <!-- <div class="hero-overlay">
+      <h1 class="hero-title">{title}</h1>
+      
+     
+      </div>
+</header>
+
+<script>
+  // Effet parallaxe
+  const banner = document.querySelector('[data-parallax]');
+  const image = banner?.querySelector('.hero-image img');
+  
+  if (banner && image) {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.5;
+      
+      if (scrolled < window.innerHeight) {
+        image.style.transform = `translateY(${rate}px)`;
+      }
+    });
+  }
+</script>
+
+-->
+</div>

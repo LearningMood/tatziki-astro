@@ -15,17 +15,25 @@
 @use 'grille/grid';
 @use 'anim';
 @use 'grille/mansory';
+@use 'components/filler';
 
 // 3. Composants
- @use 'components/beforeafter';
-// @use 'components/buttons';
+@use 'components/beforeafter';
 @use 'components/cards';
-@use 'hover';
+
 
 // 4. Sections
 @use 'sections/nav';
-// @use 'sections/hero';
+@use 'sections/content';
+@use 'sections/footer';
+@use 'sections/hero-banner';
 // @use 'sections/projects';
+
+// 5. Graphics
+@use 'graphics/hover';
+@use 'graphics/taxonomie';
+@use 'graphics/links';
+// @use 'components/buttons';
 
 
 
@@ -42,18 +50,18 @@ body {
   background-color: var(--pale);
 }
 
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  .hero {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-  
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-  }
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}

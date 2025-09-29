@@ -1,0 +1,38 @@
+.project-page {
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+
+
+  
+
+  .project-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+
+
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  .content :global(h2) {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: var(--project-color);
+  }
+
+  .content :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .content :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }

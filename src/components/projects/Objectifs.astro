@@ -1,0 +1,93 @@
+---
+const { objectifs } = Astro.props;
+---
+
+<div class="objectives-section">
+  <div class="container">
+    <h2>Les objectifs :</h2>
+    <ul class="objectives-list" data-objectives>
+      {objectifs.map((obj, index) => (
+        <li data-objective data-index={index}>
+          <span class="number">{(index + 1).toString().padStart(2, '0')}</span>
+          <span class="text">{obj}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<script>
+  // Animation des objectifs au scroll
+  const objectivesList = document.querySelector('[data-objectives]');
+  const objectives = document.querySelectorAll('[data-objective]');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        objectives.forEach((obj, index) => {
+          setTimeout(() => {
+            obj.classList.add('is-visible');
+          }, index * 150);
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  
+  if (objectivesList) {
+    observer.observe(objectivesList);
+  }
+</script>
+
+<style lang="scss">
+  .objectives-section {
+    padding: 4rem 0;
+    background: #f8f8f8;
+    margin: 4rem 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--project-color);
+  }
+  
+  .objectives-list {
+    list-style: none;
+    padding: 0;
+    
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 1rem 0;
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      &.is-visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      
+      .number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--project-color);
+        opacity: 0.3;
+      }
+      
+      .text {
+        flex: 1;
+        font-size: 1.125rem;
+        line-height: 1.6;
+      }
+    }
+  }
+</style>
