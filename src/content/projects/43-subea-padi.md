@@ -1,13 +1,13 @@
 ---
-title: "Présentation Freyssinet"
-description: "Création de la carte de vœux numérique de Freyssinnet"
-date: "2012-01-08"
-slug: "projet-freyssinet-communication-hybride"  # ← URL de la page
-projectFolder: "freyssinet"
+title: "Projet SUBEA & PADI"
+description: "SUBEA & PADI s'engage dans une démarche commune de récyclage et réduction des déchets. De nouvelles et stimulantes opportunités à présenter et mettre en avant..."
+date: "2023-09-18"
+slug: "projet-subea-padi-partenariat"
+projectFolder: "subea-padi"
 
-hero: "hero-freyssinet.jpg"
-thumbnail: "hero-freyssinet.jpg"
-thumbnail_alt: "Événementiel - la carte de vœux numérique pour Freyssinet"
+hero: "hero-subea-padi.jpg"
+thumbnail: "hero-subea-padi.jpg"
+thumbnail_alt: "Projet SUBEA - PADI illustration extrait"
 
 gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
 # gridSpan:
@@ -25,10 +25,10 @@ tags:
 couleur: "#3085a3"
 
 images:
-  - src: "freyssinet-print.jpg"
+  - src: "subea-padi-03.jpg"
     alt: "Introduction"
     cols: 24
-  - src: "freyssinet-end.jpg"
+  - src: "subea-padi-04.jpg"
     alt: "Recyclage"
     cols: 16
     parallax: 0.3
@@ -41,12 +41,8 @@ objectives:
     - "Réduire les coûts de 30%"
 
 beforeAfter:
-  before: "freyssinet-repair-start.jpg"
-  after: "freyssinet-repair-end.jpg"
+  before: "subea-padi-01.webp"
+  after: "subea-padi-02.webp"
   label: "Évolution du packaging"
 ---
 ## Hello
-
-
-
-

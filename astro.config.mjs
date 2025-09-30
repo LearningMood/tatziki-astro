@@ -7,19 +7,29 @@ export default defineConfig({
     mdx(),
     react()
 ],
-image: {
-    // Formats de sortie (WebP + format original en fallback)
-    formats: ['webp', 'jpg'],
-    // Qualité par défaut (85 est un bon compromis)
-    quality: 85,
-    // Largeurs responsives générées automatiquement
-    widths: [400, 800, 1200, 1600, 2000],
-    // Tailles pour les images de grille
-    sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-  },
+// image: {
+//     // Formats de sortie (WebP + format original en fallback)
+//     formats: ['webp', 'jpg'],
+//     // Qualité par défaut (85 est un bon compromis)
+//     quality: 85,
+//     // Largeurs responsives générées automatiquement
+//     widths: [400, 800, 1200, 1600, 2000],
+//     // Tailles pour les images de grille
+//     sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+//   },
   markdown: {
     shikiConfig: {
       theme: 'github-light'
     }
-  }
+  },
+  image: {
+    domains: [],
+    remotePatterns: [],
+    service: {
+      entrypoint: 'astro/assets/services/sharp'
+    }
+  },
+  // experimental: {
+  //   responsiveImages: true
+  // }
 });

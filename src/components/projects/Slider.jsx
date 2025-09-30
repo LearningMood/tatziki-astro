@@ -5,9 +5,9 @@ import { useState, useEffect } from 'react';
 
 // <Slider
 //   images={[
-//     { src: '/projets/areva/slide1.jpg', alt: 'Slide 1', caption: 'Première étape' },
-//     { src: '/projets/areva/slide2.jpg', alt: 'Slide 2', caption: 'Développement' },
-//     { src: '/projets/areva/slide3.jpg', alt: 'Slide 3', caption: 'Résultat final' }
+//     { src: '/projects/areva/slide1.jpg', alt: 'Slide 1', caption: 'Première étape' },
+//     { src: '/projects/areva/slide2.jpg', alt: 'Slide 2', caption: 'Développement' },
+//     { src: '/projects/areva/slide3.jpg', alt: 'Slide 3', caption: 'Résultat final' }
 //   ]}
 //   autoplay={true}
 //   duration={4000}

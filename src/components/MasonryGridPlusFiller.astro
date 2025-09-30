@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { fillerConfig } from "../content/data-filler";
 import FillerItem from "./FillerItem.astro";
 
@@ -25,13 +26,15 @@ const fillerPatterns = [
 
 // Distribuer les projets principaux
 const mainProjectsWithGrid = projects.map((project, index) => {
+    const { title, thumbnailImage, couleur, categories } = project.data;
+//             ^^^^^^^^^^^^^^ Utilise le nouveau nom transformé
     const patterns = ["square", "wide", "tall", "large", "feat", "landscape"];
     const gridSize = project.data.gridSize || patterns[index % patterns.length];
     return {
         ...project,
         gridSpan: mainPatterns[gridSize],
         gridSize,
-        type: "projet", // les projets = type principal (sinon petti filler intercalé)
+        type: "projet",
     };
 });
 
@@ -41,6 +44,7 @@ let fillerIndex = 0;
 
 mainProjectsWithGrid.forEach((project, index) => {
     allItems.push({ ...project, type: "projet" });
+
 
     // Ajouter un filler tous les 3 projets
     if (index % 3 === 1 && fillerIndex < fillerConfig.items.length) {
@@ -55,12 +59,9 @@ mainProjectsWithGrid.forEach((project, index) => {
     }
 });
 
-// Juste après la boucle forEach
 // console.log('Projets:', allItems.filter(i => i.type === 'projet').length);
 // console.log('Fillers:', allItems.filter(i => i.type === 'filler').length);
 // console.log('Premier filler:', allItems.find(i => i.type === 'filler'));
-
-
 ---
 
 <div class="masonry-grid">
@@ -68,8 +69,10 @@ mainProjectsWithGrid.forEach((project, index) => {
         allItems.map((item, index) => {
             if (item.type === "projet") {
                 // Projet principal
+
                 const { slug } = item;
-                const { title, thumbnail, couleur, categories } = item.data;
+                const { title, thumbnailImage, couleur, categories } = item.data;
+                //             ^^^^^^^^^^^^^^ Utilise le nouveau nom transformé
                 const { gridSpan, gridSize } = item;
 
                 return (
@@ -83,13 +86,25 @@ mainProjectsWithGrid.forEach((project, index) => {
           `}
                         data-scroll-animate
                     >
+                         {/* ✅ CORRIGÉ : Utilise slug au lieu de project */}
                         <a href={`/projects/${slug}`}>
                             <figure class="item-projet-image">
-                                <img
-                                    src={thumbnail}
-                                    alt={title}
-                                    loading="lazy"
-                                />
+                                {/* ✅ CORRIGÉ : Utilise le composant Image avec thumbnailImage */}
+                                {thumbnailImage ? (
+                                    <Image
+                                        src={thumbnailImage}
+                                        alt={title}
+                                        widths={[400, 600, 800, 1000]}
+                                        formats={["avif", "webp", "jpg"]}
+                                        loading="lazy"
+                                        quality={80}
+                                        class="project-thumbnail"
+                                    />
+                                ) : (
+                                    <div class="placeholder-image">
+                                        <span>Image manquante</span>
+                                    </div>
+                                )}
                                 <figcaption class="item-overlay">
                                     <span class="item-cta">Voir le projet</span>
                                 </figcaption>
@@ -109,12 +124,12 @@ mainProjectsWithGrid.forEach((project, index) => {
                 );
             } else {
                 return (
-                <FillerItem
-                    filler={item.data}
-                    gridSpan={item.gridSpan}
-                    delay={(index % 10) * 0.1}
-                />
-                )
+                    <FillerItem
+                        filler={item.data}
+                        gridSpan={item.gridSpan}
+                        delay={(index % 10) * 0.1}
+                    />
+                );
             }
         })
     }

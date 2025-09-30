@@ -1,13 +1,34 @@
 ---
-import Layout from '../components/Layout.astro';
-import MasonryGridPlusFiller from '../components/MasonryGridPlusFiller.astro';
-import { getCollection } from 'astro:content';
+import Layout from "../components/Layout.astro";
+import MasonryGridPlusFiller from "../components/MasonryGridPlusFiller.astro";
+import { getCollection } from "astro:content";
+import { getProjectImage } from "../utils/imageLoader"; // ← Import
 
 const projects = await getCollection('projects', ({ data }) => {
   return data.draft !== true;
 });
 
 projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+// === DEBUG ===
+console.log('📊 Nombre de projets trouvés:', projects.length);
+console.log('📋 Liste des slugs:', projects.map(p => p.slug));
+
+// ✅ NEW Utilise la fonction utilitaire
+const projectsWithThumbnails = await Promise.all(
+  projects.map(async (project) => ({
+    slug: project.slug,
+    data: {
+      ...project.data,
+      thumbnail: project.data.thumbnail,        // ← String original (inutil mais pour mémoire)
+      // thumbnail (string) → thumbnailImage (ImageMetadata)
+      thumbnailImage: await getProjectImage(project, project.data.thumbnail),
+      //              ^^^^^^^^^^^^^^^^                        ^^^^^^^^^
+      //              Nouveau nom                             Ancien nom (string)
+    },
+  })),
+);
+
+console.log("✅ Projets chargés:", projectsWithThumbnails.length);
 ---
 
 <Layout title="Portfolio">
@@ -16,9 +37,11 @@ projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
       <h1>Portfolio</h1>
       <p>Design graphique & Développement web</p>
     </header>
-   
   </div>
+
   <div class="container">
-     <MasonryGridPlusFiller projects={projects}/>
+    <MasonryGridPlusFiller projects={projectsWithThumbnails} />
   </div>
 </Layout>
+
+<!-- <MasonryGridPlusFiller projects={projects}/> -->

@@ -14,12 +14,12 @@ export interface Props {
 const { projectFolder, images, columns = 3 } = Astro.props;
 
 // Import dynamique de toutes les images
-const imageImports = import.meta.glob('/src/assets/projets/**/*.{jpg,jpeg,png,webp}');
+const imageImports = import.meta.glob('/src/assets/projects/**/*.{jpg,jpeg,png,webp}');
 ---
 
 <div class="gallery" style={`--columns: ${columns}`}>
   {await Promise.all(images.map(async (item) => {
-    const imagePath = `/src/assets/projets/${projectFolder}/${item.filename}`;
+    const imagePath = `/src/assets/projects/${projectFolder}/${item.filename}`;
     const imageModule = await imageImports[imagePath]?.();
     
     if (!imageModule) {

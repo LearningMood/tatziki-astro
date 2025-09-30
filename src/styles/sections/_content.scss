@@ -36,3 +36,48 @@
     height: auto;
     border-radius: 8px;
   }
+
+  // vient de Slug.astro
+
+  .project-page {
+    min-height: 100vh;
+  }
+
+  .breadcrumb {
+    padding: 1rem 2rem;
+    font-size: 0.875rem;
+  }
+
+  .breadcrumb a {
+    color: var(--project-color);
+    text-decoration: none;
+  }
+
+  .before-after-container {
+    margin: 3rem 0;
+    max-width: 1200px;
+    margin-inline: auto;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .gallery figure {
+    margin: 0;
+  }
+
+  .gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .projet-content {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }

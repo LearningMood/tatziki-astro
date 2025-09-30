@@ -1,0 +1,204 @@
+---
+const { project } = Astro.props;
+const { Content } = await project.render();
+const data = project.data || {};
+
+import { getCollection } from "astro:content";
+import { Image } from 'astro:assets';
+import Layout from "../../components/Layout.astro";
+
+// Components
+import HeroBanner from "../../components/projects/HeroBanner.astro";
+import Objectifs from "../../components/projects/Objectifs.astro";
+import BeforeAfter from "../../components/projects/BeforeAfter.astro";
+import Slider from "../../components/projects/Slider";
+import Links from "../../components/projects/Links.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },// facultatif ; tu peux aussi charger le projet côté page via getCollection dans getStaticPaths ou dans la page
+  }));
+}
+
+
+
+const {
+  title,
+  description,
+  thumbnail,
+  categories,
+  couleur,
+  hero,
+  images = [], // ← Réactivé, nécessaire
+  objectifs = [],
+  beforeAfter,
+  showSlider,
+  links,
+  componentsOrder = ["content"],
+  projectFolder // ← Ajout pour override si nécessaire
+} = data;
+
+// Images management
+const allImages = import.meta.glob('/src/assets/projets/**/*.{jpg,jpeg,png,webp}');
+const folder = projectFolder || project?.slug || '';
+// || project.slug;
+
+async function getImage(filename) {
+  if (!filename) return null;
+  
+  // Nettoyer le filename (enlever le point final s'il existe)
+  const cleanFilename = filename.replace(/\.$/, '');
+  const path = `/src/assets/projets/${projectFolder}/${cleanFilename}`;
+  const loader = allImages[path];
+  
+  if (loader) {
+    const img = await loader();
+    return img.default;
+  }
+  
+  console.warn(`Image non trouvée: ${path}`);
+  return null;
+}
+
+// Charger les images
+const heroImage = await getImage(hero);
+const beforeImageSrc = await getImage(beforeAfter?.before);
+const afterImageSrc = await getImage(beforeAfter?.after);
+
+const galleryImages = await Promise.all(
+  (images || []).map(async (item) => ({
+    ...item,
+    optimized: await getImage(item.src)
+  }))
+);
+---
+
+<Layout title={title} description={description}>
+  <article
+    class="project-page"
+    style={`--project-color: ${couleur || "#3085a3"}`}
+    aria-label={title}
+  >
+    <nav class="breadcrumb">
+      <a href="/">Accueil</a> / <span>{title}</span>
+    </nav>
+
+    <!-- Hero toujours en premier -->
+    {heroImage && (
+      <HeroBanner
+        image={heroImage}
+        title={title}
+        categories={categories}
+        description={description}
+      />
+    )}
+
+    <!-- Composants dans l'ordre défini -->
+    {componentsOrder.map((key) => {
+      switch (key) {
+        case "objectifs":
+          return objectifs && objectifs.length > 0 ? (
+            <Objectifs objectifs={objectifs} />
+          ) : null;
+
+        case "beforeAfter":
+          return beforeImageSrc && afterImageSrc ? (
+            <div class="before-after-container">
+              <BeforeAfter
+                before={beforeImageSrc}
+                after={afterImageSrc}
+                alt={`${title} - Transformation`}
+              />
+            </div>
+          ) : null;
+
+        case "slider":
+          const validImages = galleryImages.filter(img => img.optimized);
+          return showSlider && validImages.length > 0 ? (
+            <Slider
+              client:visible
+              images={validImages.map(img => ({
+                src: img.optimized.src || img.optimized,
+                alt: img.alt || '',
+                caption: img.caption
+              }))}
+              autoplay={true}
+              duration={4000}
+            />
+          ) : null;
+
+        case "gallery":
+          return galleryImages.length > 0 ? (
+            <div class="gallery">
+              {galleryImages.map(img => img.optimized && (
+                <figure>
+                  <Image src={img.optimized} alt={img.alt || ''} />
+                  {img.caption && <figcaption>{img.caption}</figcaption>}
+                </figure>
+              ))}
+            </div>
+          ) : null;
+
+        case "links":
+          return links && links.length > 0 ? (
+            <Links href={links} />
+          ) : null;
+
+        case "content":
+        default:
+          return (
+            <section class="projet-content">
+              <Content />
+            </section>
+          );
+      }
+    })}
+  </article>
+</Layout>
+
+<style>
+  .project-page {
+    min-height: 100vh;
+  }
+
+  .breadcrumb {
+    padding: 1rem 2rem;
+    font-size: 0.875rem;
+  }
+
+  .breadcrumb a {
+    color: var(--project-color);
+    text-decoration: none;
+  }
+
+  .before-after-container {
+    margin: 3rem 0;
+    max-width: 1200px;
+    margin-inline: auto;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .gallery figure {
+    margin: 0;
+  }
+
+  .gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .projet-content {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+</style>

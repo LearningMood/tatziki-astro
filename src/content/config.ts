@@ -1,23 +1,22 @@
 import { defineCollection, z } from 'astro:content';
 
-const projects = defineCollection({
+const projetsCollection = defineCollection({
   type: 'content',
   schema: z.object({
+    // === CHAMPS OBLIGATOIRES ===
     title: z.string(),
     description: z.string().optional().default(''), // parfois court ou absent
     date: z.coerce.date(),
-    // thumbnail : chemin ou URL (local ou distant)
+    categories: z.array(z.string()),
+
+    // === CHAMPS OPTIONNELS ===
+    slug: z.string().optional(),
+    projectFolder: z.string().optional(), // Nom du dossier d'images
+    hero: z.string().optional(),
     thumbnail: z.string().optional(),
     thumbnail_alt: z.string().optional().default(''),
-    // banner (hero) optionnel à voir si je garde ou fusuionne avec Thumbnail
-    hero: z.string().optional(),
-
-    // Couleur (hex) ; on garde string mais tu peux ajouter une regex si tu veux valider le hex
-    couleur: z.string().optional().default('#d7f682ff'),
-
-    // Catégories / tags
-    categories: z.array(z.string()).optional().default([]),
-    tags: z.array(z.string()).optional().default([]),
+    tags: z.array(z.string()).optional(),
+    couleur: z.string().optional(),
 
     // Grid : taille sémantique (utilisée par ton mapping -> mainPatterns)
     gridSize: z
@@ -32,60 +31,45 @@ const projects = defineCollection({
         rows: z.number().min(1).optional().default(6),
       })
       .optional(),
-
-    // Images : liste d'objets pour pouvoir stocker alt/caption facilement
-    images: z
-      .array(
-        z.object({
-          src: z.string(),
-          alt: z.string().optional(),
-          caption: z.string().optional(),
-        }),
-      )
-      .optional()
-      .default([]),
-
-    // Objectifs : tableau de string
-    objectifs: z.array(z.string()).optional().default([]),
-
-    // Before/After structuré
-    beforeAfter: z
-      .object({
+    
+    // === IMAGES DE LA GRILLE ===
+    // ✅ alt est optionnel avec valeur par défaut
+    images: z.array(z.object({
+      src: z.string(),
+      alt: z.string().default(''), // ← Optionnel avec défaut
+      cols: z.number().default(12),
+      parallax: z.number().default(0)
+    })).optional(),
+    
+    // === OBJECTIFS ===
+    objectives: z.object({
+      cols: z.number().default(6),
+      parallax: z.number().default(0.8),
+      items: z.array(z.string())
+    }).optional(),
+    
+    // === BEFORE/AFTER ===
+    // ✅ Accepte soit un objet unique, soit un array d'objets
+    beforeAfter: z.union([
+      // Un seul before/after
+      z.object({
         before: z.string(),
         after: z.string(),
-        alt: z.string().optional(),
-      })
-      .optional(),
-
-    // Slider : flag ou configuration légère
-    showSlider: z.boolean().optional().default(false),
-
-    // Lien externe optionnel
-    links: z
-  .array(
-    z.object({
-      title: z.string(),
-      url: z.string(),
-      type: z.enum(['external', 'internal']).default('external'),
-    }),
-  )
-  .optional()
-  .default([]),
-
-    // Contrôle de l'ordre des composants rendus dans le template
-    componentsOrder: z
-      .array(
-        z.enum(['hero', 'objectifs', 'beforeAfter', 'slider', 'content', 'externalLink']),
-      )
-      .optional()
-      .default(['hero', 'content']),
-
-    // Tu peux inclure un slug dans le frontmatter si tu veux forcer un slug particulier,
-    // mais Astro crée un slug à partir du nom de fichier si tu ne le fournis pas.
-    slug: z.string().optional(),
-  }),
+        label: z.string().optional()
+      }),
+      // Ou plusieurs before/after
+      z.array(z.object({
+        before: z.string(),
+        after: z.string(),
+        label: z.string().optional()
+      }))
+    ]).optional(),
+    
+    // === SLIDER ===
+    slider: z.array(z.string()).optional(),
+  })
 });
 
 export const collections = {
-  projects,
+  projects: projetsCollection
 };

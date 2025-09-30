@@ -1,19 +1,17 @@
 ---
-const { project } = Astro.props;
-const { Content } = await project.render();
-const data = project.data || {};
+import { getCollection } from "astro:content";
 
+import { Image } from "astro:assets";
 import Layout from "../../components/Layout.astro";
-// components
+import { getProjectImage, getProjectImages } from "../../utils/imageLoader"; // ← Import
+
+// Components
+import OptimizedImage from "../../components/OptimizedImage.astro";
 import HeroBanner from "../../components/projects/HeroBanner.astro";
 import Objectifs from "../../components/projects/Objectifs.astro";
 import BeforeAfter from "../../components/projects/BeforeAfter.astro";
 import Slider from "../../components/projects/Slider";
 import Links from "../../components/projects/Links.astro";
-
-// import ProjectGrid from '../../components/projects/ProjectGrid.astro';
-
-import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -23,183 +21,219 @@ export async function getStaticPaths() {
   }));
 }
 
-const {
-  title,
-  description,
-  thumbnail,
-  categories,
-  couleur,
-  hero,
-  images = [],
-  objectifs = [],
-  beforeAfter,
-  showSlider,
-  links,
-  componentsOrder = ["hero", "content"],
-} = data;
+const { project } = Astro.props;
+const data = project.data || {};
+const { title, description, couleur, slug, projectFolder, hero } = data;
 
-// helper safe
-function hasImages(arr) {
-  return Array.isArray(arr) && arr.length > 0;
+// === DEBUG : Affiche les valeurs ===
+console.log("🔍 Slug:", project.slug);
+console.log("🔍 ProjectFolder:", project.data.projectFolder);
+console.log("🔍 Hero:", project.data.hero);
+
+// === CHARGER TOUTES LES IMAGES ===
+const allImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/projects/**/*.{jpg,jpeg,png,webp,avif}",
+);
+
+// === DEBUG : Affiche toutes les images trouvées ===
+console.log("📂 Images disponibles:", Object.keys(allImages));
+
+// === FONCTION POUR CHARGER UNE IMAGE ===
+async function getImage(filename: string) {
+  // ✅ Utilise projectFolder en priorité, sinon slug
+  const folder = project.data.projectFolder || project.slug;
+
+  // Construire le chemin EXACT
+  const path = `/src/assets/projects/${folder}/${filename}`;
+
+  // === DEBUG ===
+  console.log(`🖼️  Recherche de: ${filename}`);
+  console.log(`📍 Chemin construit: ${path}`);
+
+  // Chercher l'image
+  const imageLoader = allImages[path];
+
+  if (!imageLoader) {
+    console.error(`❌ Image NON TROUVÉE: ${path}`);
+    console.log("💡 Vérifiez que le fichier existe à cet emplacement exact");
+    return null;
+  }
+
+  console.log(`✅ Image trouvée: ${path}`);
+
+  // Charger l'image
+  try {
+    const module = await imageLoader();
+    return module.default;
+  } catch (error) {
+    console.error(`❌ Erreur lors du chargement de ${path}:`, error);
+    return null;
+  }
 }
+
+// ✅ Utilise les fonctions utilitaires - beaucoup plus simple !
+const heroImage = await getProjectImage(project, project.data.hero);
+const thumbnailImage = await getProjectImage(project, project.data.thumbnail);
+
+// Charger les images de la grille
+const gridImages = project.data.images
+  ? await Promise.all(
+      project.data.images.map(async (img) => ({
+        image: await getProjectImage(project, img.src),
+        alt: img.alt || project.data.title,
+        cols: img.cols,
+        parallax: img.parallax,
+      })),
+    )
+  : [];
+
+// Before/After
+const beforeAfterData = project.data.beforeAfter
+  ? Array.isArray(project.data.beforeAfter)
+    ? project.data.beforeAfter
+    : [project.data.beforeAfter]
+  : [];
+
+const beforeAfterPairs = await Promise.all(
+  beforeAfterData.map(async (pair) => ({
+    before: await getProjectImage(project, pair.before),
+    after: await getProjectImage(project, pair.after),
+    label: pair.label || "",
+  })),
+);
+
+// Slider
+const sliderImages = project.data.slider
+  ? await getProjectImages(project, project.data.slider) // ← Fonction multiple
+  : [];
+
+// DEBUG : Affiche TOUT
+console.log("=== DEBUG PROJECT ===");
+console.log("project.slug:", project.slug);
+console.log("project.data:", project.data);
+console.log("heroImage:", heroImage);
+console.log("=====================");
+
+const { Content } = await project.render();
 ---
 
-<Layout title={title} description={description}>
+<Layout title={project.data.title} description={description}>
   <article
     class="project-page"
-    style={`--project-color: ${couleur || "#F0F"}`}
+    style={`--project-color: ${couleur || "#3085a3"}`}
     aria-label={title}
   >
     <nav class="breadcrumb">
-      <a href="/">Accueil</a> / <a href="/projects">Portfolio</a> / <span
-        >{title}</span
-      >
+      <a href="/">Accueil</a> / <span>{title}</span>
     </nav>
-
+    {/* Hero */}
     {
-      componentsOrder.map((key) => {
-        switch (key) {
-          case "hero":
-            // render hero only if banner or at least one image
-            return HeroBanner || hasImages(images) ? (
-              <HeroBanner
-                image={hero || images[0].src}
-                title={title}
-                categories={categories}
-                description={description}
-              />
-            ) : null;
-
-          case "objectifs":
-            return objectifs && objectifs.length ? (
-              <Objectifs objectifs={objectifs} />
-            ) : null;
-
-          case "beforeAfter":
-            // beforeAfter peut être un objet {before, after} dans le frontmatter
-            return beforeAfter && beforeAfter.before && beforeAfter.after ? (
-              /* lazy-load car souvent lourd */ <BeforeAfter
-                client:visible
-                before={beforeAfter.before}
-                after={beforeAfter.after}
-                alt={title}
-                // alt="Transformation du design"
-              />
-            ) : null;
-
-          case "slider":
-            // soit frontmatter (images[]) soit showSlider flag
-            return showSlider && hasImages(images) ? (
-              <Slider
-                images={[
-                  {
-                    src: "/projets/areva/slide1.jpg",
-                    alt: "Slide 1",
-                    caption: "Première étape",
-                  },
-                  {
-                    src: "/projets/areva/slide2.jpg",
-                    alt: "Slide 2",
-                    caption: "Développement",
-                  },
-                  {
-                    src: "/projets/areva/slide3.jpg",
-                    alt: "Slide 3",
-                    caption: "Résultat final",
-                  },
-                ]}
-                autoplay={true}
-                duration={4000}
-                showThumbs={true}
-                client:visible
-                client:visible
-                images={images}
-              />
-            ) : null;
-
-          case "links":
-            return links ? <Links href={links} /> : null;
-
-          case "content":
-          default:
-            // contenu MDX/Markdown (le corps du fichier)
-            return (
-              <section class="project-body">
-                <Content />
-              </section>
-            );
-        }
-      })
+      heroImage && (
+        <header class="hero">
+          <h1>{project.data.title}</h1>
+          <Image
+            src={heroImage}
+            alt={project.data.title}
+            widths={[800, 1200, 1600, 2000]}
+            formats={["avif", "webp", "jpg"]}
+            loading="eager"
+            quality={85}
+          />
+        </header>
+      )
     }
 
+    {/* Grille 24 colonnes */}
+    <div class="masonry-grid">
+      {
+        gridImages.map(
+          ({ image, alt, cols, parallax }) =>
+            image && (
+              <div class={`col-span-${cols}`} data-parallax={parallax}>
+                <Image
+                  src={image}
+                  alt={alt}
+                  widths={[400, 800, 1200]}
+                  formats={["avif", "webp", "jpg"]}
+                  loading="lazy"
+                  quality={80}
+                />
+              </div>
+            ),
+        )
+      }
 
-    <main class="projet-content">
+      {/* Objectifs */}
+      {
+        project.data.objectives && (
+          <div class={`col-span-${project.data.objectives.cols}`}>
+            <h3>Objectifs</h3>
+            <ul>
+              {project.data.objectives.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+
+    {/* Contenu Markdown */}
+    <div class="prose prose-lg max-w-none mb-12">
       <Content />
-    </main>
+    </div>
+
+    {/* Before/After */}
+    {
+      beforeAfterPairs.map(
+        ({ before, after, label }) =>
+          before &&
+          after && (
+            <div class="mb-12">
+              {label && <h3>{label}</h3>}
+              <div class="flex gap-4">
+                <Image src={before} alt="Avant" class="w-1/2" />
+                <Image src={after} alt="Après" class="w-1/2" />
+              </div>
+            </div>
+          ),
+      )
+    }
+
+    {/* Slider */}
+    {
+      sliderImages.length > 0 && (
+        <div class="slider">
+          {sliderImages.map((img) => (
+            <Image
+              src={img}
+              alt=""
+              widths={[800, 1200]}
+              formats={["avif", "webp", "jpg"]}
+            />
+          ))}
+        </div>
+      )
+    }
   </article>
 </Layout>
 
-<!-- TODO Anciennement dans frontmatter -->
-<!-- ## Vidéo de présentation
-
-<VideoPlayer
-  src="/videos/presentation.mp4"
-  poster="/images/video-poster.jpg"
-  aspectRatio="21/9"
-/> -->
-
-<!-- TODO -->
- <!-- ## Grille modulaire
-
-<ModularGrid
-  items={[
-    {
-      type: 'image',
-      content: { src: '/images/01.jpg', alt: 'Image 1' },
-      span: '1/7'
-    },
-    {
-      type: 'text',
-      content: '<h3>Concept</h3><p>Description du concept...</p>',
-      span: '7/13'
-    },
-    {
-      type: 'image',
-      content: { src: '/images/02.jpg', alt: 'Image 2' },
-      span: '1/5',
-      rowSpan: 2
-    },
-    {
-      type: 'image',
-      content: { src: '/images/03.jpg', alt: 'Image 3' },
-      span: '5/9'
-    },
-    {
-      type: 'video',
-      content: { 
-        src: '/videos/demo.mp4',
-        poster: '/images/poster.jpg',
-        autoplay: true,
-        loop: true,
-        muted: true
-      },
-      span: '9/13'
-    }
-  ]}
-  gap="1.5rem"
-/> -->
 
 
 
-<!-- TODO -->
- <!-- ## Introduction
+{/* Before/After */}
+<!-- {
+  beforeAfterPairs.map(
+    ({ before, after, label }) =>
+      before &&
+      after && (
+        <BeforeAfter
+          before={before}
+          after={after}
+          alt={title}
+          alt="Transformation du design"
+        />
+      ),
+  )
+} -->
 
-Texte d'introduction du projet...
-
-<FullWidthImage
-  src="/images/hero.jpg"
-  alt="Vue d'ensemble"
-  caption="Vue d'ensemble du projet"
-  height="70vh"
-  parallax={true}
-/> -->
