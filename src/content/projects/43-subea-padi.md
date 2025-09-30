@@ -29,52 +29,64 @@ gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "
 hero: "hero-subea-padi.jpg"
 
 
-# === GALERIE 14 COLONNES (nouveau système) ===
-gallery:
-  # Image pleine largeur
-  - src: "subea-padi-01.webp"
-    alt: "Introduction au programme de recyclage"
-    gridColumn: "2 / span 10"
-    marginTop: 25
-    parallax: -262
+# === RANGÉES INDÉPENDANTES ===
+rows:
+  
+  # Rangée 1 : Deux images qui se chevauchent
+  - elements:
+      - type: "image"
+        src: "subea-padi-03.jpg"
+        alt: "Détail fond"
+        gridColumn: "1 / span 6"
+      
+      - type: "image"
+        src: "subea-padi-04.jpg"
+        alt: "Détail premier plan"
+        gridColumn: "7 / span 2"  # Chevauche la première (commence à col 6)
+        parallax: -15 # au cas où
 
-  # Deux images côte à côte
-  - src: "subea-padi-02.webp"
-    alt: "Détail d'une combinaison recyclée"
-    gridColumn: "1 / span 6"
-    marginTop: 100
-    parallax: -20
+# Rangée 2 : Image pleine largeur
+  - elements:
+      - type: "image"
+        src: "hero-subea-padi.jpg"
+        alt: "Introduction"
+        gridColumn: "1 / span 14"
+  
+  # Rangée 3 : Bloc objectifs seul
+  - elements:
+      - type: "image"
+        src: "subea-padi-04.jpg"
+        alt: "Détail premier plan"
+        gridColumn: "1 / span 7"  # Chevauche la première (commence à col 6)
 
-  - src: "subea-padi-03.jpg"
-    alt: "Borne de collecte en magasin"
-    gridColumn: "6 / span 7"
-    marginTop: 50
-    parallax: -40
+      - type: "objectives"
+        gridColumn: "8 / span 5"
+        items:
+          - "Objectif 1"
+          - "Objectif 2"
+          - "Objectif 3"
 
-  # Bloc objectifs intégré dans la grille
-  - type: "objectives"
-    gridColumn: "2 / span 5"
-    marginTop: 80
-    parallax: -100
-    items:
-      - "Recycler 15 000 combinaisons en 6 mois"
-      - "Équiper 50 magasins Decathlon"
-      - "Sensibiliser 10 000 plongeurs"
-      - "Réduire les déchets plastiques de 30%"
-
-  # Image décalée
-  - src: "subea-padi-04.jpg"
-    alt: "Schéma du processus de recyclage"
-    gridColumn: "9 / span 6"
-    marginTop: -50
-    parallax: -25
-
-  # Grande image finale
-  - src: "hero-subea-padi.jpg"
-    alt: "Affichage en magasin"
-    gridColumn: "3 / span 10"
-    marginTop: 120
-    parallax: -40
+  - elements:
+      - type: "before-after"
+        beforeSrc: "subea-padi-10.jpg"
+        afterSrc: "subea-padi-09.jpg"
+        alt: "Petit détail"
+        gridColumn: "1 / span 12"
+        label: "Évolution du packaging"
+  
+  # Rangée 4 : Trois éléments (petit + grand + texte)
+  - elements:     
+      - type: "image"
+        src: "hero-subea-padi.jpg"
+        alt: "Une grande image"
+        gridColumn: "1 / span 4"  # Chevauche le premier
+      
+      - type: "text"
+        gridColumn: "5 / span 4"
+        content: |
+          ## Résultats
+          
+          Après 6 mois, le programme a permis de recycler plus de 15 000 combinaisons.
 
 # === BEFORE/AFTER (optionnel) ===
 beforeAfter:

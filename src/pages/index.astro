@@ -10,9 +10,9 @@ const projects = await getCollection('projects', ({ data }) => {
 });
 
 projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-// === DEBUG ===
-console.log('📊 Nombre de projets trouvés:', projects.length);
-console.log('📋 Liste des slugs:', projects.map(p => p.slug));
+
+// console.log('Nombre de projets trouvés:', projects.length);
+// console.log('Liste des slugs:', projects.map(p => p.slug));
 
 // ✅ NEW Utilise la fonction utilitaire
 // Les seuls champs utilisés pour la home :
@@ -30,7 +30,7 @@ const projectsWithThumbnails = await Promise.all(
   }))
 );
 
-console.log("✅ Projets chargés:", projectsWithThumbnails.length);
+// console.log("✅ Projets chargés:", projectsWithThumbnails.length);
 ---
 
 <Layout title="Portfolio">

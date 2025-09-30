@@ -1,70 +1,70 @@
 ---
-export interface Props {
-  before: string;
-  after: string;
+import { Image } from 'astro:assets';
+
+interface Props {
+  before: ImageMetadata;
+  after: ImageMetadata;
   alt?: string;
 }
 
-const { before, after, alt = "Comparaison avant/après" } = Astro.props;
-const id = Math.random().toString(36).substring(7);
+const { before, after, alt = 'Comparaison avant/après' } = Astro.props;
 ---
 
-<section class="container before-after" data-id={id}>
-  <div class="before-after-container">
-    <div class="image-container">
-      <img src={before} alt={`${alt} - Avant`} class="before-image" />
-      <img src={after} alt={`${alt} - Après`} class="after-image" />
-      <div class="slider-line">
-        <div class="slider-handle">
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <path d="M8 12L4 8v8l4-4zm8 0l4-4v8l-4-4z" fill="white"/>
-          </svg>
-        </div>
-      </div>
+<div class="before-after-container">
+  <div class="before-after-images">
+    <div class="image-before">
+      <Image src={before} alt={`Avant - ${alt}`} />
+      <span class="label">Avant</span>
+    </div>
+    <div class="image-after">
+      <Image src={after} alt={`Après - ${alt}`} />
+      <span class="label">Après</span>
     </div>
   </div>
-</section>
+</div>
 
-<script define:vars={{ id }}>
-  document.addEventListener('DOMContentLoaded', () => {
-    const container = document.querySelector(`[data-id="${id}"] .before-after-container`);
-    const slider = container.querySelector('.slider-line');
-    const afterImage = container.querySelector('.after-image');
-    
-    let isActive = false;
-    
-    const updateSlider = (x) => {
-      const rect = container.getBoundingClientRect();
-      const percent = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
-      slider.style.left = percent + '%';
-      afterImage.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
-    };
-    
-    container.addEventListener('mousedown', (e) => {
-      isActive = true;
-      updateSlider(e.clientX);
-    });
-    
-    document.addEventListener('mousemove', (e) => {
-      if (isActive) updateSlider(e.clientX);
-    });
-    
-    document.addEventListener('mouseup', () => {
-      isActive = false;
-    });
-    
-    // Support tactile
-    container.addEventListener('touchstart', (e) => {
-      isActive = true;
-      updateSlider(e.touches[0].clientX);
-    });
-    
-    document.addEventListener('touchmove', (e) => {
-      if (isActive) updateSlider(e.touches[0].clientX);
-    });
-    
-    document.addEventListener('touchend', () => {
-      isActive = false;
-    });
-  });
-</script>
+<style>
+  .before-after-container {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .before-after-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .image-before,
+  .image-after {
+    position: relative;
+  }
+
+  .image-before img,
+  .image-after img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .before-after-images {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>

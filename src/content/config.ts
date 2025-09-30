@@ -37,29 +37,47 @@ const projectsCollection = defineCollection({
     hero: z.string().optional(), // Image hero en haut de la page projet
     tags: z.array(z.string()).optional(),
 
-    // === GALERIE 14 COLONNES (style Wanaka) ===
-    gallery: z.array(z.union([
-      // Type 1 : Image
-      z.object({
-        type: z.literal('image').optional().default('image'),
-        src: z.string(),
-        alt: z.string().default(''),
-        gridColumn: z.string().default('1 / span 14'), // Ex: "3 / span 8"
-        gridRow: z.string().optional(),        // ← NOUVEAU
-        marginTop: z.number().default(0), // Décalage vertical en px
-        parallax: z.number().default(0), // Amplitude parallax en px
-        zIndex: z.number().optional(),         // ← NOUVEAU
-        delay: z.number().optional(),          // ← NOUVEAU (optionnel)
-      }),
-      // Type 2 : Bloc objectifs
-      z.object({
-        type: z.literal('objectives'),
-        gridColumn: z.string().default('1 / span 5'),
-        marginTop: z.number().default(0),
-        parallax: z.number().default(0),
-        items: z.array(z.string()),
-      }),
-    ])).optional(),
+    // === NOUVELLE STRUCTURE : RANGÉES ===
+    rows: z.array(z.object({
+      // Espacement vertical avant cette rangée (optionnel)
+
+      // Éléments dans cette rangée (1 à 3)
+      elements: z.array(z.union([
+        // Type 1 : Image
+        z.object({
+          type: z.literal('image'),
+          src: z.string(),
+          alt: z.string().default(''),
+          gridColumn: z.string().default('1 / span 14'),
+        }),
+
+        // Type 2 : Objectifs
+        z.object({
+          type: z.literal('objectives'),
+          gridColumn: z.string().default('1 / span 5'),
+          items: z.array(z.string()),
+          parallax: z.number().default(0.8),
+        }),
+
+        // Type 3 : Bloc de texte libre
+        z.object({
+          type: z.literal('text'),
+          gridColumn: z.string().default('1 / span 6'),
+          parallax: z.number().default(0),
+          content: z.string(), // Markdown ou texte
+        }),
+
+        // Type 4 : Before After
+        z.object({
+          type: z.literal('before-after'),
+          gridColumn: z.string().default('1 / span 12'),
+          beforeSrc: z.string(),
+          afterSrc: z.string(),
+          label: z.string().optional(),
+        }),
+
+      ])),
+    })).optional(),
 
     // === ANCIENNES IMAGES (compatibilité - optionnel) ===
     // Utilisé si tu ne veux pas utiliser 'gallery'
@@ -68,7 +86,6 @@ const projectsCollection = defineCollection({
       alt: z.string().default(''),
       layout: z.enum(['full', 'half', 'text-left', 'text-right']).default('half'),
       cols: z.number().optional(),
-      parallax: z.number().default(0)
     })).optional(),
 
     // === OBJECTIFS (ancien format - optionnel) ===

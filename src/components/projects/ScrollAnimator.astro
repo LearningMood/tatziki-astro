@@ -11,20 +11,25 @@
     // === ANIMATION D'APPARITION AU SCROLL ===
     initScrollAnimation() {
       const observer = new IntersectionObserver(
-        (entries) => {
+(entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
+              // ✅ Ajouter la classe quand visible
               requestAnimationFrame(() => {
                 entry.target.classList.add("is-visible");
               });
-              // Ne pas unobserve si l'élément a du parallax
-              if (!entry.target.hasAttribute('data-parallax')) {
-                observer.unobserve(entry.target);
-              }
+            } else {
+              // ✅ Retirer la classe quand invisible (aller-retour)
+              entry.target.classList.remove("is-visible");
             }
+            // ❌ NE PAS unobserve pour permettre l'aller-retour
+
           });
         },
-        { threshold: 0.1, rootMargin: "50px" }
+        { 
+          threshold: 0.1, 
+          rootMargin: "50px" 
+        }
       );
 
       document.querySelectorAll("[data-scroll-animate]").forEach((el) => {
