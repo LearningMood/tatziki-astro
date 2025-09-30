@@ -1,4 +1,6 @@
 ---
+import ScrollAnimator from './projects/ScrollAnimator.astro';
+
 export interface Props {
   title: string;
   description?: string;
@@ -29,6 +31,8 @@ const { title, description = 'Portfolio Tatziki' } = Astro.props;
   <footer>
     <p>© {new Date().getFullYear()} Charlotte Casters | Tatziki</p>
   </footer>
+
+  <ScrollAnimator />
 </body>
 </html>
 

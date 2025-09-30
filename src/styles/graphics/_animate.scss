@@ -1,0 +1,42 @@
+// TODO à garder ou redondant avec is-visible ?
+
+  /* Styles globaux pour toutes les pages */
+  [data-scroll-animate] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 
+      opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: var(--delay, 0s);
+  }
+
+  [data-scroll-animate].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Variantes */
+  [data-scroll-animate][data-animate-from="left"] {
+    transform: translateX(-50px) translateY(0);
+  }
+
+  [data-scroll-animate][data-animate-from="left"].is-visible {
+    transform: translateX(0) translateY(0);
+  }
+
+  [data-scroll-animate][data-animate-from="right"] {
+    transform: translateX(50px) translateY(0);
+  }
+
+  [data-scroll-animate][data-animate-from="right"].is-visible {
+    transform: translateX(0) translateY(0);
+  }
+
+  /* Animation scale pour grandes images */
+  [data-scroll-animate][data-animate-scale] {
+    transform: scale(0.95) translateY(20px);
+  }
+
+  [data-scroll-animate][data-animate-scale].is-visible {
+    transform: scale(1) translateY(0);
+  }

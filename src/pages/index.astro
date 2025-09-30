@@ -4,6 +4,7 @@ import MasonryGridPlusFiller from "../components/MasonryGridPlusFiller.astro";
 import { getCollection } from "astro:content";
 import { getProjectImage } from "../utils/imageLoader"; // ← Import
 
+
 const projects = await getCollection('projects', ({ data }) => {
   return data.draft !== true;
 });
@@ -14,18 +15,19 @@ console.log('📊 Nombre de projets trouvés:', projects.length);
 console.log('📋 Liste des slugs:', projects.map(p => p.slug));
 
 // ✅ NEW Utilise la fonction utilitaire
+// Les seuls champs utilisés pour la home :
 const projectsWithThumbnails = await Promise.all(
   projects.map(async (project) => ({
     slug: project.slug,
     data: {
-      ...project.data,
-      thumbnail: project.data.thumbnail,        // ← String original (inutil mais pour mémoire)
-      // thumbnail (string) → thumbnailImage (ImageMetadata)
-      thumbnailImage: await getProjectImage(project, project.data.thumbnail),
-      //              ^^^^^^^^^^^^^^^^                        ^^^^^^^^^
-      //              Nouveau nom                             Ancien nom (string)
-    },
-  })),
+      title: project.data.title,
+      categories: project.data.categories,
+      couleur: project.data.couleur,
+      gridSize: project.data.gridSize, // ← Taille de la carte
+      thumbnailImage: await getProjectImage(project, project.data.thumbnail), // ← Image
+      thumbnail_alt: project.data.thumbnail_alt,
+    }
+  }))
 );
 
 console.log("✅ Projets chargés:", projectsWithThumbnails.length);

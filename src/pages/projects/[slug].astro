@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const data = project.data || {};
-const { title, description, couleur, slug, projectFolder, hero } = data;
+const { title, description, couleur, slug, projectFolder, hero, gallery } = data;
 
 // === DEBUG : Affiche les valeurs ===
 console.log("🔍 Slug:", project.slug);
@@ -76,14 +76,34 @@ const heroImage = await getProjectImage(project, project.data.hero);
 const thumbnailImage = await getProjectImage(project, project.data.thumbnail);
 
 // Charger les images de la grille
-const gridImages = project.data.images
+const galleryItems = gallery
   ? await Promise.all(
-      project.data.images.map(async (img) => ({
-        image: await getProjectImage(project, img.src),
-        alt: img.alt || project.data.title,
-        cols: img.cols,
-        parallax: img.parallax,
-      })),
+      gallery.map(async (item, index) => {
+        // Si c'est un objectif (texte)
+        if (item.type === 'objectives') {
+          return {
+            type: 'objectives',
+            gridColumn: item.gridColumn || '1 / span 5',
+            gridRow: item.gridRow,              // ← NOUVEAU
+            marginTop: item.marginTop || 0,
+            parallax: item.parallax || 0,
+            items: item.items,
+            zIndex: item.zIndex,                // ← NOUVEAU
+            delay: item.delay ?? index * 0.15,
+          };
+        }
+        
+        // Si c'est une image
+        return {
+          type: 'image',
+          image: await getProjectImage(project, item.src),
+          alt: item.alt || '',
+          gridColumn: item.gridColumn || '1 / span 14',
+          marginTop: item.marginTop || 0,
+          parallax: item.parallax || 0,
+          delay: index * 0.1,
+        };
+      })
     )
   : [];
 
@@ -117,109 +137,123 @@ console.log("=====================");
 const { Content } = await project.render();
 ---
 
-<Layout title={project.data.title} description={description}>
+<Layout title={project.data.title}>
   <article
     class="project-page"
     style={`--project-color: ${couleur || "#3085a3"}`}
     aria-label={title}
+    data-scroll-animate
   >
-    <nav class="breadcrumb">
-      <a href="/">Accueil</a> / <span>{title}</span>
-    </nav>
-    {/* Hero */}
+    {/* === HERO PLEINE HAUTEUR === */}
     {
       heroImage && (
-        <header class="hero">
-          <h1>{project.data.title}</h1>
-          <Image
-            src={heroImage}
-            alt={project.data.title}
-            widths={[800, 1200, 1600, 2000]}
-            formats={["avif", "webp", "jpg"]}
-            loading="eager"
-            quality={85}
-          />
-        </header>
+        <section class="hero-fullscreen">
+          <div class="hero-image">
+            <Image
+              src={heroImage}
+              alt={project.data.title}
+              widths={[1200, 1600, 2000, 2400]}
+              formats={["avif", "webp", "jpg"]}
+              loading="eager"
+              quality={90}
+            />
+          </div>
+          <div class="hero-overlay">
+            <div class="hero-content">
+              <h1 class="hero-title">{project.data.title}</h1>
+              <p class="hero-categories">
+                {project.data.categories.join(" • ")}
+              </p>
+            </div>
+          </div>
+          <div class="scroll-indicator">
+            <span>Défiler</span>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path d="M12 5v14M19 12l-7 7-7-7" />
+            </svg>
+          </div>
+        </section>
       )
     }
 
-    {/* Grille 24 colonnes */}
-    <div class="masonry-grid">
-      {
-        gridImages.map(
-          ({ image, alt, cols, parallax }) =>
-            image && (
-              <div class={`col-span-${cols}`} data-parallax={parallax}>
-                <Image
-                  src={image}
-                  alt={alt}
-                  widths={[400, 800, 1200]}
-                  formats={["avif", "webp", "jpg"]}
-                  loading="lazy"
-                  quality={80}
-                />
-              </div>
-            ),
-        )
-      }
+    {/* === INTRODUCTION === */}
+    <section class="project-intro" data-scroll-animate>
+      <div class="container-narrow">
+        <Content />
+      </div>
+    </section>
 
-      {/* Objectifs */}
-      {
-        project.data.objectives && (
-          <div class={`col-span-${project.data.objectives.cols}`}>
-            <h3>Objectifs</h3>
-            <ul>
-              {project.data.objectives.items.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </div>
-        )
-      }
-    </div>
 
-    {/* Contenu Markdown */}
-    <div class="prose prose-lg max-w-none mb-12">
-      <Content />
-    </div>
-
-    {/* Before/After */}
-    {
-      beforeAfterPairs.map(
-        ({ before, after, label }) =>
-          before &&
-          after && (
-            <div class="mb-12">
-              {label && <h3>{label}</h3>}
-              <div class="flex gap-4">
-                <Image src={before} alt="Avant" class="w-1/2" />
-                <Image src={after} alt="Après" class="w-1/2" />
+    {/* === GALERIE 14 COLONNES === */}
+    <section class="project-gallery-grid">
+      {galleryItems.map((item) => {
+        
+        // === BLOC OBJECTIFS (TEXTE) ===
+        if (item.type === 'objectives') {
+          return (
+            <div
+              class="gallery-item objectives-block"
+              data-scroll-animate
+              data-parallax={item.parallax}
+              style={`
+                --grid-column: ${item.gridColumn};
+                --margin-top: ${item.marginTop}px;
+                --parallax-amplitude: ${item.parallax}px;
+                --delay: ${item.delay}s;
+              `}
+            >
+              <div class="objectives-content" data-parallax-content>
+                <h3>Objectifs</h3>
+                <ul>
+                  {item.items.map((objective) => (
+                    <li>{objective}</li>
+                  ))}
+                </ul>
               </div>
             </div>
-          ),
-      )
-    }
+          );
+        }
+        
+        // === BLOC IMAGE ===
+        if (item.type === 'image' && item.image) {
+          return (
+            <div
+              class="gallery-item image-block"
+              data-scroll-animate
+              data-parallax={item.parallax}
+              style={`
+                --grid-column: ${item.gridColumn};
+                --margin-top: ${item.marginTop}px;
+                --parallax-amplitude: ${item.parallax}px;
+                --delay: ${item.delay}s;
+              `}
+            >
+              <div class="image-wrapper" data-parallax-content>
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  widths={[600, 900, 1200, 1600]}
+                  formats={['avif', 'webp', 'jpg']}
+                  loading="lazy"
+                  quality={85}
+                />
+              </div>
+            </div>
+          );
+        }
+        
+        return null;
+      })}
+    </section>
 
-    {/* Slider */}
-    {
-      sliderImages.length > 0 && (
-        <div class="slider">
-          {sliderImages.map((img) => (
-            <Image
-              src={img}
-              alt=""
-              widths={[800, 1200]}
-              formats={["avif", "webp", "jpg"]}
-            />
-          ))}
-        </div>
-      )
-    }
   </article>
 </Layout>
-
-
-
 
 {/* Before/After */}
 <!-- {

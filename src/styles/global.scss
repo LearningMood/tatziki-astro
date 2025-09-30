@@ -11,7 +11,7 @@
 @use 'typo/textes';
 // @use 'base/layout';
 
-@use 'container';
+@use 'grille/container';
 @use 'grille/grid';
 @use 'anim';
 @use 'grille/mansory';
@@ -31,9 +31,11 @@
 // @use 'sections/projects';
 
 // 5. Graphics
+@use 'graphics/img';
 @use 'graphics/hover';
 @use 'graphics/taxonomie';
 @use 'graphics/links';
+// @use 'graphics/animate';
 // @use 'components/buttons';
 
 

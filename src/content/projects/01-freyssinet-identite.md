@@ -27,25 +27,30 @@ couleur: "#3085a3"
 images:
   - src: "freyssinet-print.jpg"
     alt: "Introduction"
-    cols: 24
+    cols: 8
+    rows: 8
   - src: "freyssinet-end.jpg"
     alt: "Recyclage"
-    cols: 16
+    cols: 10
+    rows: 10
     parallax: 0.3
 
 objectives:
-  cols: 6
+  cols: 13
+  rows: 3
   parallax: 0.8
   items:
     - "Développer une solution innovante"
     - "Réduire les coûts de 30%"
 
 beforeAfter:
+  cols: 6
+  rows: 2
   before: "freyssinet-repair-start.jpg"
   after: "freyssinet-repair-end.jpg"
-  label: "Évolution du packaging"
 ---
-## Hello
+  label: "Le label du Before-After"
+
 
 
 

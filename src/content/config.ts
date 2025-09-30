@@ -1,75 +1,110 @@
+// src/content/config.ts
 import { defineCollection, z } from 'astro:content';
 
-const projetsCollection = defineCollection({
+const projectsCollection = defineCollection({
   type: 'content',
   schema: z.object({
-    // === CHAMPS OBLIGATOIRES ===
+    // === INFORMATIONS GÉNÉRALES (obligatoires) ===
     title: z.string(),
-    description: z.string().optional().default(''), // parfois court ou absent
+    description: z.string().optional().default(''),
     date: z.coerce.date(),
     categories: z.array(z.string()),
 
-    // === CHAMPS OPTIONNELS ===
+    // === IDENTIFIANTS ===
     slug: z.string().optional(),
-    projectFolder: z.string().optional(), // Nom du dossier d'images
-    hero: z.string().optional(),
-    thumbnail: z.string().optional(),
-    thumbnail_alt: z.string().optional().default(''),
-    tags: z.array(z.string()).optional(),
-    couleur: z.string().optional(),
+    projectFolder: z.string().optional(), // Dossier des images (différent du slug)
 
-    // Grid : taille sémantique (utilisée par ton mapping -> mainPatterns)
+    // === VISUELS POUR LA HOME (grille masonry) ===
+    thumbnail: z.string().optional(), // Image de la carte sur la home
+    thumbnail_alt: z.string().optional().default(''),
+    couleur: z.string().optional(), // Couleur d'accentuation de la carte
+
+    // Taille de la carte sur la home (converti en cols/rows par mainPatterns)
     gridSize: z
       .enum(['square', 'portrait', 'landscape', 'wide', 'tall', 'feat', 'mini'])
       .optional()
       .default('landscape'),
 
-    // Grid span explicite (si tu veux surdéfinir précisément cols/rows)
+    // Si tu veux forcer des dimensions précises (override de gridSize)
     gridSpan: z
       .object({
-        cols: z.number().min(1).max(24).optional().default(6),
-        rows: z.number().min(1).optional().default(6),
+        cols: z.number().min(1).max(24).optional(),
+        rows: z.number().min(1).optional(),
       })
       .optional(),
-    
-    // === IMAGES DE LA GRILLE ===
-    // ✅ alt est optionnel avec valeur par défaut
+
+    // === VISUELS POUR LA PAGE PROJET ===
+    hero: z.string().optional(), // Image hero en haut de la page projet
+    tags: z.array(z.string()).optional(),
+
+    // === GALERIE 14 COLONNES (style Wanaka) ===
+    gallery: z.array(z.union([
+      // Type 1 : Image
+      z.object({
+        type: z.literal('image').optional().default('image'),
+        src: z.string(),
+        alt: z.string().default(''),
+        gridColumn: z.string().default('1 / span 14'), // Ex: "3 / span 8"
+        gridRow: z.string().optional(),        // ← NOUVEAU
+        marginTop: z.number().default(0), // Décalage vertical en px
+        parallax: z.number().default(0), // Amplitude parallax en px
+        zIndex: z.number().optional(),         // ← NOUVEAU
+        delay: z.number().optional(),          // ← NOUVEAU (optionnel)
+      }),
+      // Type 2 : Bloc objectifs
+      z.object({
+        type: z.literal('objectives'),
+        gridColumn: z.string().default('1 / span 5'),
+        marginTop: z.number().default(0),
+        parallax: z.number().default(0),
+        items: z.array(z.string()),
+      }),
+    ])).optional(),
+
+    // === ANCIENNES IMAGES (compatibilité - optionnel) ===
+    // Utilisé si tu ne veux pas utiliser 'gallery'
     images: z.array(z.object({
       src: z.string(),
-      alt: z.string().default(''), // ← Optionnel avec défaut
-      cols: z.number().default(12),
+      alt: z.string().default(''),
+      layout: z.enum(['full', 'half', 'text-left', 'text-right']).default('half'),
+      cols: z.number().optional(),
       parallax: z.number().default(0)
     })).optional(),
-    
-    // === OBJECTIFS ===
+
+    // === OBJECTIFS (ancien format - optionnel) ===
+    // Utilisé si pas dans gallery
     objectives: z.object({
       cols: z.number().default(6),
+      rows: z.number().default(6),
       parallax: z.number().default(0.8),
       items: z.array(z.string())
     }).optional(),
-    
+
     // === BEFORE/AFTER ===
-    // ✅ Accepte soit un objet unique, soit un array d'objets
     beforeAfter: z.union([
       // Un seul before/after
       z.object({
         before: z.string(),
         after: z.string(),
-        label: z.string().optional()
+        label: z.string().optional(),
+        gridColumn: z.string().optional(), // Si tu veux le positionner dans gallery
+        marginTop: z.number().optional(),
       }),
-      // Ou plusieurs before/after
+      // Plusieurs before/after
       z.array(z.object({
         before: z.string(),
         after: z.string(),
-        label: z.string().optional()
+        label: z.string().optional(),
+        gridColumn: z.string().optional(),
+        marginTop: z.number().optional(),
       }))
     ]).optional(),
-    
-    // === SLIDER ===
+
+    // === SLIDER DE FIN ===
     slider: z.array(z.string()).optional(),
   })
 });
 
 export const collections = {
-  projects: projetsCollection
+  projects: projectsCollection
 };
