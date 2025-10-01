@@ -5,6 +5,8 @@ description: "SUBEA & PADI s'engage dans une démarche commune de récyclage et 
 date: "2023-09-18"
 slug: "projet-subea-padi-partenariat"
 projectFolder: "subea-padi"
+featured: true  # ← Projet à la une
+featuredOrder: 1  # ← Ordre dans le carousel (optionnel)
 
 categories:
   - "Direction artistique"

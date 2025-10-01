@@ -9,6 +9,8 @@ const projectsCollection = defineCollection({
     description: z.string().optional().default(''),
     date: z.coerce.date(),
     categories: z.array(z.string()),
+    featured: z.boolean().optional().default(false),
+    featuredOrder: z.number().min(1).max(5).optional(),
 
     // === IDENTIFIANTS ===
     slug: z.string().optional(),

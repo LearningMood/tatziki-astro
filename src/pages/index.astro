@@ -1,8 +1,9 @@
 ---
 import Layout from "../components/Layout.astro";
+import FeaturedCarousel from "../components/FeaturedCarousel.astro";
 import MasonryGridPlusFiller from "../components/MasonryGridPlusFiller.astro";
 import { getCollection } from "astro:content";
-import { getProjectImage } from "../utils/imageLoader"; // ← Import
+import { getProjectImage } from "../utils/imageLoader";
 
 
 const projects = await getCollection('projects', ({ data }) => {
@@ -10,6 +11,28 @@ const projects = await getCollection('projects', ({ data }) => {
 });
 
 projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+// Carousel | je sépare les projets à la une
+const featuredProjects = projects.filter(p => p.data.featured);
+const regularProjects = projects.filter(p => !p.data.featured);
+
+// Trier les featured par ordre si défini
+featuredProjects.sort((a, b) => {
+  const orderA = a.data.featuredOrder || 999;
+  const orderB = b.data.featuredOrder || 999;
+  return orderA - orderB;
+});
+
+// Charger les thumbnails pour les projets featured
+const featuredWithImages = await Promise.all(
+  featuredProjects.map(async (project) => ({
+    slug: project.slug,
+    data: {
+      ...project.data,
+      heroImage: await getProjectImage(project, project.data.hero)
+    }
+  }))
+);
+
 
 // console.log('Nombre de projets trouvés:', projects.length);
 // console.log('Liste des slugs:', projects.map(p => p.slug));
@@ -34,13 +57,16 @@ const projectsWithThumbnails = await Promise.all(
 ---
 
 <Layout title="Portfolio">
-  <div class="container">
+  {/* Carousel des projets à la une */}
+    {featuredWithImages.length > 0 && (
+      <FeaturedCarousel projects={featuredWithImages} />
+    )}
+<div class="container">
     <header class="hero">
       <h1>Portfolio</h1>
       <p>Design graphique & Développement web</p>
     </header>
   </div>
-
   <div class="container--max">
     <MasonryGridPlusFiller projects={projectsWithThumbnails} />
   </div>

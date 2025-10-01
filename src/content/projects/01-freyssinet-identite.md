@@ -4,6 +4,7 @@ description: "Création de la carte de vœux numérique de Freyssinnet"
 date: "2012-01-08"
 slug: "projet-freyssinet-communication-hybride"  # ← URL de la page
 projectFolder: "freyssinet"
+featured: true
 
 hero: "hero-freyssinet.jpg"
 thumbnail: "hero-freyssinet.jpg"
