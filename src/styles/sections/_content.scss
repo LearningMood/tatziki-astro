@@ -1,244 +1,242 @@
 .project-page {
-    min-height: 100vh;
-    padding: 2rem 0;
-  }
+  min-height: 100vh;
+}
 
 
 
-  .project-header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
+.project-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
 
 
-  .content {
-    max-width: 900px;
-    margin: 0 auto;
-    font-size: 1.125rem;
-    line-height: 1.7;
-  }
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
 
-  .content :global(h2) {
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-    color: var(--project-color);
-  }
+.content :global(h2) {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: var(--project-color);
+}
 
-  .content :global(h3) {
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
-  }
+.content :global(h3) {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
 
-  .content :global(img) {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
+.content :global(img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
 
 
-  /* === INTRODUCTION === */
-  .project-intro {
-    padding: 8rem 0 6rem;
-  }
+/* === INTRODUCTION === */
+.project-intro {
+  padding: 8rem 0 6rem;
+  text-align: center;
+}
 
-  .intro-text {
-    font-size: 1.25rem;
-    line-height: 1.8;
-    color: #333;
-  }
+.intro-text {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #333;
+}
 
-  .intro-text :global(p) {
-    margin-bottom: 1.5rem;
-  }
+.intro-text :global(p) {
+  margin-bottom: 1.5rem;
+}
 
-  /* === OBJECTIFS === */
-  .project-objectives {
-    padding: 6rem 0;
-    background: #f8f9fa;
-  }
+/* === OBJECTIFS === */
+.project-objectives {
+  padding: 6rem 0;
+  background: #f8f9fa;
+}
 
-  .project-objectives h2 {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    text-align: center;
-  }
+.project-objectives h2 {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
 
-  .objectives-list {
-    list-style: none;
-    display: grid;
-    gap: 2rem;
-  }
+.objectives-list {
+  list-style: none;
+  display: grid;
+  gap: 2rem;
+}
 
-  .objectives-list li {
-    font-size: 1.125rem;
-    padding: 2rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    position: relative;
-    padding-left: 3rem;
-  }
+.objectives-list li {
+  font-size: 1.125rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+  padding-left: 3rem;
+}
 
-  .objectives-list li::before {
-    content: "→";
-    position: absolute;
-    left: 1rem;
-    font-size: 1.5rem;
-    color: var(--accent-color, #3085a3);
-  }
+.objectives-list li::before {
+  content: "→";
+  position: absolute;
+  left: 1rem;
+  font-size: 1.5rem;
+  color: var(--accent-color, #3085a3);
+}
 
-  /* === GALERIE === */
-  .project-gallery {
-    padding: 6rem 0;
-  }
+/* === GALERIE === */
+.project-gallery {
+  padding: 6rem 0;
+}
 
-  .gallery-item {
-    margin-bottom: 6rem;
-  }
+.gallery-item {
+  margin-bottom: 6rem;
+}
 
 /* === GRILLE 14 COLONNES === */
-  .project-gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(14, minmax(0, 1fr));
-  }
+.project-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+}
 
-  /* === ITEMS DE LA GRILLE === */
-  .project-gallery-item {
-    /* Positionnement via CSS variables */
-    grid-column: var(--grid-column);
-    margin-top: var(--margin-top, 0);
-    
-    /* Animation d'apparition */
-    opacity: 0;
-    transform: translateY(30px);
-    transition: 
-      opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    transition-delay: var(--delay, 0s);
-  }
+/* === ITEMS DE LA GRILLE === */
+.project-gallery-item {
+  /* Positionnement via CSS variables */
+  grid-column: var(--grid-column);
+  margin-top: var(--margin-top, 0);
 
-  .project-gallery-item.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* Animation d'apparition */
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: var(--delay, 0s);
+}
+
+.project-gallery-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 
-  /* === RANGÉES === */
-  .project-row {
-    /* padding: 4rem 2rem; */
-  }
+/* === RANGÉES === */
 
+.row-grid {
+  // border: dashed 1px #F0F;
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  gap: 2rem;
+  margin: 0 auto;
+  position: relative;
+  // min-height: 400px;
+  margin-bottom: 4rem;
+  /* Hauteur minimum pour éviter l'écrasement */
+}
+
+/* === ÉLÉMENTS === */
+.row-element {
+  grid-column: var(--grid-column);
+  position: relative;
+
+  /* Animation d'apparition */
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: var(--delay, 0s);
+}
+
+.row-element.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.element-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Images */
+
+.element-image img {
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Objectifs */
+.element-objectives .element-wrapper {
+  border-radius: 12px;
+  padding: 2rem 1rem;
+  color: var(--color-dark);
+}
+
+.element-objectives h3 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.element-objectives ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.element-objectives li {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.element-objectives li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  font-size: 1.5rem;
+}
+
+/* Texte libre */
+.element-text .element-wrapper {
+  padding: 2rem;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.element-text h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+
+/* Responsive */
+@media (max-width: 1024px) {
   .row-grid {
-    display: grid;
-    grid-template-columns: repeat(14, 1fr);
-gap: 2rem;
-    margin: 0 auto;
-    position: relative;
-    min-height: 400px; /* Hauteur minimum pour éviter l'écrasement */
+    grid-template-columns: repeat(8, 1fr);
   }
 
-  /* === ÉLÉMENTS === */
   .row-element {
-    grid-column: var(--grid-column);
-    position: relative;
+    grid-column: 1 / span 8 !important;
+    margin-top: 2rem !important;
+  }
+}
 
-    /* Animation d'apparition */
-    opacity: 0;
-    transform: translateY(40px);
-    transition:
-      opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    transition-delay: var(--delay, 0s);
+@media (max-width: 768px) {
+  .row-grid {
+    grid-template-columns: 1fr;
   }
 
-  .row-element.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+  .row-element {
+    grid-column: 1 !important;
   }
-
-  .element-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* Images */
-  .element-image .element-wrapper {
-    overflow: hidden;
-    border-radius: var(--border-radius);
-  }
-
-  .element-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* Objectifs */
-  .element-objectives .element-wrapper {
-    background: #fff;
-    border-radius: 12px;
-    padding: 3rem 2.5rem;
-    color: var(--color-dark);
-  }
-
-  .element-objectives h3 {
-    font-size: 1.75rem;
-    margin-bottom: 2rem;
-    font-weight: 700;
-  }
-
-  .element-objectives ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .element-objectives li {
-    font-size: 1.125rem;
-    line-height: 1.6;
-    padding-left: 2rem;
-    position: relative;
-  }
-
-  .element-objectives li::before {
-    content: "→";
-    position: absolute;
-    left: 0;
-    font-size: 1.5rem;
-  }
-
-  /* Texte libre */
-  .element-text .element-wrapper {
-    padding: 2rem;
-    font-size: 1.125rem;
-    line-height: 1.7;
-  }
-
-  .element-text h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  /* Responsive */
-  @media (max-width: 1024px) {
-    .row-grid {
-      grid-template-columns: repeat(8, 1fr);
-    }
-
-    .row-element {
-      grid-column: 1 / span 8 !important;
-      margin-top: 2rem !important;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .row-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .row-element {
-      grid-column: 1 !important;
-    }
-  }
+}

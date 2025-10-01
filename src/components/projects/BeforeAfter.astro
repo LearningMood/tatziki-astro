@@ -1,70 +1,47 @@
 ---
+// src/components/BeforeAfter.astro
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   before: ImageMetadata;
   after: ImageMetadata;
   alt?: string;
+  label?: string;
 }
 
-const { before, after, alt = 'Comparaison avant/après' } = Astro.props;
+const { before, after, alt = '', label } = Astro.props;
 ---
 
-<div class="before-after-container">
-  <div class="before-after-images">
-    <div class="image-before">
-      <Image src={before} alt={`Avant - ${alt}`} />
-      <span class="label">Avant</span>
-    </div>
-    <div class="image-after">
-      <Image src={after} alt={`Après - ${alt}`} />
-      <span class="label">Après</span>
-    </div>
+<div class="before-after-container" data-before-after>
+  <Image 
+    src={before} 
+    alt={`Avant - ${alt}`} 
+    class="before-image"
+    widths={[600, 900, 1200]}
+    formats={['avif', 'webp', 'jpg']}
+    loading="lazy"
+  />
+  <Image 
+    src={after} 
+    alt={`Après - ${alt}`} 
+    class="after-image"
+    widths={[600, 900, 1200]}
+    formats={['avif', 'webp', 'jpg']}
+    loading="lazy"
+  />
+  
+  <div class="slider-line" aria-hidden="true">
+    <button 
+      class="slider-handle"
+      aria-label="Déplacer pour comparer avant et après"
+      type="button"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M8 12L4 8v8l4-4zm8 0l4-4v8l-4-4z" fill="currentColor"/>
+      </svg>
+    </button>
   </div>
+  
+  {label && <h3 class="before-after-label">{label}</h3>}
 </div>
-
-<style>
-  .before-after-container {
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .before-after-images {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .image-before,
-  .image-after {
-    position: relative;
-  }
-
-  .image-before img,
-  .image-after img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .label {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 768px) {
-    .before-after-images {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-    }
-  }
-</style>

@@ -27,7 +27,7 @@ const fillerPatterns = [
 // Distribuer les projets principaux
 const mainProjectsWithGrid = projects.map((project, index) => {
     const { title, thumbnailImage, couleur, categories } = project.data;
-//             ^^^^^^^^^^^^^^ Utilise le nouveau nom transformé
+    //             ^^^^^^^^^^^^^^ Utilise le nouveau nom transformé
     const patterns = ["square", "wide", "tall", "large", "feat", "landscape"];
     const gridSize = project.data.gridSize || patterns[index % patterns.length];
     return {
@@ -44,7 +44,6 @@ let fillerIndex = 0;
 
 mainProjectsWithGrid.forEach((project, index) => {
     allItems.push({ ...project, type: "projet" });
-
 
     // Ajouter un filler tous les 3 projets
     if (index % 3 === 1 && fillerIndex < fillerConfig.items.length) {
@@ -71,7 +70,8 @@ mainProjectsWithGrid.forEach((project, index) => {
                 // Projet principal
 
                 const { slug } = item;
-                const { title, thumbnailImage, couleur, categories } = item.data;
+                const { title, thumbnailImage, couleur, categories } =
+                    item.data;
                 //             ^^^^^^^^^^^^^^ Utilise le nouveau nom transformé
                 const { gridSpan, gridSize } = item;
 
@@ -86,10 +86,8 @@ mainProjectsWithGrid.forEach((project, index) => {
           `}
                         data-scroll-animate
                     >
-                         {/* ✅ CORRIGÉ : Utilise slug au lieu de project */}
                         <a href={`/projects/${slug}`}>
                             <figure class="item-projet-image">
-                                {/* ✅ CORRIGÉ : Utilise le composant Image avec thumbnailImage */}
                                 {thumbnailImage ? (
                                     <Image
                                         src={thumbnailImage}

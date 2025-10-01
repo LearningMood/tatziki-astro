@@ -71,7 +71,6 @@ async function getImage(filename: string) {
 const heroImage = await getProjectImage(project, project.data.hero);
 const thumbnailImage = await getProjectImage(project, project.data.thumbnail);
 
-
 // Slider
 const sliderImages = project.data.slider
   ? await getProjectImages(project, project.data.slider) // ← Fonction multiple
@@ -112,27 +111,32 @@ const projectRows = project.data.rows
             // Type 4 : Before-After
             if (element.type === "before-after") {
               // ✅ CORRECTION : Charger les deux images
-              const beforeImage = await getProjectImage(project, element.beforeSrc);
-              const afterImage = await getProjectImage(project, element.afterSrc);
+              const beforeImage = await getProjectImage(
+                project,
+                element.beforeSrc,
+              );
+              const afterImage = await getProjectImage(
+                project,
+                element.afterSrc,
+              );
 
               // Vérifier que les deux images sont chargées
               if (!beforeImage || !afterImage) {
-                console.error('❌ Before-After images manquantes:', {
+                console.error("❌ Before-After images manquantes:", {
                   before: element.beforeSrc,
                   after: element.afterSrc,
                 });
                 return null; // Skip cet élément
               }
-              
+
               return {
-                type: 'before-after',
+                type: "before-after",
                 gridColumn: element.gridColumn,
                 beforeImage,
                 afterImage,
                 label: element.label,
-                alt: element.alt || '',
+                alt: element.alt || "",
               };
-
             }
 
             return null;
@@ -201,11 +205,10 @@ const { Content } = await project.render();
         <Content />
       </div>
     </section>
-
-    {
-      projectRows.map((row, rowIndex) => (
-        <section class="project-row container">
-          <div class="row-grid">
+    <main class="container">
+      {
+        projectRows.map((row, rowIndex) => (
+          <section class="row-grid">
             {row.elements.map((element, index) => {
               // === IMAGE ===
               if (element.type === "image" && element.image) {
@@ -213,21 +216,20 @@ const { Content } = await project.render();
                   <div
                     class="row-element element-image"
                     data-scroll-animate
+                    data-parallax-content
                     style={`
                     --grid-column: ${element.gridColumn};
                     --delay: ${(index % 10) * 0.1}s;
                   `}
                   >
-                    <div class="element-wrapper" data-parallax-content>
-                      <Image
-                        src={element.image}
-                        alt={element.alt}
-                        widths={[600, 900, 1200, 1600]}
-                        formats={["avif", "webp", "jpg"]}
-                        loading="lazy"
-                        quality={85}
-                      />
-                    </div>
+                    <Image
+                      src={element.image}
+                      alt={element.alt}
+                      widths={[600, 900, 1200, 1600]}
+                      formats={["avif", "webp", "jpg"]}
+                      loading="lazy"
+                      quality={85}
+                    />
                   </div>
                 );
               }
@@ -272,48 +274,36 @@ const { Content } = await project.render();
                   </div>
                 );
               }
-
               // === BEFORE-AFTER ===
-            if (element.type === 'before-after' && element.beforeImage && element.afterImage) {
-              return (
-                <div
-                  class="row-element element-before-after"
-                  data-scroll-animate
-                  style={`
-                    --grid-column: ${element.gridColumn};
-                    --delay: ${element.delay}s;
-                  `}
-                >
-                  {element.label && <h3 class="before-after-label">{element.label}</h3>}
-                  <BeforeAfterFirst 
-                    before={element.beforeImage} 
-                    after={element.afterImage}
-                    alt={element.alt}
-                  />
-                </div>
-              );
-            }
+              if (
+                element.type === "before-after" &&
+                element.beforeImage &&
+                element.afterImage
+              ) {
+                return (
+                  <div
+                    class="row-element element-before-after"
+                    data-scroll-animate
+                    style={`
+        --grid-column: ${element.gridColumn};
+        --delay: ${element.delay}s;
+      `}
+                  >
+                    <BeforeAfter
+                      before={element.beforeImage}
+                      after={element.afterImage}
+                      alt={element.alt}
+                      label={element.label}
+                    />
+                  </div>
+                );
+              }
+
               return null;
             })}
-          </div>
-        </section>
-      ))
-    }
+          </section>
+        ))
+      }
+    </main>
   </article>
 </Layout>
-
-{/* Before/After */}
-<!-- {
-  beforeAfterPairs.map(
-    ({ before, after, label }) =>
-      before &&
-      after && (
-        <BeforeAfter
-          before={before}
-          after={after}
-          alt={title}
-          alt="Transformation du design"
-        />
-      ),
-  )
-} -->

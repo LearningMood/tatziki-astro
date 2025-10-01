@@ -57,21 +57,21 @@ rows:
       - type: "image"
         src: "subea-padi-04.jpg"
         alt: "Détail premier plan"
-        gridColumn: "1 / span 7"  # Chevauche la première (commence à col 6)
+        gridColumn: "1 / span 9"  # Chevauche la première (commence à col 6)
 
       - type: "objectives"
-        gridColumn: "8 / span 5"
+        gridColumn: "10 / span 5"
         items:
           - "Objectif 1"
           - "Objectif 2"
           - "Objectif 3"
-
+# Rangée 3 : Bloc objectifs seul
   - elements:
       - type: "before-after"
         beforeSrc: "subea-padi-10.jpg"
         afterSrc: "subea-padi-09.jpg"
         alt: "Petit détail"
-        gridColumn: "1 / span 12"
+        gridColumn: "3 / span 10"
         label: "Évolution du packaging"
   
   # Rangée 4 : Trois éléments (petit + grand + texte)
@@ -79,7 +79,7 @@ rows:
       - type: "image"
         src: "hero-subea-padi.jpg"
         alt: "Une grande image"
-        gridColumn: "1 / span 4"  # Chevauche le premier
+        gridColumn: "1 / span 8"  # Chevauche le premier
       
       - type: "text"
         gridColumn: "5 / span 4"

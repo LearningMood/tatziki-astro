@@ -105,11 +105,12 @@
   }
 
   .hero-title {
+    color: #fff;;
     font-size: clamp(2.5rem, 8vw, 5rem);
     font-weight: 700;
     margin-bottom: 1rem;
     line-height: 1.1;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    // text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
   }
 
   .hero-categories {

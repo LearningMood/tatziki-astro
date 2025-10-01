@@ -1,10 +1,17 @@
 // La navigation
-nav {
+.main-nav {
     display: flex;
-    gap: 1rem;
-    background: #000;
-    color: #fff;
-    padding: 1rem 3rem;
+    justify-content: space-between;
+    padding: 1.4rem 4rem;
+    font-family: var(--font-nav);
+}
+.main-nav-menu {
+  display: flex;
+  gap: 2rem;
+}
+.logo-tatziki {
+  width: 100px;
+  background-color: var(--color-main);
 }
 
 nav.breadcrumb {

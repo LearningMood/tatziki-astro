@@ -15,8 +15,8 @@ $container-max: 1400px;
   --color-text: --color-dark;
   --color-grey-dark: #515455;
   --color-grey-medium: #889397;
-  --color-bg: #fff;
-  --pale: #eee;
+  --color-bg: #fcfcfc;
+  --pale: #fcfcfc;
   
   // Espacements - cohérence
   --space-xs: 0.25rem;
@@ -30,7 +30,9 @@ $container-max: 1400px;
   --font-narrow: 'pt-sans-narrow', sans-serif;
   --font-body: system-ui, -apple-system, sans-serif;
   --font-display: 'Georgia', serif;
-  --font-taxo: 'zilla-slab', sans-serif;
+  --font-slab: 'zilla-slab', sans-serif;
+  --font-taxo: var(--font-slab);
+  --font-nav: var(--font-slab);
 
   // Radius
   --border-radius: 4px;

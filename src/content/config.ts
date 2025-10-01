@@ -75,7 +75,6 @@ const projectsCollection = defineCollection({
           afterSrc: z.string(),
           label: z.string().optional(),
         }),
-
       ])),
     })).optional(),
 
