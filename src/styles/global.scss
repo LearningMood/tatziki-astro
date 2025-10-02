@@ -26,9 +26,10 @@
 // 4. Sections
 @use 'sections/nav';
 @use 'sections/carousel';
+@use 'sections/intro';
 @use 'sections/content';
 @use 'sections/footer';
-@use 'sections/hero-banner';
+@use 'sections/hero';
 // @use 'sections/projects';
 
 // 5. Graphics
@@ -36,6 +37,7 @@
 @use 'graphics/hover';
 @use 'graphics/taxonomie';
 @use 'graphics/links';
+@use 'graphics/buttons';
 // @use 'graphics/animate';
 // @use 'components/buttons';
 

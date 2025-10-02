@@ -1,8 +1,6 @@
-  .featured-section {
-    height: 70vh;
-    min-height: 400px;
+  .carousel {
     background: var(--pale);
-    margin: 2rem 0 5rem;
+    margin: 2rem 0rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -10,7 +8,7 @@
 
   .featured-title {
     font-size: 2.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-lg);
     text-align: center;
   }
 
@@ -20,6 +18,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end; // juste pour la nav
+    padding-bottom: var(--space-md);
   }
 
   .carousel-track {
@@ -32,6 +31,10 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
+
+.carousel-track:focus-within {
+  scroll-snap-type: none; /* Désactive snap pendant navigation */
+}
 
   .carousel-track::-webkit-scrollbar {
     display: none;

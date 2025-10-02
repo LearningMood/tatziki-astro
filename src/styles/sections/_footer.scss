@@ -1,5 +1,29 @@
 footer {
-    background: #000;
-    color: #fff;
-    padding: 2rem 4rem;
+    background: var(--color-footer);
+    color: silver;
+    font-size: var(--font-size-sm);
+
+    .footer-infos {
+        display: flex;
+        gap: var(--space-md);
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: var(--space-lg);
+    }
+}
+
+.col--contact { flex: 2; }
+
+.co--projects {flex: 3; }
+
+.col--search { flex: 1; }
+
+
+.bottom-footer {
+    background-color: #3b4d57;
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    text-align: center;
+    color: #26343a;
+    text-align: center;
 }

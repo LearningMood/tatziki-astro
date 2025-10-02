@@ -17,97 +17,123 @@ interface Props {
 const { projects } = Astro.props;
 ---
 
-<div class="featured-section">
+<section class="carousel">
 
-    <div class="carousel-container">
-      <div class="carousel-track">
-        {projects.map((project, index) => (
-          <div class="carousel-slide" id={`slide-${index}`}>
-            <a href={`/projects/${project.slug}`} class="featured-card">
-              {project.data.heroImage && (
-                <div class="featured-image">
-                  <Image
-                    src={project.data.heroImage}
-                    alt={project.data.thumbnail_alt || project.data.title}
-                    widths={[600, 900, 1200]}
-                    formats={['avif', 'webp', 'jpg']}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    quality={85}
-                  />
-                </div>
-                <div class="bandeau-overlay"></div>
-              )}
-              <div class="featured-infos">
-                {project.data.title && (
-                <h3
-                  style={`
-                    --color: ${project.data.couleur || "#3085a3"};`}
-                >{project.data.title}</h3>
-                )}
-                <div class="featured-categories">
-                  {project.data.categories.slice(0, 2).map(cat => (
-                    <span class="category-tag">{cat}</span>
-                  ))}
-                </div>
+  <div class="carousel-container">
+    <div class="carousel-track">
+      {projects.map((project, index) => (
+        <div class="carousel-slide" id={`slide-${index}`}>
+          <a href={`/projects/${project.slug}`} class="featured-card">
+            {project.data.heroImage && (
+              <div class="featured-image">
+                <Image
+                  src={project.data.heroImage}
+                  alt={project.data.thumbnail_alt || project.data.title}
+                  widths={[600, 900, 1200]}
+                  formats={['avif', 'webp', 'jpg']}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  quality={85}
+                />
               </div>
-            </a>
-          </div>
-        ))}
-      </div>
+              <div class="bandeau-overlay"></div>
+            )}
+            <div class="featured-infos">
+              {project.data.title && (
+              <h3
+                style={`
+                  --color: ${project.data.couleur || "#3085a3"};`}
+              >{project.data.title}</h3>
+              )}
+              <div class="featured-categories">
+                {project.data.categories.slice(0, 2).map(cat => (
+                  <span class="category-tag">{cat}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        </div>
+      ))}
     </div>
-    <!-- Navigation par points -->
-      <div class="carousel-nav">
-        {projects.map((_, index) => (
-          <a 
-            href={`#slide-${index}`} 
+  </div>
+  <!-- Navigation par points -->
+<div class="carousel-nav">
+  {projects.map((_, index) => (
+   <button 
             class="nav-dot"
+            data-slide={index}
             aria-label={`Aller au projet ${index + 1}`}
+            type="button"
           />
-        ))}
-      </div>
+  ))}
 </div>
+</section>
+
+
 
 <script>
-  function initCarousel() {
+  function initCarouselNav() {
+    const container = document.querySelector('.carousel-container');
     const track = document.querySelector('.carousel-track');
     const slides = document.querySelectorAll('.carousel-slide');
-    let currentIndex = 0;
-    const intervalTime = 5000;
+    const dots = document.querySelectorAll('.nav-dot');
+    
+    if (!track || slides.length === 0) return;
     
     function goToSlide(index) {
-      slides[index]?.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'nearest', 
-        inline: 'center' 
+      const slide = slides[index];
+      if (!slide) return;
+      
+      // Calculer la position exacte
+      const slideLeft = slide.offsetLeft;
+      
+      // Scroll horizontal uniquement, sans toucher au scroll vertical
+      track.scrollTo({
+        left: slideLeft,
+        behavior: 'smooth'
+      });
+      
+      updateDots(index);
+    }
+    
+    function updateDots(activeIndex) {
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === activeIndex);
       });
     }
     
-    function nextSlide() {
-      currentIndex = (currentIndex + 1) % slides.length;
-      goToSlide(currentIndex);
-    }
-    
-    // Auto-play
-    let interval = setInterval(nextSlide, intervalTime);
-    
-    // Pause au hover
-    track?.addEventListener('mouseenter', () => {
-      clearInterval(interval);
+    // Click sur les dots
+    dots.forEach((dot) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault(); // ← Empêche tout comportement par défaut
+        const slideIndex = parseInt(dot.dataset.slide);
+        goToSlide(slideIndex);
+      });
     });
     
-    track?.addEventListener('mouseleave', () => {
-      interval = setInterval(nextSlide, intervalTime);
-    });
+    // Détecter la slide visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            const index = Array.from(slides).indexOf(entry.target);
+            updateDots(index);
+          }
+        });
+      },
+      { 
+        threshold: 0.5, 
+        root: track 
+      }
+    );
     
-    // Cleanup
-    document.addEventListener('astro:before-swap', () => {
-      clearInterval(interval);
-    });
+    slides.forEach((slide) => observer.observe(slide));
+    
+    updateDots(0);
   }
   
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCarousel);
+    document.addEventListener('DOMContentLoaded', initCarouselNav);
   } else {
-    initCarousel();
+    initCarouselNav();
   }
 </script>

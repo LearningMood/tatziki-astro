@@ -17,12 +17,13 @@ $container-max: 1400px;
   --color-grey-medium: #889397;
   --color-bg: #fcfcfc;
   --pale: #fcfcfc;
+  --color-footer: #253439;
   
   // Espacements - cohérence
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 2rem;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 3rem;
   --space-xl: 4rem;
   
   // Typographie
@@ -33,6 +34,11 @@ $container-max: 1400px;
   --font-slab: 'zilla-slab', sans-serif;
   --font-taxo: var(--font-slab);
   --font-nav: var(--font-slab);
+
+
+  // Font-size
+  --font-size-sm: .8rem;
+  --font-size-md: 1rem;
 
   // Radius
   --border-radius: 4px;
