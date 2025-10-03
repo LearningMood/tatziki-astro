@@ -5,8 +5,8 @@ description: "SUBEA & PADI s'engage dans une démarche commune de récyclage et 
 date: "2023-09-18"
 slug: "projet-subea-padi-partenariat"
 projectFolder: "subea-padi"
-featured: true  # ← Projet à la une
-featuredOrder: 1  # ← Ordre dans le carousel (optionnel)
+featured: true 
+featuredOrder: 1  
 
 categories:
   - "Direction artistique"
@@ -30,77 +30,107 @@ gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "
 # === PAGE PROJET ===
 hero: "hero-subea-padi.jpg"
 
-
 # === RANGÉES INDÉPENDANTES ===
 rows:
   
-  # Rangée 1 : Deux images qui se chevauchent
   - elements:
       - type: "image"
-        src: "subea-padi-03.jpg"
-        alt: "Détail fond"
-        gridColumn: "1 / span 6"
-      
-      - type: "image"
-        src: "subea-padi-04.jpg"
-        alt: "Détail premier plan"
-        gridColumn: "7 / span 2"  # Chevauche la première (commence à col 6)
-        parallax: -15 # au cas où
-
-# Rangée 2 : Image pleine largeur
-  - elements:
-      - type: "image"
-        src: "hero-subea-padi.jpg"
-        alt: "Introduction"
-        gridColumn: "1 / span 14"
-  
-  # Rangée 3 : Bloc objectifs seul
-  - elements:
-      - type: "image"
-        src: "subea-padi-04.jpg"
-        alt: "Détail premier plan"
-        gridColumn: "1 / span 9"  # Chevauche la première (commence à col 6)
+        src: "subea-padi-sketch.jpg"
+        alt: "Recherches préliminaires - sketching Subea Padi"
+        gridColumn: "1 / span 13"
 
       - type: "objectives"
-        gridColumn: "10 / span 5"
+        gridColumn: "15 / span 8"
         items:
-          - "Objectif 1"
-          - "Objectif 2"
-          - "Objectif 3"
-# Rangée 3 : Bloc objectifs seul
-  - elements:
-      - type: "before-after"
-        beforeSrc: "subea-padi-10.jpg"
-        afterSrc: "subea-padi-09.jpg"
-        alt: "Petit détail"
-        gridColumn: "3 / span 10"
-        label: "Évolution du packaging"
+          - "Présenter les ambitions et objectifs partagés de PADI et SUBEA"
+          - "Illustrer la circularité de l'offre et les engagements concrets en faveur du recyclage et de la réduction de déchets"
+          - "Présenter visuellement les opportunités commerciales et sportives offertes par ce partenariat"
   
-  # Rangée 4 : Trois éléments (petit + grand + texte)
-  - elements:     
+  - elements:
       - type: "image"
-        src: "hero-subea-padi.jpg"
-        alt: "Une grande image"
-        gridColumn: "1 / span 8"  # Chevauche le premier
+        src: "subea-padi-01.webp"
+        alt: "Illustration du partnariat Subea - Padi"
+        gridColumn: "6 / span 15"
+        parallax: -15 # au cas où
       
-      - type: "text"
-        gridColumn: "5 / span 4"
-        content: |
-          ## Résultats
-          
-          Après 6 mois, le programme a permis de recycler plus de 15 000 combinaisons.
+  - elements:
+      - type: "image"
+        src: "subea-padi-02.webp"
+        alt: "Illustration du partnariat Subea - Padi"
+        gridColumn: "1 / span 12"
+      
+      - type: "image"
+        src: "subea-padi-03.webp"
+        alt: "Illustration du partnariat Subea - Padi"
+        gridColumn: "13 / span 12"
 
-# === BEFORE/AFTER (optionnel) ===
-beforeAfter:
-  cols: 6
-  rows: 2
-  before: "subea-padi-01.webp"
-  after: "subea-padi-02.webp"
-  label: "Évolution du packaging"
+  - elements:
+      - type: "image"
+        src: "subea-padi-bg01-01.jpg"
+        alt: "Détails de l'illustration"
+        gridColumn: "1 / span 7"
+
+      - type: "image"
+        src: "subea-padi-bg01-02.jpg"
+        alt: "Détails de l'illustration"
+        gridColumn: "8 / span 7"
+
+  - elements:
+      - type: "image"
+        src: "subea-padi-bg02-01.jpg"
+        alt: "Détails de l'illustration"
+        gridColumn: "4 / span 7"
+      - type: "image"
+        src: "subea-padi-bg02-02.jpg"
+        alt: "Détails de l'illustration"
+        gridColumn: "11 / span 7"
+      - type: "image"
+        src: "subea-padi-bg02-03.jpg"
+        alt: "Détails de l'illustration"
+        gridColumn: "18 / span 7"
+
+  - elements: 
+      - type: "image"
+        src: "subea-padi-bg03-01.jpg"
+        alt: "Détails de l'illustration"
+        gridColumn: "9 / span 7"
+
+      - type: "before-after"
+        beforeSrc: "subea-padi-bg03-02.jpg"
+        afterSrc: "subea-padi-bg03-03.jpg"
+        alt: "Détails de l'illustration"
+        gridColumn: "16 / span 9"
+        # label: "Évolution de l'illustration"
+        
+links: 
+  - url: "https://www.padi.com/fr/padi-decathlon"
+
+  # - elements:     
+  #     - type: "image"
+  #       src: "hero-subea-padi.jpg"
+  #       alt: "Une grande image"
+  #       gridColumn: "1 / span 8"  # Chevauche le premier
+      
+  #     - type: "text"
+  #       gridColumn: "9 / span 6"
+  #       content: |
+  #         ## Résultats
+          
+  #         Après 6 mois, le programme a permis de recycler plus de 15 000 combinaisons.
+
+  # - elements:
+  #     - type: "before-after"
+  #       beforeSrc: "subea-padi-ba01-before.jpg"
+  #       afterSrc: "subea-padi-ba01-after.jpg"
+  #       alt: "Détails de l'illustration"
+  #       gridColumn: "3 / span 12"
+  #       # label: "Évolution de l'illustration"
+
 
 # === SLIDER (optionnel) ===
 slider:
   - "hero-subea-padi.jpg"
+  - "https://travel.padi.com/fr/landing_page/dxq6299r/?aid=28888"
 
 
 ---

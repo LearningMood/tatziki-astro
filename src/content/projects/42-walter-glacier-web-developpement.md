@@ -2,22 +2,26 @@
 title: "Développement du site Glacier artisanal"
 description: ""
 date: "2022-07-22"
-modified: "2025-06-25T12:53:50"
 slug: "developpement-walter-glacier-fr"
 projectFolder: "walter-glacier"
 featured: true 
-featuredOrder: 1  
+featuredOrder: 3  
 
 categories:
   - "Démarche UX"
   - "Développement front-end"
   - "Direction artistique"
   - "Wedesign"
+  - "Web developpement"
+  - "Création de thème WP sur-mesure"
+
 tags:
-  - "DECATHLON"
-  - "SUBEA"
   - "Illustrator"
   - "Photoshop"
+  - "Php"
+
+clients:
+  - "Walter glacier"
 
 couleur: "#cb2d91ff"
 
@@ -54,70 +58,63 @@ rows:
         src: "glacier-01.jpg"
         alt: "Détail fond"
         gridColumn: "1 / span 6"
-      
-      - type: "image"
-        src: "glacier-02.jpg"
-        alt: "Détail premier plan"
-        gridColumn: "7 / span 2"  # Chevauche la première (commence à col 6)
-        parallax: -15 # au cas où
 
-# Rangée 2 : Image pleine largeur
+      - type: "objectives"
+        gridColumn: "7 / span 6"
+        items:
+          - "Proposer un univers coloré et gourmand, en accord avec l'état d'esprit de l'enseigne"
+          - "Faciliter le choix parmi une gamme étendue de produits"
+          - "Illustrer l'ensemble des parfums de glaces et sorbets"
+          - "Mettre en valeur de la qualité des produits et de l'exigence de confection"
+
   - elements:
       - type: "image"
+        src: "glacier-02.jpg"
+        alt: "Version mobile friendly du site page Smoothies"
+        gridColumn: "1 / span 6"
+        parallax: -15
+
+      - type: "image"
         src: "glacier-03.jpg"
-        alt: "Introduction"
-        gridColumn: "1 / span 14"
+        alt: "Version mobile friendly du site page Gauffres et crèpes"
+        gridColumn: "7 / span 7"
   
-  # Rangée 3 : Bloc objectifs seul
   - elements:
       - type: "image"
         src: "glacier-04.jpg"
-        alt: "Détail premier plan"
-        gridColumn: "1 / span 9"  # Chevauche la première (commence à col 6)
+        alt: "Version mobile friendly du site page Bubble Waffles"
+        gridColumn: "1 / span 9"
 
-      - type: "objectives"
-        gridColumn: "10 / span 5"
-        items:
-          - "Objectif 1"
-          - "Objectif 2"
-          - "Objectif 3"
-# Rangée 3 : Bloc objectifs seul
-  - elements:
-      - type: "before-after"
-        beforeSrc: "subea-padi-10.jpg"
-        afterSrc: "subea-padi-09.jpg"
-        alt: "Petit détail"
-        gridColumn: "3 / span 10"
-        label: "Évolution du packaging"
-  
-  # Rangée 4 : Trois éléments (petit + grand + texte)
   - elements:     
       - type: "image"
-        src: "hero-subea-padi.jpg"
-        alt: "Une grande image"
-        gridColumn: "1 / span 8"  # Chevauche le premier
-      
-      - type: "text"
-        gridColumn: "5 / span 4"
-        content: |
-          ## Résultats
-          
-          Après 6 mois, le programme a permis de recycler plus de 15 000 combinaisons.
+        src: "thumb-glacier.png"
+        alt: "La préparation du thème personnalisé du glacier (Wp + starter theme _Underscore)"
+        gridColumn: "1 / span 8" 
 
-# === BEFORE/AFTER (optionnel) ===
-beforeAfter:
-  cols: 6
-  rows: 2
-  before: "subea-padi-01.webp"
-  after: "subea-padi-02.webp"
-  label: "Évolution du packaging"
+  - elements:
+      - type: "image"
+        src: "glacier-05.gif"
+        alt: "Développement du thème personnalisé du glacier (Wp + starter theme _Underscore) - Écran Visual Studio"
+        gridColumn: "1 / span 9"
 
-# === SLIDER (optionnel) ===
-slider:
-  - "hero-subea-padi.jpg"
+  - elements:
+      - type: "image"
+        src: "glacier-06.jpg"
+        alt: "Version desktop du site de Walter glacier"
+        gridColumn: "1 / span 9"
 
+  - elements:
+      - type: "image"
+        src: "glacier-07.jpg"
+        alt: "Création photomontage Photoshop de chaque parfum"
+        gridColumn: "4 / span 9"
+
+  - elements:
+      - type: "image"
+        src: "glacier-08.jpg"
+        alt: "Création photomontage Photoshop de chaque sorbet"
+        gridColumn: "4 / span 9"
 
 ---
 
-
----
+Un projet mélant identité visuelle, deisgn d'intervface et développement web. Pour une vente de glace : autant dire un moment de grâce, fruité et savoureux...

@@ -1,6 +1,29 @@
-  
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-narrow);
     // font-style: normal;
     // color: var(--color-grey-dark);
+  }
+
+  h1.titre-intro {
+    font-family: var(--font-slab);
+    font-size: 2rem;
+  }
+
+  // letter-spacing: -.1rem;
+
+  .project-title--home {
+    font-size: 1.2rem;
+    line-height: 1;
+    margin-bottom: .5rem;
+  }
+
+  h1.project-title {
+    font-size: clamp(2rem, 5vw, 2.1rem);
+    color: #515455;
+    margin-bottom: var(--space-md);
   }

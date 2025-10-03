@@ -49,10 +49,18 @@
 
   .container--max {
     width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
     position: relative;
     margin-left: auto;
     margin-right: auto;
     padding-right: 20px;
     padding-left: 20px
+  }
+
+  // 
+  .container--flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }

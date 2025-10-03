@@ -1,0 +1,16 @@
+svg {
+  width: 100%;  /* Prend toute la largeur du conteneur */
+  height: auto; /* Garde les proportions */
+}
+
+svg.logo-tatziki {
+    width: 140px;
+}
+
+svg.esperluette {
+    width: 60px;
+    position: relative;
+    top: 10px;
+    fill: #9acd32;
+    margin: 0 var(--space-xs);
+}

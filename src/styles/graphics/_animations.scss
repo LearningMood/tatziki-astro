@@ -1,4 +1,13 @@
-// TODO à garder ou redondant avec is-visible ?
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   /* Styles globaux pour toutes les pages */
   [data-scroll-animate] {
