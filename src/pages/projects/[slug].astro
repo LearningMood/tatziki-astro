@@ -4,33 +4,58 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import Layout from "@/components/Layout.astro";
 import { getProjectImage, getProjectImages } from "@/utils/imageLoader"; // ← Import
-import { marked } from "marked"; 
+import { marked } from "marked";
 
 import Objectifs from "@/components/projects/Objectifs.astro";
 import BeforeAfter from "@/components/projects/BeforeAfter.astro";
 import Slider from "@/components/projects/Slider";
 import Links from "@/components/projects/Links.astro";
-import BeforeAfterFirst from "@/components/projects/BeforeAfterFirst.astro";
 import Hero from "@/components/projects/Hero.astro";
+import ProjectNavigation from "@/components/projects/ProjectNavigation.astro";
 
-export async function getStaticPaths() {
-  const projects = await getCollection("projects");
-  return projects.map((project) => ({
+
+// 2. getStaticPaths() - TOUJOURS EN PREMIER
+export async function getStaticPaths() { //fonction spéciale qui s'exécute au moment du build, pas au moment du rendu de la page
+  const projects = await getCollection("projects", ({ data }) => {
+    return data.draft !== true;  // ← Filtre aussi ici
+  });
+  
+  projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()); // par date
+  
+  return projects.map((project, index) => ({
     params: { slug: project.slug },
-    props: { project },
+    props: { 
+      project,
+// Boucle circulaire
+    prevProject: projects[index - 1] || projects[projects.length - 1],
+    nextProject: projects[index + 1] || projects[0],
+    }
   }));
 }
+// ⚠️ FIN DE LA FONCTION - Toutes les variables locales sont détruites
+// prevProject et nextProject existent seulement dans l'objet props retourné. Les variables locales prevProject et nextProject n'existent plus.
 
-const { project } = Astro.props;
-const data = project.data || {};
-const { title, description, couleur, slug, projectFolder, hero, categories } =
-  data;
+// 3. RÉCUPÉRATION DES PROPS
+const { project, prevProject, nextProject } = Astro.props;
 
-console.log("🔍 Slug:", project.slug);
+// 4. DESTRUCTURATION DES DONNÉES
+const { 
+  title, 
+  couleur, 
+  slug, 
+  projectFolder, 
+  thumbnail, 
+  hero, 
+  categories, 
+  links 
+} = project.data;
+
+
+// console.log("🔍 Slug:", project.slug);
 // console.log("🔍 ProjectFolder:", project.data.projectFolder);
 // console.log("🔍 Hero:", project.data.hero);
 
-// === CHARGER TOUTES LES IMAGES ===
+// 5. CHARGEMENT DES IMAGES
 const allImages = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/projects/**/*.{jpg,jpeg,png,webp,avif}",
 );
@@ -39,7 +64,7 @@ const allImages = import.meta.glob<{ default: ImageMetadata }>(
 
 // === FONCTION POUR CHARGER UNE IMAGE ===
 async function getImage(filename: string) {
-  const folder = project.data.projectFolder || project.slug;
+  const folder = projectFolder || slug;
 
   // Construire le chemin EXACT
   const path = `/src/assets/projects/${folder}/${filename}`;
@@ -66,15 +91,23 @@ async function getImage(filename: string) {
 }
 
 // Fonctions utilitaires
-const heroImage = await getProjectImage(project, project.data.hero);
-const thumbnailImage = await getProjectImage(project, project.data.thumbnail);
+const heroImage = await getProjectImage(project, hero);
+const thumbnailImage = await getProjectImage(project, thumbnail);
 
+const prevThumbnail = prevProject 
+  ? await getProjectImage(prevProject, prevProject.data.thumbnail)
+  : null;
+const nextThumbnail = nextProject 
+  ? await getProjectImage(nextProject, nextProject.data.thumbnail)
+  : null;
+
+  console.log("PREV THUMBNAIL : ", prevThumbnail);
 // Slider
 const sliderImages = project.data.slider
   ? await getProjectImages(project, project.data.slider) // ← Fonction multiple
   : [];
 
-// Charger les rangées
+// 6. TRAITEMENT DES RANGÉES
 const projectRows = project.data.rows
   ? await Promise.all(
       project.data.rows.map(async (row, rowIndex) => ({
@@ -149,7 +182,7 @@ const projectRows = project.data.rows
 // console.log("project.data:", project.data);
 // console.log("heroImage:", heroImage);
 // console.log("=====================");
-
+// 7. RENDER DU CONTENU MARKDOWN
 const { Content } = await project.render();
 ---
 
@@ -160,18 +193,14 @@ const { Content } = await project.render();
     aria-label={title}
     data-scroll-animate
   >
-    {/* === HERO PLEINE HAUTEUR === */}
-    {
-      heroImage && (
-        <Hero 
-          imgSrc={heroImage} 
+    { heroImage && (
+        <Hero
+          imgSrc={heroImage}
           title={title}
           caegories={categories}
           showScrollIndicator={true}
         />
-        
-      )
-    }
+      )}
 
     <section class="project-intro" data-scroll-animate>
       <div class="container--narrow">
@@ -179,8 +208,7 @@ const { Content } = await project.render();
       </div>
     </section>
     <main class="container--max">
-      {
-        projectRows.map((row, rowIndex) => (
+      { projectRows.map((row, rowIndex) => (
           <section class="row-grid">
             {row.elements.map((element, index) => {
               // === IMAGE ===
@@ -258,9 +286,9 @@ const { Content } = await project.render();
                     class="row-element element-before-after"
                     data-scroll-animate
                     style={`
-        --grid-column: ${element.gridColumn};
-        --delay: ${element.delay}s;
-      `}
+                      --grid-column: ${element.gridColumn};
+                      --delay: ${element.delay}s;
+                    `}
                   >
                     <BeforeAfter
                       before={element.beforeImage}
@@ -275,8 +303,23 @@ const { Content } = await project.render();
               return null;
             })}
           </section>
+          <aside>
+            {
+              links && <a href={links} >Un lien</a>
+            }
+          </aside>
         ))
       }
     </main>
   </article>
+
+
+      <ProjectNavigation 
+        prevProject={prevProject}
+        nextProject={nextProject}
+        prevThumbnail={prevThumbnail}
+        nextThumbnail={nextThumbnail}
+
+      />
 </Layout>
+

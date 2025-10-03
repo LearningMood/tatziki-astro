@@ -27,3 +27,107 @@ nav.breadcrumb {
   nav.breadcrumb a:hover {
     text-decoration: underline;
   }
+
+  // POST NAVIGATION
+section.navigation-projects {
+    background: #f6f6f6;
+    padding: 4rem 0;
+
+  }
+nav.nav-projects {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin: 6rem auto 4rem;
+
+  }
+
+  a.nav-link {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: white;
+    border: 2px solid #f0f0f0;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+  }
+
+  a.nav-link:hover {
+    border-color: #3085a3;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-prev {
+    flex-direction: row;
+  }
+
+  .nav-next {
+    flex-direction: row-reverse;
+    text-align: right;
+  }
+
+  .nav-image {
+    // flex: 0 0 120px;
+    height: 120px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+
+  .nav-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .nav-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .nav-label {
+    font-size: 0.875rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+  }
+
+  .nav-categories {
+    font-size: 0.875rem;
+    color: #999;
+  }
+
+  /* Si un seul projet (début ou fin de liste) */
+  .nav-card:only-child {
+    grid-column: 1 / -1;
+    max-width: 600px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .project-navigation {
+      grid-template-columns: 1fr;
+    }
+
+    .nav-card {
+      flex-direction: column !important;
+      text-align: left !important;
+    }
+
+    .nav-image {
+      flex: 0 0 200px;
+      height: 200px;
+      width: 100%;
+    }
+  }

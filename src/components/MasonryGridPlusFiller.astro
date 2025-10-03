@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
-import { fillerConfig } from "../content/data-filler";
+import { fillerConfig } from "@/content/data-filler";
 import FillerItem from "./FillerItem.astro";
+import Placeholder from "@/assets/tatziki-placeholder.jpg";
 
 const { projects, miniProjects = [] } = Astro.props;
 
@@ -99,8 +100,17 @@ mainProjectsWithGrid.forEach((project, index) => {
                                         class="project-thumbnail"
                                     />
                                 ) : (
+                                    // TODO vérif
                                     <div class="placeholder-image">
-                                        <span>Image manquante</span>
+                                        <Image
+                                            src={Placeholder}
+                                            alt={title}
+                                            widths={[400, 600, 800, 1000]}
+                                            formats={["avif", "webp", "jpg"]}
+                                            loading="lazy"
+                                            quality={60}
+                                            class="project-thumbnail"
+                                        />
                                     </div>
                                 )}
                                 <figcaption class="item-overlay">

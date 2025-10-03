@@ -4,26 +4,26 @@ export class ScrollAnimator {
     this.initParallax();
   }
 
-  initScrollAnimation() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            requestAnimationFrame(() => {
-              entry.target.classList.add("is-visible");
-            });
-          } else {
-            entry.target.classList.remove("is-visible");
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "50px" }
-    );
+initScrollAnimation() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          requestAnimationFrame(() => {
+            entry.target.classList.add("is-visible");
+          });
+          // ✅ Une fois visible, ne plus observer
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "50px" }
+  );
 
-    document.querySelectorAll("[data-scroll-animate]").forEach((el) => {
-      observer.observe(el);
-    });
-  }
+  document.querySelectorAll("[data-scroll-animate]").forEach((el) => {
+    observer.observe(el);
+  });
+}
 
   initParallax() {
     const parallaxItems = document.querySelectorAll('[data-parallax]');

@@ -20,7 +20,7 @@ tags:
 couleur: "#3085a3"
 
 # === AFFICHAGE SUR LA HOME ===
-thumbnail: "hero-subea-padi.jpg"
+thumbnail: "subea-padi-02.webp"
 thumbnail_alt: "Projet SUBEA - PADI illustration extrait"
 gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
 # gridSpan:
@@ -130,10 +130,12 @@ links:
 # === SLIDER (optionnel) ===
 slider:
   - "hero-subea-padi.jpg"
-  - "https://travel.padi.com/fr/landing_page/dxq6299r/?aid=28888"
+
+links: 
 
 
 ---
 SUBEA et PADI s'engagent ensemble pour réduire les déchets plastiques dans les océans. Ce partenariat unique combine expertise technique et engagement environnemental.
 
 Le projet vise à créer une économie circulaire pour les équipements de plongée, en récupérant les combinaisons usagées pour les transformer en nouveaux produits.
+https://travel.padi.com/fr/landing_page/dxq6299r/?aid=28888

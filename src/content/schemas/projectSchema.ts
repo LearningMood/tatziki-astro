@@ -6,8 +6,9 @@ export const projectSchema = z.object({
     description: z.string().optional().default(''),
     date: z.coerce.date(),
     categories: z.array(z.string()),
-    tags: z.array(z.string()).optional(),
+    competences: z.array(z.string()).optional(),
     clients: z.array(z.string()).optional(),
+    tags: z.array(z.string()).optional(),
 
     //  Si à la une de la home (bandeau + ordre)
     featured: z.boolean().optional().default(false),
@@ -16,7 +17,7 @@ export const projectSchema = z.object({
     slug: z.string().optional(),
     projectFolder: z.string().optional(),
 
-    thumbnail: z.string().optional(), // Image sur la home
+    thumbnail: z.string().default('placeholder.jpg'), // Image sur la home
     thumbnail_alt: z.string().optional().default(''),
     hero: z.string().optional(), // Image hero en haut de la page projet
 
@@ -44,6 +45,16 @@ export const projectSchema = z.object({
             textElementSchema,
         ])),
     })).optional(),
+
+    // Lien externe optionnel
+    links: z
+        .array(
+            z.object({
+                title: z.string(),
+                url: z.string(),
+                type: z.enum(['external', 'internal']).default('external'),
+            }),
+        )
 
     slider: z.array(z.string()).optional(),
     content: z.string().optional(),

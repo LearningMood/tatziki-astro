@@ -2,8 +2,10 @@
 @use 'variables';
 @use 'mixins';
 
-// 2. Base (ordre useant)
+// 2. Base
 @use 'base/reset';
+
+// 3. Typographie
 @use 'typo/typo-general';
 @use 'typo/titres';
 @use 'typo/textes';
@@ -13,14 +15,14 @@
 @use 'grille/grid';
 @use 'grille/mansory';
 
-// 3. Composants
+// 4. Composants
 @use 'components/beforeafter';
 @use 'components/cards';
 @use 'components/video';
 @use 'components/filler';
 
 
-// 4. Sections
+// 45. Sections
 @use 'sections/nav';
 @use 'sections/carousel';
 @use 'sections/intro';
@@ -30,7 +32,7 @@
 @use 'sections/objectifs';
 // @use 'sections/projects';
 
-// 5. Graphics
+// 6. Graphics
 @use 'graphics/img';
 @use 'graphics/hover';
 @use 'graphics/taxonomie';

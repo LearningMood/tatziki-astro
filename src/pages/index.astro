@@ -10,7 +10,8 @@ const projects = await getCollection("projects", ({ data }) => {
   return data.draft !== true;
 });
 
-projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()); // date
+
 // Carousel | je sépare les projets à la une
 const featuredProjects = projects.filter((p) => p.data.featured);
 const regularProjects = projects.filter((p) => !p.data.featured);

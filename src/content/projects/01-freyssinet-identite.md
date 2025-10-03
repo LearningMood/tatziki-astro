@@ -1,6 +1,6 @@
 ---
 title: "Présentation Freyssinet"
-description: "Création de la carte de vœux numérique de Freyssinnet"
+description: "Création de la carte de vœux numérique de Freyssinet"
 date: "2012-01-08"
 slug: "projet-freyssinet-communication-hybride"  # ← URL de la page
 projectFolder: "freyssinet"
@@ -23,7 +23,11 @@ tags:
   - "SUBEA"
   - "Illustrator"
   - "Photoshop"
-couleur: "#3085a3"
+
+clients: 
+  - "Freyssinet"
+  
+couleur: "#67050dff"
 
 images:
   - src: "freyssinet-print.jpg"
@@ -50,7 +54,7 @@ beforeAfter:
   before: "freyssinet-repair-start.jpg"
   after: "freyssinet-repair-end.jpg"
 ---
-  label: "Le label du Before-After"
+
 
 
 
