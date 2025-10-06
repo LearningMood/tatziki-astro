@@ -1,6 +1,8 @@
+@use '../mixins' as *;
 .home-projects {
   margin-bottom: 6rem;
 }
+
 .project-page {
   min-height: 100vh;
 }
@@ -39,10 +41,14 @@
 
 /* === INTRODUCTION === */
 .project-intro {
-  padding: 4rem 0 0;
   text-align: center;
+  padding: 1rem 0 0;
+  
+  @include media('tablet') {
+    padding: 4rem 0 0;
+  }
 
-   &::after {
+  &::after {
     content: "";
     display: block;
     width: 80px;
@@ -75,8 +81,6 @@
 }
 
 /* === GRILLE 24 COLONNES === */
-/* === RANGÉES === */
-
 .row-grid {
   // border: dashed 1px #F0F;
   display: grid;
@@ -137,9 +141,7 @@
   margin-bottom: 1rem;
 }
 
-
-/* Responsive */
-@media (max-width: 1024px) {
+@include media-max('desktop') {
   .row-grid {
     grid-template-columns: repeat(8, 1fr);
   }
@@ -150,7 +152,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@include media-max('tablet') {
   .row-grid {
     grid-template-columns: 1fr;
   }

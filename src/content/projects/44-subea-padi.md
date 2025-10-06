@@ -103,7 +103,12 @@ rows:
         # label: "Évolution de l'illustration"
         
 links: 
-  - url: "https://www.padi.com/fr/padi-decathlon"
+  - title: "Visiter le site"
+    url: "https://www.padi.com/fr/padi-decathlon"
+    type: "external"
+  - title: "Visiter le site de réservation"
+    url: "https://travel.padi.com/fr/landing_page/dxq6299r/?aid=28888"
+    type: "external"
 
   # - elements:     
   #     - type: "image"
@@ -131,11 +136,10 @@ links:
 slider:
   - "hero-subea-padi.jpg"
 
-links: 
 
 
 ---
 SUBEA et PADI s'engagent ensemble pour réduire les déchets plastiques dans les océans. Ce partenariat unique combine expertise technique et engagement environnemental.
 
 Le projet vise à créer une économie circulaire pour les équipements de plongée, en récupérant les combinaisons usagées pour les transformer en nouveaux produits.
-https://travel.padi.com/fr/landing_page/dxq6299r/?aid=28888
+

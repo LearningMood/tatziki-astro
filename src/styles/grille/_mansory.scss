@@ -1,3 +1,4 @@
+@use '../mixins' as *;
 .masonry-grid {
     display: grid;
     grid-template-columns: repeat(24, 1fr);
@@ -6,17 +7,19 @@
     row-gap: 3rem;
 
     grid-auto-flow: dense;
+
     // Version mobile : 6 colonnes
-    @media (max-width: 768px) {
+    @include media-max('tablet') {
         display: block;
-        
+
         .grid-item {
             margin-bottom: 2rem;
         }
     }
 
     // Version tablette : 12 colonnes
-    @media (min-width: 769px) and (max-width: 1200px) {
+    // @media (min-width: 769px) and (max-width: 1200px) {
+    @include media-between('tablet', 'wide') {
         grid-template-columns: repeat(12, 1fr);
     }
 
@@ -33,34 +36,33 @@ article.grid-item,
     // État initial (invisible)
     opacity: 0;
     transform: translateY(40px);
-    
+
     // Transition douce
-    transition: 
-      opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    
+    transition:
+        opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
     // Quand l'élément devient visible (classe ajoutée par JS)
     &.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: var(--delay); // Délai en cascade
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: var(--delay); // Délai en cascade
     }
 
-
-    // Adaptation responsive
-    @media (max-width: 768px) {
+    @include media-max('mobile') {
         // Tout en 6 colonnes sur mobile
         grid-column: span 6 !important;
 
-        &.size-small {
+        &.size-mini {
             grid-row: span 4;
         }
 
-        &.size-medium {
+        &.size-square,
+        &.size-portrait {
             grid-row: span 6;
         }
 
-        &.size-large {
+        &.size-landscape {
             grid-row: span 8;
         }
 
@@ -72,19 +74,21 @@ article.grid-item,
             grid-row: span 6;
         }
 
-        &.size-featured {
+        &.size-feat {
             grid-row: span 12;
         }
     }
 
-    @media (min-width: 769px) and (max-width: 1200px) {
+
+    @include media-between('tablet', 'wide') {
 
         // Adapter les colonnes pour tablette (ratio 12/18 = 0.66)
         &.size-mini {
             grid-column: span 3;
         }
 
-        &.size-square {
+        &.size-square,
+        &.size-portrait {
             grid-column: span 4;
         }
 
@@ -210,5 +214,3 @@ a.item-projet {
 // .grid-item:nth-child(4n+4) {
 //     --color-rgb: 224, 182, 98;
 // }
-
-

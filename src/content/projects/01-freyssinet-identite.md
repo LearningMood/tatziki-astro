@@ -1,6 +1,6 @@
 ---
 title: "Présentation Freyssinet"
-description: "Création de la carte de vœux numérique de Freyssinet"
+description: "azert" #Création de la carte de vœux numérique de Freyssinet
 date: "2012-01-08"
 slug: "projet-freyssinet-communication-hybride"  # ← URL de la page
 projectFolder: "freyssinet"
@@ -10,17 +10,12 @@ hero: "hero-freyssinet.jpg"
 thumbnail: "hero-freyssinet.jpg"
 thumbnail_alt: "Événementiel - la carte de vœux numérique pour Freyssinet"
 
-gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
-# gridSpan:
-#   cols: 10
-#   rows: 8
+gridSize: "miniWide"
 
 categories:
   - "Direction artistique"
   - "Illustration"
 tags:
-  - "DECATHLON"
-  - "SUBEA"
   - "Illustrator"
   - "Photoshop"
 

@@ -25,17 +25,17 @@ export const projectSchema = z.object({
 
     // Taille de la carte sur la home (converti en cols/rows par mainPatterns)
     gridSize: z
-        .enum(['square', 'portrait', 'landscape', 'wide', 'tall', 'feat', 'mini'])
+        .enum(['square', 'portrait', 'landscape', 'wide', 'miniWide', 'tall', 'feat', 'mini'])
         .optional()
         .default('landscape'),
 
-    // Si tu veux forcer des dimensions précises (override de gridSize)
-    gridSpan: z
-        .object({
-            cols: z.number().min(1).max(24).optional(),
-            rows: z.number().min(1).optional(),
-        })
-        .optional(),
+    // Pour forcer des dimensions précises (override de gridSize)
+    // gridSpanCols: z.number().min(1).max(24).optional(),
+    // gridSpanRows: z.number().min(1).max(24).optional(),
+    gridSpanCols: z.number().optional(),
+    gridSpanRows: z.number().optional(),
+
+    gridCustom: z.string().optional(), // Format "2x3"
 
     rows: z.array(z.object({
         elements: z.array(z.union([
@@ -46,15 +46,13 @@ export const projectSchema = z.object({
         ])),
     })).optional(),
 
-    // Lien externe optionnel
-    links: z
-        .array(
-            z.object({
-                title: z.string(),
-                url: z.string(),
-                type: z.enum(['external', 'internal']).default('external'),
-            }),
-        )
+    // Liens optionnels
+    links: z.array(z.object({
+        title: z.string(),
+        url: z.string().url(), // valide que c'est bien une URL
+        type: z.enum(['external', 'internal']).default('external'),
+    })).optional(),
+
 
     slider: z.array(z.string()).optional(),
     content: z.string().optional(),

@@ -1,22 +1,32 @@
+@use '../mixins' as *;
 footer {
     background: var(--color-footer);
     color: silver;
     font-size: var(--font-size-sm);
 
     .footer-infos {
-        display: flex;
-        gap: var(--space-md);
-        justify-content: space-between;
-        align-items: flex-start;
         padding: var(--space-lg);
+
+        @include media('tablet') {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: space-between;
+            align-items: flex-start;
+        }
     }
 }
 
-.col--contact { flex: 2; }
+.col--contact {
+    flex: 2;
+}
 
-.co--projects {flex: 3; }
+.co--projects {
+    flex: 3;
+}
 
-.col--search { flex: 1; }
+.col--search {
+    flex: 1;
+}
 
 
 .bottom-footer {

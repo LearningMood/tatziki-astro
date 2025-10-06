@@ -28,9 +28,7 @@ gridSize: "portrait"  #square",  "portrait",  "landscape",  "wide",  "tall",  "f
 # === PAGE PROJET ===
 hero: "hero-decathlon-takuma.jpg"
 
-
 rows:
-  # Rangée 1 : Deux images qui se chevauchent
   - elements:
       - type: "image"
         src: "decathlon-takuma-catalog-efoil-Double.jpg"
@@ -40,26 +38,24 @@ rows:
   - elements:
         - type: "image"
           src: "decathlon-takuma-catalog-Illustrator.jpg"
-          alt: "Illustratins vectorielles - Illustrator Charlotte Casters"
+          alt: "Illustrations vectorielles - Illustrator Charlotte Casters"
           gridColumn: "6 / span 13"
   - elements:
         - type: "image"
           src: "decathlon-takuma-catalog-illustrations-vectorielle-Illustrator.jpg"
-          alt: "Illustratins vectorielles - Illustrator Charlotte Casters"
+          alt: "Illustrations vectorielles - Illustrator Charlotte Casters"
           gridColumn: "6 / span 13"
   - elements:
         - type: "image"
           src: "chemin-de-fer-InDesign.jpg"
           alt: "Chemin de fer - Maquette inDesign Adobe Catalogue Takuma Charlotte Casters"
           gridColumn: "6 / span 13"
-
-# Rangée 2 : Image pleine largeur
+# OBJECTIFS
   - elements:
         - type: "image"
           src: "decathlon-takuma-catalog-01.jpg"
           alt: "Couv du catalogue Decathlon Takuma - Efoil"
           gridColumn: "4 / span 8"
-
 
         - type: "objectives"
           gridColumn: "13 / span 8"

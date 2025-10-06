@@ -1,3 +1,5 @@
+@use '../mixins' as *;
+
 .grid-item.filler {
     grid-column: span var(--cols);
     grid-row: span var(--rows);
@@ -113,7 +115,7 @@
         }
     }
 
-    // Effet de texture/pattern optionnel
+    // Effet de pattern
     &::before {
         content: '';
         position: absolute;
@@ -128,9 +130,7 @@
     }
 }
 
-
-// Responsive pour les fillers
-@media (max-width: 768px) {
+@include media-max('tablet') {
     .grid-item.filler {
         grid-column: span 6 !important;
         grid-row: span 7 !important;

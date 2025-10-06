@@ -1,3 +1,4 @@
+@use '../mixins' as *;
 .before-after-container {
     position: relative;
     width: 100%;
@@ -87,8 +88,7 @@
     pointer-events: none;
   }
 
-  /* Responsive */
-  @media (max-width: 768px) {
+  @include media-max('tablet') {
     .slider-handle {
       width: 40px;
       height: 40px;

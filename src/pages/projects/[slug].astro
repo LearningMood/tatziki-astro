@@ -77,7 +77,6 @@ async function getImage(filename: string) {
 
   if (!imageLoader) {
     console.error(`❌ Image NON TROUVÉE: ${path}`);
-    console.log("💡 Vérifiez que le fichier existe à cet emplacement exact");
     return null;
   }
   // Charger l'image
@@ -101,7 +100,6 @@ const nextThumbnail = nextProject
   ? await getProjectImage(nextProject, nextProject.data.thumbnail)
   : null;
 
-  console.log("PREV THUMBNAIL : ", prevThumbnail);
 // Slider
 const sliderImages = project.data.slider
   ? await getProjectImages(project, project.data.slider) // ← Fonction multiple
@@ -303,14 +301,13 @@ const { Content } = await project.render();
               return null;
             })}
           </section>
-          <aside>
-            {
-              links && <a href={links} >Un lien</a>
-            }
-          </aside>
+         
         ))
       }
     </main>
+            <!-- {
+              links && <a href={links} >Un lien</a>
+            } -->
   </article>
 
 

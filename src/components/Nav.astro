@@ -5,9 +5,14 @@ import Logo from "./graphics/Logo.astro";
 <nav class="main-nav">
     <div class="container container--flex">
         <a href="/">
-            <Logo />
+            <div class="logo--mobile">
+                <Logo variant="mobile" />
+            </div>
+            <div class="logo--desktop">
+                <Logo variant="desktop" />
+            </div>
         </a>
-        <div class="main-nav-menu">
+        <div class="main-nav-items">
             <a href="/about">Présentation</a>
         </div>
     </div>

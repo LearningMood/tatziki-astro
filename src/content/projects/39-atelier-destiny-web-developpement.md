@@ -4,7 +4,6 @@ description: "Création & développement du site de présentation de l'Atelier D
 date: "2021-06-27"
 slug: "creation-du-site-de-latelier-destiny"
 projectFolder: "atelier-destiny"
-links: "https://atelierdestiny.com/"
 
 featured: true 
 featuredOrder: 7 
@@ -25,8 +24,13 @@ categories:
 tags:
   - "Php"
 
-client: 
+clients: 
   - "Atelier Destiny"
+
+links:
+  - title: "Visiter le site de 'lAtelier Destiny"
+    url: "https://atelierdestiny.com/"
+
 
 rows:
   

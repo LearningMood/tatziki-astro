@@ -4,7 +4,7 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   // site: 'https://tonsite.com', // ← Ton URL de production
-    site: 'http://localhost:4321',
+  site: 'http://localhost:4321',
   base: '/', // ← Important : doit être '/' si tu es à la racine
 
   // Optionnel : Configuration de build
@@ -18,26 +18,27 @@ export default defineConfig({
     mdx(),
     react()
   ],
-  // image: {
-  //     // Formats de sortie (WebP + format original en fallback)
-  //     formats: ['webp', 'jpg'],
-  //     // Qualité par défaut (85 est un bon compromis)
-  //     quality: 85,
-  //     // Largeurs responsives générées automatiquement
-  //     widths: [400, 800, 1200, 1600, 2000],
-  //     // Tailles pour les images de grille
-  //     sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-  //   },
   markdown: {
     shikiConfig: {
       theme: 'github-light'
     }
   },
   image: {
+    //Formats de sortie (WebP + format original en fallback)
+    formats: ['webp', 'jpg'],
+    // Qualité par défaut (85 est un bon compromis)
+    quality: 85,
+    // Largeurs responsives générées automatiquement
+    widths: [400, 800, 1200, 1600, 2000],
+    // Tailles pour les images de grille
+    sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
     domains: [],
     remotePatterns: [],
     service: {
-      entrypoint: 'astro/assets/services/sharp'
+      entrypoint: 'astro/assets/services/sharp',
+      config: {
+        limitInputPixels: false,
+      }
     }
   },
   // experimental: {

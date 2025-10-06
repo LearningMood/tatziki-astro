@@ -1,14 +1,26 @@
 @import url("https://use.typekit.net/yzs3igk.css");
 
-// Variables SCSS pour la compilation (valeurs statiques)
-$breakpoint-mobile: 768px;
-$breakpoint-tablet: 1024px;
-$grid-columns: 12;
-$container-max: 1400px;
+// _variables.scss
+$mobile: 640px;
+$tablet: 768px;
+$desktop: 1024px;
+$wide: 1280px;
 
-// CSS custom properties pour le theming dynamique
+// Map pour les mixins
+$breakpoints: (
+  'mobile': $mobile,
+  'tablet': $tablet,
+  'desktop': $desktop,
+  'wide': $wide,
+);
+
 :root {
-  // Couleurs - modifiables par projet
+  --bk-mobile: #{$mobile};
+  --bk-tablet: #{$tablet};
+  --bk-desktop: #{$desktop};
+  --bk-wide: #{$wide};
+
+  // Couleurs
   --color-main: #0cb4ce;
   --color-tatziki: #6ebfb1;
   --color-secondary: #e74c3c;
@@ -20,15 +32,15 @@ $container-max: 1400px;
   --pale: #fcfcfc;
   --color-footer: #253439;
   --color-overlay: #0b061e1f;
-  
-  // Espacements - cohérence
+
+  // Espacements
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 2rem;
   --space-lg: 3rem;
   --space-xl: 4rem;
   --space-xxl: 10rem;
-  
+
   // Typographie
   --font-titre: 'poppins', sans-serif;
   --font-narrow: 'pt-sans-narrow', sans-serif;
@@ -45,14 +57,17 @@ $container-max: 1400px;
 
   // Radius
   --border-radius: 4px;
+  --border-radius-md: 8px;
 
   // Box Shadow
-  --box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-  --box-shadow-hover: box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-  
+  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --box-shadow-hover: box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+
   // Animations
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
+
+
 }
 
 // Mixins utilisant les deux
@@ -60,7 +75,7 @@ $container-max: 1400px;
   max-width: $container-max;
   margin: 0 auto;
   padding: 0 var(--space-lg);
-  
+
   @media (max-width: $breakpoint-mobile) {
     padding: 0 var(--space-md);
   }

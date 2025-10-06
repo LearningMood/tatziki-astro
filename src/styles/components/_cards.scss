@@ -1,3 +1,4 @@
+@use '../mixins' as *;
 // Les cartes
 .projects-grid {
     display: grid;
@@ -6,7 +7,7 @@
     margin-top: 3rem;
   }
   
-  @media (max-width: 768px) {
+  @include media-max('tablet') {
     .projects-grid {
       grid-template-columns: 1fr;
       gap: 1.5rem;

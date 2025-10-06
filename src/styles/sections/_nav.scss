@@ -1,133 +1,151 @@
+@use '../mixins' as *;
+
 // La navigation
 .main-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 1.4rem 4rem;
-    font-family: var(--font-nav);
+  font-family: var(--font-nav);
+  padding: var(--space-sm);
+  
+  @include media('tablet') {
+    padding: 1.4rem var(--space-xl);
+  }
 }
-.main-nav-menu {
+
+.main-nav-items {
   display: flex;
   gap: 2rem;
 }
-.logo-tatziki {
-  width: 100px;
-}
+
 
 nav.breadcrumb {
-    font-size: 0.875rem;
-    color: #666;
-    margin-bottom: 2rem;
-  }
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
 
-  nav.breadcrumb a {
-    color: var(--project-color);
-    text-decoration: none;
-  }
+nav.breadcrumb a {
+  color: var(--project-color);
+  text-decoration: none;
+}
 
-  nav.breadcrumb a:hover {
-    text-decoration: underline;
-  }
+nav.breadcrumb a:hover {
+  text-decoration: underline;
+}
 
-  // POST NAVIGATION
+// POST NAVIGATION
 section.navigation-projects {
-    background: #f6f6f6;
-    padding: 4rem 0;
+  background: #f6f6f6;
+  padding: 4rem 0;
 
-  }
+}
+
 nav.nav-projects {
+  margin: 3rem auto;
+
+  @include media('tablet') {
     display: flex;
     justify-content: space-between;
+    align-items: stretch;
     gap: 2rem;
     margin: 6rem auto 4rem;
-
   }
 
-  a.nav-link {
-    display: flex;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    border-radius: 12px;
-    background: white;
-    border: 2px solid #f0f0f0;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s ease;
+}
+
+a.nav-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-radius: var(--border-radius-md);
+  background: white;
+  border: 2px solid #f0f0f0;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+a.nav-link:hover {
+  border-color: var(--pale);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(186, 186, 186, 0.1);
+}
+
+.nav-link--prev {
+  flex-direction: row;
+}
+
+.nav-link--next {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.nav-link--center {
+  text-align: center;
+}
+
+.nav-image {
+  // flex: 0 0 120px;
+  height: 120px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.nav-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nav-label {
+  font-weight: bold;
+  font-size: var(--font-size-sm);
+  color: var(--color-tatziki);
+  font-family: var(--font-narrow);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.nav-content h3 {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  color: var(--color-dark);
+}
+
+.nav-categories {
+  font-size: var(--font-size-sm);
+  color: var(--color-grey-medium);
+  font-family: var(--font-slab);
+}
+
+/* Si un seul projet (début ou fin de liste) */
+.nav-card:only-child {
+  grid-column: 1 / -1;
+  max-width: 600px;
+}
+
+/* Responsive */
+@include media-max('tablet') {
+  .project-navigation {
+    grid-template-columns: 1fr;
   }
 
-  a.nav-link:hover {
-    border-color: #3085a3;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  }
-
-  .nav-prev {
-    flex-direction: row;
-  }
-
-  .nav-next {
-    flex-direction: row-reverse;
-    text-align: right;
+  .nav-card {
+    flex-direction: column !important;
+    text-align: left !important;
   }
 
   .nav-image {
-    // flex: 0 0 120px;
-    height: 120px;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-  }
-
-  .nav-image img {
+    flex: 0 0 200px;
+    height: 200px;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
-
-  .nav-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .nav-label {
-    font-size: 0.875rem;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.5rem;
-  }
-
-  .nav-content h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: #1a1a1a;
-  }
-
-  .nav-categories {
-    font-size: 0.875rem;
-    color: #999;
-  }
-
-  /* Si un seul projet (début ou fin de liste) */
-  .nav-card:only-child {
-    grid-column: 1 / -1;
-    max-width: 600px;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .project-navigation {
-      grid-template-columns: 1fr;
-    }
-
-    .nav-card {
-      flex-direction: column !important;
-      text-align: left !important;
-    }
-
-    .nav-image {
-      flex: 0 0 200px;
-      height: 200px;
-      width: 100%;
-    }
-  }
+}

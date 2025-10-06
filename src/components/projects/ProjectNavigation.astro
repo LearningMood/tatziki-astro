@@ -12,67 +12,67 @@ const { prevProject, nextProject, prevThumbnail, nextThumbnail } = Astro.props;
 ---
 
 <section class="navigation-projects">
-        <nav class="nav-projects container">
-            {
-                prevProject && (
-                    <a
-                        href={`/projects/${prevProject.slug}`}
-                        class="nav-link nav-prev"
-                    >
-                        {prevThumbnail &&
-                        (
-                            <div class="nav-image">
-                                <Image
-                                    src={prevThumbnail}
-                                    alt={prevProject.slug}
-                                    widths={[400, 600]}
-                                    formats={["avif", "webp", "jpg"]}
-                                    loading="lazy"
-                                    quality={85}
-                                />
-                            </div>
-                        )}
-                        <div class="nav-content">
-                            <span class="nav-label">Projet suivant →</span>
-                            <h3>{prevProject.data.title}</h3>
-                            <p class="nav-categories">
-                                {nextProject.data.categories.join(" • ")}
-                            </p>
+    <nav class="nav-projects container">
+        {
+            prevProject && (
+                <a
+                    href={`/projects/${prevProject.slug}`}
+                    class="nav-link nav-link-prev"
+                >
+                    {prevThumbnail && (
+                        <div class="nav-image">
+                            <Image
+                                src={prevThumbnail}
+                                alt={prevProject.slug}
+                                widths={[120, 240, 480]}
+                                formats={["avif", "webp", "jpeg"]}
+                                sizes="(max-width: 768px) 50vw, 200px"
+                                quality={60}
+                                loading="lazy"
+                            />
                         </div>
-                    </a>
-                )
-            }
-            <a href="/" class="nav-link">
-                <h3>Tous les projets</h3>
-            </a>
-            {
-                nextProject && (
-                    <a
-                        href={`/projects/${nextProject.slug}`}
-                        class="nav-link nav-next"
-                    >
-                        {nextThumbnail && (
-                            <div class="nav-image">
-                                <Image
-                                    src={nextThumbnail}
-                                    alt={nextProject.slug}
-                                    widths={[400, 600]}
-                                    formats={["avif", "webp", "jpg"]}
-                                    loading="lazy"
-                                    quality={85}
-                                />
-                            </div>
-                        )}
-                        <div class="nav-content">
-                            <span class="nav-label">Projet suivant →</span>
-                            <h3>{nextProject.data.title}</h3>
-                            <p class="nav-categories">
-                                {nextProject.data.categories.join(" • ")}
-                            </p>
+                    )}
+                    <div class="nav-content">
+                        <span class="nav-label">Projet suivant →</span>
+                        <h3>{prevProject.data.title}</h3>
+                        <p class="nav-categories">
+                            {nextProject.data.categories.join(" • ")}
+                        </p>
+                    </div>
+                </a>
+            )
+        }
+        <a href="/" class="nav-link nav-link--center">
+            <span class="nav-label">Tous les projets</span>
+        </a>
+        {
+            nextProject && (
+                <a
+                    href={`/projects/${nextProject.slug}`}
+                    class="nav-link nav-link--next"
+                >
+                    {nextThumbnail && (
+                        <div class="nav-image">
+                            <Image
+                                src={nextThumbnail}
+                                alt={nextProject.slug}
+                                widths={[120, 240, 480]}
+                                formats={["avif", "webp", "jpeg"]}
+                                sizes="(max-width: 768px) 50vw, 200px"
+                                quality={60}
+                                loading="lazy"
+                            />
                         </div>
-                    </a>
-                )
-            }
-        </nav>
-
+                    )}
+                    <div class="nav-content">
+                        <span class="nav-label">Projet suivant →</span>
+                        <h3>{nextProject.data.title}</h3>
+                        <p class="nav-categories">
+                            {nextProject.data.categories.join(" • ")}
+                        </p>
+                    </div>
+                </a>
+            )
+        }
+    </nav>
 </section>

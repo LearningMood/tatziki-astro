@@ -1,3 +1,4 @@
+@use '../mixins' as *;  // ✅ Ça importera aussi variables automatiquement
   /* === CONTENEURS === */
   .container {
     position: relative;
@@ -7,28 +8,28 @@
     padding-left: 20px;
   }
 
-  @media (min-width: 576px) {
+  @include media('mobile') {
     .container {
       width: 540px;
       max-width: 100%
     }
   }
 
-  @media (min-width: 768px) {
+  @include media('tablet') {
     .container {
       width: 720px;
       max-width: 100%
     }
   }
 
-  @media (min-width: 992px) {
+  @include media('desktop') {
     .container {
       width: 920px;
       max-width: 100%
     }
   }
 
-  @media (min-width: 1200px) {
+  @include media('wide') {
     .container {
       width: 1180px;
       max-width: 100%

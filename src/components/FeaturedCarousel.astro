@@ -23,16 +23,18 @@ const { projects } = Astro.props;
     <div class="carousel-track">
       {projects.map((project, index) => (
         <div class="carousel-slide" id={`slide-${index}`}>
-          <a href={`/projects/${project.slug}`} class="featured-card">
+          <a href={`/projects/${project.slug}`} class="carousel-featured-card ">
             {project.data.heroImage && (
               <div class="featured-image">
                 <Image
                   src={project.data.heroImage}
                   alt={project.data.thumbnail_alt || project.data.title}
-                  widths={[600, 900, 1200]}
-                  formats={['avif', 'webp', 'jpg']}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  quality={85}
+                  widths={[640, 1024, 1600, 2400]}
+                  sizes="100vw"
+                  formats={['avif','webp','jpeg']}
+                  quality={80} 
+                  loading="eager"
+                  fetchpriority="high"
                 />
               </div>
               <div class="bandeau-overlay"></div>

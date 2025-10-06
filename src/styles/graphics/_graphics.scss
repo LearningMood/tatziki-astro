@@ -1,11 +1,27 @@
+@use '../mixins' as *;
+
 svg {
   width: 100%;  /* Prend toute la largeur du conteneur */
   height: auto; /* Garde les proportions */
 }
 
-svg.logo-tatziki {
-    width: 140px;
-}
+.logo--mobile {
+    display: block;
+    width: 50px; // Taille du logo carré
+    
+    @include media('tablet') {
+      display: none;
+    }
+  }
+  
+  .logo--desktop {
+    display: none;
+    
+    @include media('tablet') {
+      display: block;
+      width: 180px; // Taille du logo horizontal
+    }
+  }
 
 svg.esperluette {
     width: 60px;

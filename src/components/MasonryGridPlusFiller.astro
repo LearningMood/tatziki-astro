@@ -8,10 +8,11 @@ const { projects, miniProjects = [] } = Astro.props;
 
 // Patterns pour projets principaux (sur 24 colonnes)
 const mainPatterns = {
-    square: { cols: 8, rows: 8 }, //+2 pourle texte ?
-    portrait: { cols: 7, rows: 10 },
-    landscape: { cols: 10, rows: 7 },
-    wide: { cols: 12, rows: 8 },
+    square: { cols: 6, rows: 6 }, //+2 pourle texte ?
+    portrait: { cols: 8, rows: 10 },
+    landscape: { cols: 12, rows: 7 },
+    wide: { cols: 12, rows: 5 },
+    miniWide: { cols: 6, rows: 4 },
     tall: { cols: 6, rows: 12 },
     feat: { cols: 12, rows: 9 },
 };
@@ -29,12 +30,12 @@ const fillerPatterns = [
 const mainProjectsWithGrid = projects.map((project, index) => {
     const { title, thumbnailImage, couleur, categories } = project.data;
     //             ^^^^^^^^^^^^^^ Utilise le nouveau nom transformé
-    const patterns = ["square", "wide", "tall", "large", "feat", "landscape"];
+    const patterns = ["square", "wide", "miniWide", "tall", "large", "feat", "landscape"];
     const gridSize = project.data.gridSize || patterns[index % patterns.length];
     return {
         ...project,
-        gridSpan: mainPatterns[gridSize],
         gridSize,
+        gridSpan: mainPatterns[gridSize],
         type: "projet",
     };
 });
@@ -93,10 +94,11 @@ mainProjectsWithGrid.forEach((project, index) => {
                                     <Image
                                         src={thumbnailImage}
                                         alt={title}
-                                        widths={[400, 600, 800, 1000]}
-                                        formats={["avif", "webp", "jpg"]}
+                                        widths={[200, 400, 800]}
+                                        formats={["avif", "webp", "jpeg"]}
+                                        sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+                                        quality={70}
                                         loading="lazy"
-                                        quality={80}
                                         class="project-thumbnail"
                                     />
                                 ) : (
@@ -105,10 +107,11 @@ mainProjectsWithGrid.forEach((project, index) => {
                                         <Image
                                             src={Placeholder}
                                             alt={title}
-                                            widths={[400, 600, 800, 1000]}
-                                            formats={["avif", "webp", "jpg"]}
+                                            widths={[200, 400, 800]}
+                                            formats={["avif", "webp", "jpeg"]}
+                                            sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+                                            quality={50}
                                             loading="lazy"
-                                            quality={60}
                                             class="project-thumbnail"
                                         />
                                     </div>

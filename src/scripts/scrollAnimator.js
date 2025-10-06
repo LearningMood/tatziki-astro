@@ -23,6 +23,10 @@ initScrollAnimation() {
   document.querySelectorAll("[data-scroll-animate]").forEach((el) => {
     observer.observe(el);
   });
+  // Observer tous les articles
+  // document.querySelectorAll('article').forEach(article => {
+  //   observer.observe(article);
+  // });
 }
 
   initParallax() {

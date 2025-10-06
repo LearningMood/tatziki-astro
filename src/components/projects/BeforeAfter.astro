@@ -1,7 +1,6 @@
 ---
-// src/components/BeforeAfter.astro
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+import type { ImageMetadata } from "astro";
 
 interface Props {
   before: ImageMetadata;
@@ -10,38 +9,40 @@ interface Props {
   label?: string;
 }
 
-const { before, after, alt = '', label } = Astro.props;
+const { before, after, alt = "", label } = Astro.props;
 ---
 
 <div class="before-after-container" data-before-after>
-  <Image 
-    src={before} 
-    alt={`Avant - ${alt}`} 
+  <Image
+    src={before}
+    alt={`Avant - ${alt}`}
     class="before-image"
     widths={[600, 900, 1200]}
-    formats={['avif', 'webp', 'jpg']}
+    formats={["avif", "webp", "jpg"]}
     loading="lazy"
+    quality={80}
   />
-  <Image 
-    src={after} 
-    alt={`Après - ${alt}`} 
+  <Image
+    src={after}
+    alt={`Après - ${alt}`}
     class="after-image"
     widths={[600, 900, 1200]}
-    formats={['avif', 'webp', 'jpg']}
+    formats={["avif", "webp", "jpg"]}
     loading="lazy"
+    quality={80}
   />
-  
+
   <div class="slider-line" aria-hidden="true">
-    <button 
+    <button
       class="slider-handle"
       aria-label="Déplacer pour comparer avant et après"
       type="button"
     >
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M8 12L4 8v8l4-4zm8 0l4-4v8l-4-4z" fill="currentColor"/>
+        <path d="M8 12L4 8v8l4-4zm8 0l4-4v8l-4-4z" fill="currentColor"></path>
       </svg>
     </button>
   </div>
-  
+
   {label && <h3 class="before-after-label">{label}</h3>}
 </div>
