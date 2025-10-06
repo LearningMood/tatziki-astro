@@ -22,10 +22,10 @@ couleur: "#3085a3"
 # === AFFICHAGE SUR LA HOME ===
 thumbnail: "subea-padi-02.webp"
 thumbnail_alt: "Projet SUBEA - PADI illustration extrait"
-gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "feat",  "mini",
-# gridSpan:
-#   cols: 10
-#   rows: 8
+gridSize: "landscape"
+# gridSpanCols: 2
+# gridSpanRows: 3
+# gridCustom: "2x3"
 
 # === PAGE PROJET ===
 hero: "hero-subea-padi.jpg"

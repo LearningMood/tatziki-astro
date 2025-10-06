@@ -23,19 +23,10 @@ export const projectSchema = z.object({
 
     couleur: z.string().optional(),
 
-    // Taille de la carte sur la home (converti en cols/rows par mainPatterns)
-    gridSize: z
-        .enum(['square', 'portrait', 'landscape', 'wide', 'miniWide', 'tall', 'feat', 'mini'])
-        .optional()
-        .default('landscape'),
-
-    // Pour forcer des dimensions précises (override de gridSize)
-    // gridSpanCols: z.number().min(1).max(24).optional(),
-    // gridSpanRows: z.number().min(1).max(24).optional(),
-    gridSpanCols: z.number().optional(),
-    gridSpanRows: z.number().optional(),
-
-    gridCustom: z.string().optional(), // Format "2x3"
+    gridSize: z.enum(["square", "portrait", "landscape", "wide", "miniWide", "tall", "feat", "mini"]).optional().default("landscape"),
+    // gridSpanCols: z.number().optional().default(12),
+    // gridSpanRows: z.number().optional().default(8),
+    // gridCustom: z.string().optional(),
 
     rows: z.array(z.object({
         elements: z.array(z.union([

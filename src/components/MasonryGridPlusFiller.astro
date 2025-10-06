@@ -28,10 +28,12 @@ const fillerPatterns = [
 
 // Distribuer les projets principaux
 const mainProjectsWithGrid = projects.map((project, index) => {
-    const { title, thumbnailImage, couleur, categories } = project.data;
+    const { title, thumbnailImage, couleur, categories} = project.data;
     //             ^^^^^^^^^^^^^^ Utilise le nouveau nom transformé
     const patterns = ["square", "wide", "miniWide", "tall", "large", "feat", "landscape"];
     const gridSize = project.data.gridSize || patterns[index % patterns.length];
+
+    // console.log("project.data", project.data);
     return {
         ...project,
         gridSize,
@@ -60,6 +62,7 @@ mainProjectsWithGrid.forEach((project, index) => {
     }
 });
 
+
 // console.log('Projets:', allItems.filter(i => i.type === 'projet').length);
 // console.log('Fillers:', allItems.filter(i => i.type === 'filler').length);
 // console.log('Premier filler:', allItems.find(i => i.type === 'filler'));
@@ -72,7 +75,7 @@ mainProjectsWithGrid.forEach((project, index) => {
                 // Projet principal
 
                 const { slug } = item;
-                const { title, thumbnailImage, couleur, categories } =
+                const { title, thumbnailImage, couleur, categories} =
                     item.data;
                 //             ^^^^^^^^^^^^^^ Utilise le nouveau nom transformé
                 const { gridSpan, gridSize } = item;

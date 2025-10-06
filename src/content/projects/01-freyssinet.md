@@ -2,7 +2,7 @@
 title: "Présentation Freyssinet"
 description: "azert" #Création de la carte de vœux numérique de Freyssinet
 date: "2012-01-08"
-slug: "projet-freyssinet-communication-hybride"  # ← URL de la page
+slug: "projet-freyssinet-communication"  # ← URL de la page
 projectFolder: "freyssinet"
 featured: true
 
@@ -11,6 +11,9 @@ thumbnail: "hero-freyssinet.jpg"
 thumbnail_alt: "Événementiel - la carte de vœux numérique pour Freyssinet"
 
 gridSize: "miniWide"
+# gridSpanCols: 2
+# gridSpanRows: 3
+# gridCustom: "2x3"
 
 categories:
   - "Direction artistique"
@@ -23,6 +26,9 @@ clients:
   - "Freyssinet"
   
 couleur: "#67050dff"
+
+---
+
 
 images:
   - src: "freyssinet-print.jpg"
@@ -48,10 +54,3 @@ beforeAfter:
   rows: 2
   before: "freyssinet-repair-start.jpg"
   after: "freyssinet-repair-end.jpg"
----
-
-
-
-
-
-
