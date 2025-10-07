@@ -28,7 +28,6 @@ gridSize: "landscape"  #square",  "portrait",  "landscape",  "wide",  "tall",  "
 # === PAGE PROJET ===
 hero: "hero-tribord.jpg"
 
-
 rows:
 
   - elements:

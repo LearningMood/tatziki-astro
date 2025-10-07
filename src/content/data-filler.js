@@ -15,17 +15,17 @@ export const fillerConfig = {
     {
       id: 'quote-1',
       type: 'quote',
-      content: 'La créativité\nc\'est l\'intelligence\nqui s\'amuse',
-      author: 'Einstein',
+      content: "J'aime bien travailler sur des projets divers",
+      // author: 'Einstein',
       colors: {
-        gradient: ['#a36c94ff', '#76363eff'],
+        gradient: ['#ff976b', '#ff8569'],
         text: '#ffffff'
       }
     },
     {
       id: 'stat-projects',
       type: 'stat',
-      number: '50+',
+      number: '130+',
       label: 'Projets réalisés',
       colors: {
         gradient: ['#4d5f6eff', '#00f2fe'],

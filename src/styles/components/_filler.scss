@@ -1,6 +1,12 @@
 @use '../mixins' as *;
 
 .grid-item.filler {
+    font-family: var(--font-slab);
+
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: pre-line;
     grid-column: span var(--cols);
     grid-row: span var(--rows);
     border-radius: var(--border-radius);
@@ -22,9 +28,9 @@
         transition-delay: var(--delay);
     }
 
-    &.filler-quote {
-        background: linear-gradient(90deg, #ff976b 0%, #ff455e 100%);
-    }
+    // &.filler-quote {
+    //     background: linear-gradient(90deg, #ff976b 0%, #ff455e 100%);
+    // }
 
     &.filler-stat {
         background: linear-gradient(135deg, #79aad6 0%, #4680a9 100%);
@@ -69,10 +75,7 @@
 
         blockquote {
             margin: 0;
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            font-weight: 500;
-            line-height: 1.4;
-            white-space: pre-line;
+
         }
 
         cite {

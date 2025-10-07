@@ -2,42 +2,52 @@
 import { Image } from "astro:assets";
 import { fillerConfig } from "@/content/data-filler";
 import FillerItem from "./FillerItem.astro";
+import MasonryGridItem from "./MasonryGridItem.astro";
 import Placeholder from "@/assets/tatziki-placeholder.jpg";
 
 const { projects, miniProjects = [] } = Astro.props;
 
 // Patterns pour projets principaux (sur 24 colonnes)
 const mainPatterns = {
-    square: { cols: 6, rows: 6 }, //+2 pourle texte ?
+    feat: { cols: 12, rows: 9 },
     portrait: { cols: 8, rows: 10 },
+    square: { cols: 6, rows: 6 }, //+2 pourle texte ?
     landscape: { cols: 12, rows: 7 },
     wide: { cols: 12, rows: 5 },
-    miniWide: { cols: 6, rows: 4 },
     tall: { cols: 6, rows: 12 },
-    feat: { cols: 12, rows: 9 },
+    miniWide: { cols: 7, rows: 3 },
 };
 
 // Mini-projets de remplissage
 const fillerPatterns = [
-    { cols: 6, rows: 3 },
-    { cols: 4, rows: 4 },
-    { cols: 5, rows: 5 },
-    { cols: 4, rows: 5 },
-    { cols: 5, rows: 4 },
+    { cols: 5, rows: 3 },
+    { cols: 3, rows: 5 },
+    { cols: 3, rows: 3 },
+    { cols: 7, rows: 5 },
 ];
 
 // Distribuer les projets principaux
 const mainProjectsWithGrid = projects.map((project, index) => {
-    const { title, thumbnailImage, couleur, categories} = project.data;
+    const { title, thumbnailImage, couleur, categories } = project.data;
     //             ^^^^^^^^^^^^^^ Utilise le nouveau nom transformé
-    const patterns = ["square", "wide", "miniWide", "tall", "large", "feat", "landscape"];
-    const gridSize = project.data.gridSize || patterns[index % patterns.length];
+
+    const patterns = [
+        "feat",
+        "portrait",
+        "square",
+        "landscape",
+        "wide",
+        "tall",
+        "miniWide",
+    ];
+    // quelle taille attribuer automatiquement si gridSize n'est pas défini dans le frontmatter. Le projet 0 aura "square", le projet 1 aura "wide", etc.
+    // const gridSize = project.data.gridSize || patterns[index % patterns.length];
 
     // console.log("project.data", project.data);
     return {
-        ...project,
-        gridSize,
-        gridSpan: mainPatterns[gridSize],
+        ...project, // Copie tout le projet original
+        // gridSize, // Ajoute gridSize au niveau racine
+        // gridSpan: mainPatterns[gridSize], // Ajoute gridSpan au niveau racine
         type: "projet",
     };
 });
@@ -50,7 +60,7 @@ mainProjectsWithGrid.forEach((project, index) => {
     allItems.push({ ...project, type: "projet" });
 
     // Ajouter un filler tous les 3 projets
-    if (index % 3 === 1 && fillerIndex < fillerConfig.items.length) {
+    if (index % 6 === 1 && fillerIndex < fillerConfig.items.length) {
         const pattern =
             fillerConfig.patterns[fillerIndex % fillerConfig.patterns.length];
         allItems.push({
@@ -62,7 +72,6 @@ mainProjectsWithGrid.forEach((project, index) => {
     }
 });
 
-
 // console.log('Projets:', allItems.filter(i => i.type === 'projet').length);
 // console.log('Fillers:', allItems.filter(i => i.type === 'filler').length);
 // console.log('Premier filler:', allItems.find(i => i.type === 'filler'));
@@ -70,83 +79,57 @@ mainProjectsWithGrid.forEach((project, index) => {
 
 <div class="masonry-grid">
     {
-        allItems.map((item, index) => {
-            if (item.type === "projet") {
-                // Projet principal
-
-                const { slug } = item;
-                const { title, thumbnailImage, couleur, categories} =
-                    item.data;
-                //             ^^^^^^^^^^^^^^ Utilise le nouveau nom transformé
-                const { gridSpan, gridSize } = item;
-
-                return (
-                    <article
-                        class={`grid-item project size-${gridSize}`}
-                        style={`
-            --cols: ${gridSpan.cols};
-            --rows: ${gridSpan.rows};
-            --color: ${couleur || "#3085a3"};
-            --delay: ${(index % 10) * 0.1}s;
-          `}
-                        data-scroll-animate
-                    >
-                        <a href={`/projects/${slug}`}>
-                            <figure class="item-projet-image">
-                                {thumbnailImage ? (
-                                    <Image
-                                        src={thumbnailImage}
-                                        alt={title}
-                                        widths={[200, 400, 800]}
-                                        formats={["avif", "webp", "jpeg"]}
-                                        sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-                                        quality={70}
-                                        loading="lazy"
-                                        class="project-thumbnail"
-                                    />
-                                ) : (
-                                    // TODO vérif
-                                    <div class="placeholder-image">
-                                        <Image
-                                            src={Placeholder}
-                                            alt={title}
-                                            widths={[200, 400, 800]}
-                                            formats={["avif", "webp", "jpeg"]}
-                                            sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-                                            quality={50}
-                                            loading="lazy"
-                                            class="project-thumbnail"
-                                        />
-                                    </div>
-                                )}
-                                <figcaption class="item-overlay">
-                                    <span class="item-cta">Voir le projet</span>
-                                </figcaption>
-                            </figure>
-                            <div class="item-projet-info">
-                                <h3 class="project-title--home">{title}</h3>
-                                {categories && categories.length > 0 && (
-                                    <div class="categories">
-                                        {categories.slice(0, 2).map((cat) => (
-                                            <span class="category">{cat}</span>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        </a>
-                    </article>
-                );
-            } else {
-                return (
-                    <FillerItem
-                        filler={item.data}
-                        gridSpan={item.gridSpan}
-                        delay={(index % 10) * 0.1}
-                    />
-                );
+    allItems.map((item, index) => {
+        if (item.type === "projet") {
+            // 🔍 Debug
+            console.log(`Projet ${index}:`, {
+                slug: item.slug,
+                hasData: !!item.data,
+                hasThumbnail: !!item.data?.thumbnailImage,
+                keys: Object.keys(item.data || {})
+            });
+            
+            const { slug, data } = item;
+            const { 
+                title, 
+                thumbnailImage, 
+                couleur, 
+                categories, 
+                gridSize: gridSizeFromData 
+            } = data;
+            
+            // ⚠️ Vérification temporaire
+            if (!thumbnailImage) {
+                console.error(`❌ Pas de thumbnail pour ${slug}`);
             }
-        })
-    }
+            
+            const gridSize = gridSizeFromData || patterns[index % patterns.length];
+            const gridSpan = mainPatterns[gridSize];
+
+            return (
+                <MasonryGridItem 
+                    title={title}
+                    gridSize={gridSize}
+                    cols={gridSpan.cols}
+                    rows={gridSpan.rows}
+                    couleur={couleur}
+                    slug={slug}
+                    thumbnail={thumbnailImage}
+                    categories={categories}
+                    index={index}
+                />
+            );
+        }
+        
+        return (
+            <FillerItem
+                filler={item.data}
+                gridSpan={item.gridSpan}
+                delay={(index % 10) * 0.1}
+            />
+        );
+    })
+}
 </div>
 
 <script>

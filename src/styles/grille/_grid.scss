@@ -32,13 +32,6 @@
   transform: scale(1.05);
 }
 
-figcaption {
-  padding: var(--space-xs);
-  font-size: 0.875rem;
-  color: #666;
-  text-align: center;
-}
-
 /* Masonry support (CSS moderne) */
 @supports (grid-template-rows: masonry) {
   .gallery {

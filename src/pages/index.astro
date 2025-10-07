@@ -39,17 +39,24 @@ const featuredWithImages = await Promise.all(
 
 // Les seuls champs utilisés pour la home :
 const projectsWithThumbnails = await Promise.all(
-  projects.map(async (project) => ({
-    slug: project.slug,
-    data: {
-      title: project.data.title,
-      categories: project.data.categories,
-      couleur: project.data.couleur,
-      gridSize: project.data.gridSize, // ← Taille de la carte
-      thumbnailImage: await getProjectImage(project, project.data.thumbnail), // ← Image
-      thumbnail_alt: project.data.thumbnail_alt,
-    },
-  })),
+  projects.map(async (project) => {
+    const thumbnail = await getProjectImage(project, project.data.thumbnail);
+    
+    // 🔍 Debug
+    console.log(`Image pour ${project.slug}:`, !!thumbnail);
+    
+    return {
+      slug: project.slug,
+      data: {
+        title: project.data.title,
+        categories: project.data.categories,
+        couleur: project.data.couleur,
+        gridSize: project.data.gridSize,
+        thumbnailImage: thumbnail,
+        thumbnail_alt: project.data.thumbnail_alt,
+      },
+    };
+  }),
 );
 
 // console.log("✅ Projets chargés:", projectsWithThumbnails.length);

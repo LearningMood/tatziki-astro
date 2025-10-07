@@ -1,0 +1,91 @@
+---
+import { Image } from "astro:assets";
+import Placeholder from "@/assets/tatziki-placeholder.jpg";
+
+// Props avec types (optionnel mais recommandé)
+interface Props {
+    title: string;
+    gridSize: string;
+    cols: number;
+    rows: number;
+    couleur?: string;
+    slug: string;
+    thumbnail?: ImageMetadata;
+    categories?: string[];
+    index: number; // ⚠️ MANQUANT dans vos props
+}
+
+const { 
+    title, 
+    gridSize, 
+    cols, 
+    rows, 
+    couleur, 
+    slug, 
+    thumbnail,  // Peut être undefined 
+    categories = [], 
+    index = 0 
+} = Astro.props;
+---
+
+<article
+    class={`grid-item project size-${gridSize}`}
+    style={`
+            --cols: ${cols};
+            --rows: ${rows};
+            --color: ${couleur || "#3085a3"};
+            --delay: ${(index % 10) * 0.1}s;
+          `}
+    data-scroll-animate
+>
+    <a href={`/projects/${slug}`}>
+        <figure class="item-projet-image">
+            <div class="bloc-overlay">
+                {
+                    thumbnail ? (
+                        <Image
+                            src={thumbnail}
+                            alt={title}
+                            widths={[200, 400, 800]}
+                            formats={["avif", "webp", "jpeg"]}
+                            sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+                            quality={70}
+                            loading="lazy"
+                            class="project-thumbnail"
+                        />
+                    ) : (
+
+                        <div class="placeholder-image">
+                            <Image
+                                src={Placeholder}
+                                alt={title}
+                                widths={[200, 400, 800]}
+                                formats={["avif", "webp", "jpeg"]}
+                                sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+                                quality={50}
+                                loading="lazy"
+                                class="project-thumbnail"
+                            />
+                        </div>
+                    )
+                }
+                <div class="item-overlay">
+                    <span class="item-cta">Voir le projet</span>
+                </div>
+            </div>
+
+            <figcaption class="item-projet-info">
+                <h3 class="project-title--home">{title}</h3>
+                {
+                    categories && categories.length > 0 && (
+                        <div class="categories">
+                            {categories.slice(0, 2).map((cat) => (
+                                <span class="category">{cat}</span>
+                            ))}
+                        </div>
+                    )
+                }
+            </figcaption>
+        </figure>
+    </a>
+</article>

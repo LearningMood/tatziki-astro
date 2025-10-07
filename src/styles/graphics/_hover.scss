@@ -1,4 +1,4 @@
-figure.item-projet-image figcaption::before {
+figure.item-projet-image .item-overlay::before {
     z-index: 1;
     position: absolute;
     top: 1rem;
@@ -15,7 +15,7 @@ figure.item-projet-image figcaption::before {
     transform: scale(0, 1)
 }
 
-figure.item-projet-image figcaption::after {
+figure.item-projet-image .item-overlay::after {
     z-index: 1;
     position: absolute;
     display: block;
@@ -34,8 +34,8 @@ figure.item-projet-image figcaption::after {
     -ms-transition: opacity 0.4s, transform 0.4s;
     -o-transition: opacity 0.4s, transform 0.4s;
 }
-figure.item-projet-image:hover figcaption::before,
-figure.item-projet-image:hover figcaption::after {
+figure.item-projet-image:hover .item-overlay::before,
+figure.item-projet-image:hover .item-overlay::after {
     opacity: 1;
     transform: scale(1)
 }
