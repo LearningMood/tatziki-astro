@@ -49,32 +49,19 @@ rows:
       - type: "image"
         src: "decathlon-olaian-catalog-02.jpg"
         alt: "Détail fond"
-        gridColumn: "1 / span 10"
+        gridColumn: "8 / span 10"
 
-      - type: "objectives"  
-        gridColumn: "11 / span 6"
-        items:
-          - "Proposer une mise en forme homogène et dynamique de la gamme de produits Olaian : surf, néoprène et bodyboard"
-          - "Mise en avant de l'innovation et de l'ingénierie des produits Héros"
-          - "Optimisation de la mise en page pour une visualisation multi supports"
   - elements:
       - type: "image"
         src: "decathlon-olaian-catalog-sommaire.jpg"
         alt: "Sommaire du catalogue Surf Decathlon Olaian"
         gridColumn: "4 / span 18"
-# OBJECTIFS
+
   - elements:
         - type: "image"
           src: "decathlon-olaian-catalog-05.jpg"
           alt: "Couv du catalogue Decathlon Takuma - Efoil"
           gridColumn: "4 / span 8"
-
-        - type: "objectives"
-          gridColumn: "13 / span 8"
-          items:
-            - "Réaliser le support de lancement de l’Efoil"
-            - "Présenter les caractéristiques techniques et potentialités du nouveau produit de Takuma"
-            - "Valoriser la gamme de produits complémentaires"
   - elements:
         - type: "image"
           src: "decathlon-olaian-catalog-05.jpg"
@@ -168,4 +155,4 @@ rows:
 
 ---
 
-
+Proposer une mise en forme homogène et dynamique de la gamme de produits Olaian : surf, néoprène et bodyboard. Mise en avant de l'innovation et de l'ingénierie des produits Héros. Optimisation de la mise en page pour une visualisation multi supports

@@ -1,16 +1,19 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-
-hero-walter-glacier.jpg
-glacier-01.jpg
-glacier-02.jpg
-glacier-03.jpg
-glacier-04.jpg
-glacier-05.jpg
-glacier-06.png
-glacier-07.jpg
-glacier-08.gif
-glacier-09.jpg
-glacier-10.jpg
-glacier-11.jpg
-glacier-12.jpg
-
+<dirinfo>
+<files>
+	<item key='glacier-01.jpg20220722212200' />
+	<item key='glacier-02.jpg20220722212214' />
+	<item key='glacier-03.jpg20220722212210' />
+	<item key='glacier-04.jpg20220722212208' />
+	<item key='glacier-05.jpg20220722212210' />
+	<item key='glacier-visual-studio.gif20220725104114' />
+	<item key='glacier-06.jpg20220722213616' />
+	<item key='glacier-07.jpg20220725103458' />
+	<item key='glacier-08.jpg20220722212950' />
+	<item key='glacier-09.jpg20220722212950' />
+	<item key='glacier-10.jpg20220722212204' />
+	<item key='glacier-11.jpg20220725104500' />
+	<item key='hero-walter-glacier.jpg20220722212118' />
+	<item key='thumb-glacier.png20220722202536' />
+</files>
+</dirinfo>

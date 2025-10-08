@@ -31,35 +31,34 @@ hero: "hero-bal-pompiers.jpg"
 rows:
   # Rangée 1 : Deux images qui se chevauchent
   - elements:
+      # - type: "objectives"
+      #   gridColumn: "1 / span 10"
+      #   items:
+      #     - "Proposer une atmosphère festive & ensoleillée pour cet événement emblématique"
+      #     - "Décliner les déclinaisons de la communication : supports imprimés et diffusion en ligne"
+
       - type: "image"
         src: "bal-pompiers-01.jpg"
         alt: "Affiche du bal des pompiers Hendaye 2022"
-        gridColumn: "1 / span 8"
+        gridColumn: "7 / span 12"
 
-  - elements:
-        - type: "image"
-          src: "bal-pompiers-04.jpg"
-          alt: "Diffusion de l'affiche du bal des pompiers sur les abribus"
-          gridColumn: "4 / span 12"
-
-# Rangée 2 : Image pleine largeur
   - elements:
       - type: "before-after"
         beforeSrc: "bal-pompiers-05.jpg"
         afterSrc: "bal-pompiers-06.jpg"
-        alt: "Petit détail"
-        gridColumn: "2 / span 6"
+        alt: "Affichage de l'événement"
+        gridColumn: "2 / span 8"
         # label: "Détail de l'affiche"
 
-      - type: "objectives"
-        gridColumn: "10 / span 5"
-        items:
-          - "Proposer une atmosphère festive & ensoleillée pour cet événement emblématique"
-          - "Décliner les déclinaisons de la communication : supports imprimés et diffusion en ligne"
+      - type: "image"
+        src: "bal-pompiers-04.jpg"
+        alt: "Diffusion de l'affiche du bal des pompiers sur les abribus"
+        gridColumn: "10 / span 13"
 
   - elements:
         - type: "image"
           src: "bal-pompiers-02.jpg"
           alt: "Déclinaison de la communication du Bal des Pompiers"
-          gridColumn: "4 / span 10"  # Chevauche la première (commence à col 6)
+          gridColumn: "6 / span 15"  # Chevauche la première (commence à col 6)
 ---
+Proposer une atmosphère festive & ensoleillée pour cet événement emblématique. Décliner les déclinaisons de la communication : supports imprimés et diffusion en ligne
