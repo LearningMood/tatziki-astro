@@ -1,0 +1,25 @@
+@use 'shared' as *;
+
+.footer {
+  background: get-color(indigo, 800);
+  color: get-color(indigo, 200);
+  padding: space(12);
+}
+.footer__infos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: space(8);
+  padding: space(8) space(12); 
+
+  @include mq-max(md) {
+    display: block;
+  }
+}
+
+.footer__bottom {
+  display: block;
+  padding: space(12);
+  text-align: center;
+  background-color: #000;
+  color: get-color(indigo, 400);
+}

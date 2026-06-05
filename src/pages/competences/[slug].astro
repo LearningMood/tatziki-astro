@@ -1,0 +1,25 @@
+---
+// src/pages/competence/[slug].astro
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const competences = await getCollection('competences');
+  return competences.map((c) => ({
+    params: { slug: c.id },
+    props: { competence: c },       // on passe l'objet directement
+  }));
+}
+
+const { competence } = Astro.props;  // pas besoin de getEntry
+
+// on filtre les projets liés à cette compétence
+const projets = await getCollection('projets', ({ data }) =>
+  data.competences.some((c) => c.id === competence.id)
+);
+---
+
+<h1>{competence.data.label}</h1>
+
+{projets.map((projet) => (
+  <a href={`/projet/${projet.id}`}>{projet.data.title}</a>
+))}

@@ -1,0 +1,28 @@
+.debug-wrapper {
+    position: relative;
+  }
+
+  .debug-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 0, 0, 0.9);
+    color: white;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-family: monospace;
+    z-index: 100;
+    white-space: nowrap;
+  }
+
+  .debug-label--video {
+    background: rgba(0, 100, 255, 0.9);
+  }
+
+  .debug-label--text {
+    background: rgba(0, 150, 0, 0.9);
+  }
+
+  .debug-label--special {
+    background: rgba(150, 0, 150, 0.9);
+  }

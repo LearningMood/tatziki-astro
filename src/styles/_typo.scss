@@ -1,0 +1,48 @@
+@use 'shared' as *;
+p, ul, ol, span, a {
+    font-family: $font-texte;
+    color: $noir-500;
+}
+
+p{
+    line-height: line-height(relaxed);
+}
+p.baseline {
+    font-size: 1.6rem;
+    color: #fff
+}
+
+blockquote p {
+    font-family: $font-manuscrite;
+}
+
+figcaption {
+    font-family: $font-texte;
+    color: get-color(noir, 500);
+    text-align: center;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+::selection {
+    background: $tatziki;
+    text-shadow: none;
+    color: #fff;
+}
+
+::marker {
+    color: $tatziki;
+}
+
+// Listes
+ul.contains-task-list {
+    list-style: none;
+}
+input {
+    font-family: $font-titre;
+    font-weight: 500;
+}
+
+input[type="checkbox"] {
+    margin-right: 1rem;
+}

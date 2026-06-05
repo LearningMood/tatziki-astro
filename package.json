@@ -1,0 +1,21 @@
+{
+  "name": "tatziki-portfolio",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "optimize-images": "node scripts/optimize-images.js"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^6.0.1",
+    "astro": "^6.4.2"
+  },
+  "devDependencies": {
+    "glob": "10.5.0",
+    "sass-embedded": "1.97.1",
+    "sharp": "0.33.5"
+  }
+}

@@ -1,0 +1,125 @@
+---
+// components/projet/ProjetItem.astro
+//Dispatch conditionnel
+
+import type { OptimizedImage } from "@/lib/projectImages";
+import Image from "./Image.astro";
+import Video from "./Video.astro";
+import Blockquote from "./Blockquote.astro";
+import Caption from "./Caption.astro";
+import BeforeAfter from "./BeforeAfter.astro";
+import HorizontalSlider from "./HorizontalSlider.astro";
+
+interface GroupItem {
+  col?: number;
+  span?: number;
+  top?: string;
+  parallax?: number;
+  type?: "video" | "blockquote" | "caption" | "before-after" | "slider";
+  src?: string;
+  aspectRatio?: string;
+  content?: string;
+  author?: string;
+  width?: string;
+  styled?: boolean;  // ← Nouveau
+  labelAvant?: string;
+  labelApres?: string;
+}
+
+interface Props {
+  item: GroupItem;
+  img?: OptimizedImage;
+  imageIndex?: number;
+  beforeAfterData?: { before: OptimizedImage; after: OptimizedImage; name: string };
+  sliderImages?: OptimizedImage[];
+  baseColor: string;
+  blockIndex: number;
+  debug?: boolean;
+  styled?: boolean;  // ← Nouveau
+}
+
+const { 
+  item, 
+  img, 
+  imageIndex,
+  beforeAfterData,
+  sliderImages = [],
+  baseColor,
+  blockIndex,
+  debug = false,
+  styled = false
+} = Astro.props;
+
+// Détermine le type d'élément
+const itemType = item.type || "image";
+---
+
+{/* IMAGE */}
+{itemType === "image" && img && (
+  <Image
+    img={img}
+    config={{
+      col: item.col!,
+      span: item.span!,
+      top: item.top!,
+      parallax: item.parallax || 0,
+    }}
+    imageIndex={imageIndex!}
+    baseColor={baseColor}
+    blockIndex={blockIndex}
+    debug={debug}
+    styled={styled}
+  />
+)}
+
+{/* VIDEO */}
+{itemType === "video" && item.src && (
+  <Video
+    src={item.src}
+    col={item.col}
+    span={item.span}
+    top={item.top}
+    aspectRatio={item.aspectRatio}
+    debug={debug}
+  />
+)}
+
+{/* BLOCKQUOTE */}
+{itemType === "blockquote" && item.content && (
+  <Blockquote
+    content={item.content}
+    col={item.col!}
+    span={item.span!}
+    top={item.top!}
+    debug={debug}
+  />
+)}
+
+{/* CAPTION */}
+{itemType === "caption" && item.content && (
+  <Caption
+    content={item.content}
+    author={item.author}
+    col={item.col!}
+    span={item.span!}
+    top={item.top!}
+    debug={debug}
+  />
+)}
+
+{/* BEFORE/AFTER */}
+{itemType === "before-after" && beforeAfterData && (
+  <BeforeAfter
+    before={beforeAfterData.before}
+    after={beforeAfterData.after}
+    name={beforeAfterData.name}
+    width={item.width || "65"} 
+    labelAvant={item.labelAvant}
+    labelApres={item.labelApres}
+  />
+)}
+
+{/* SLIDER */}
+{itemType === "slider" && sliderImages.length > 0 && (
+  <HorizontalSlider images={sliderImages} />
+)}

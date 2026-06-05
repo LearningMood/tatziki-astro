@@ -1,0 +1,95 @@
+@use "sass:color";
+
+// ============================================
+// COULEURS AVEC VARIATIONS
+// ============================================
+
+// INDIGO
+$indigo-50: #f0f4f8;
+$indigo-100: #d9e2ec;
+$indigo-200: #bcccdc;
+$indigo-300: #9fb3c8;
+$indigo-400: #829ab1;
+$indigo-500: #546b93;   // Couleur de base
+$indigo-600: #44567a;
+$indigo-700: #334162;
+$indigo-800: #232d49;
+$indigo-900: #121831;
+
+// AZUL
+$azul-50: #e0fcff;
+$azul-100: #bef8fd;
+$azul-200: #87eaf2;
+$azul-300: #54d1db;
+$azul-400: #38bec9;
+$azul-500: #0cb4ce;    // Couleur de base
+$azul-600: #0a9bb5;
+$azul-700: #07829c;
+$azul-800: #056983;
+$azul-900: #03506a;
+
+// POMME
+$pomme-50: #f7fee7;
+$pomme-100: #ecfccb;
+$pomme-200: #d9f99d;
+$pomme-300: #d4f17e;
+$pomme-400: #d0ec5f;
+$pomme-500: #c9e655;   // Couleur de base
+$pomme-600: #a1b944;
+$pomme-700: #798c33;
+$pomme-800: #515e22;
+$pomme-900: #293111;
+
+// NOIR (gris)
+$noir-50: #f9fafb;
+$noir-100: #fcfcfc;
+$noir-200: #e5e7eb;
+$noir-300: #d1d5db;
+$noir-400: #9ca3af;
+$noir-500: #6b7280;
+$noir-600: #515455;
+$noir-700: #374151;
+$noir-800: #1f2937;
+$noir-900: #111827;
+
+// TOMATO 
+$tomato-50: #fff3f1;
+$tomato-100: #ffe4df;
+$tomato-200: #ffcec5;
+$tomato-300: #ffac9d;
+$tomato-400: #ff7c64;
+$tomato-500: #ff6347;
+$tomato-600: #ed3615;
+$tomato-700: #c8290d;
+$tomato-800: #a5260f;
+$tomato-900: #882614;
+
+// ============================================
+// COULEURS SIMPLES (pas de variations)
+// ============================================
+$color-main: $azul-500;
+$tatziki: #6fbfb1;
+$framboise: #fe386f;
+
+$typo: #3c7471;
+$couleur: #dc6337;
+$icono: #c14758;
+$compo: #59a0c7;
+$histoire: #43538a;
+
+// Formation UX Design
+$recherche: #e27235;
+$livrables: #2b6067;
+$design: #6aa84f;
+
+// Outils
+$google-sheet: #05ac47;
+$miro: #ffdd33;
+$wooclap: #005eff;
+
+$tomato: $tomato-500;
+$rose: #eb7777;
+$gold: #f2b348;
+$color-text-default: $noir-800;
+$color-titre-default: $noir-600;
+

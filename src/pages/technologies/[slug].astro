@@ -1,0 +1,25 @@
+---
+// src/pages/technologies/[slug].astro
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const technologies = await getCollection('technologies');
+  return technologies.map((t) => ({
+    params: { slug: t.id },
+    props: { technology: t },       // on passe l'objet directement
+  }));
+}
+
+const { technology } = Astro.props;  // pas besoin de getEntry
+
+// on filtre les projets liés à cette technologie
+const projets = await getCollection('projets', ({ data }) =>
+  data.technologies.some((t) => t.id === technology.id)
+);
+---
+
+<h1>{technology.data.label}</h1>
+
+{projets.map((projet) => (
+  <a href={`/projet/${projet.id}`}>{projet.data.title}</a>
+))}

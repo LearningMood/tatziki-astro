@@ -1,0 +1,129 @@
+@use 'shared' as *;
+
+  .footer-global {
+    background: get-color(indigo, 500);
+    color: white;
+    padding: space(12) 0 space(8);
+  }
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 space(8);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: space(12);
+    margin-bottom: space(4);
+  }
+
+  .footer-section h3 {
+    font-size: 1.25rem;
+    margin: 0 0 space(6) 0;
+    font-weight: 700;
+  }
+
+  .footer-intro {
+    margin: 0 0 space(6) 0;
+    opacity: 0.9;
+  }
+
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: space(4);
+    margin-bottom: space(6);
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: space(3);
+    color: white;
+    text-decoration: none;
+    padding: space(3) space(4);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(4px);
+    }
+  }
+
+  .contact-icon {
+    font-size: 1.5rem;
+  }
+
+  .btn-contact {
+    font-family: $font-titre;
+    display: inline-block;
+    padding: space(4) space(8);
+    background: white;
+    color: get-color(indigo, 500);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s;
+    text-align: center;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // Liens
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: space(3);
+  }
+
+  .footer-links a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+  }
+
+  .formation-duree {
+    font-size: 0.875rem;
+    opacity: 0.7;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  // Bottom
+  .footer-bottom {
+    padding-top: space(8);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+
+    p {
+      margin: 0;
+      opacity: 0.7;
+      font-size: 0.875rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }

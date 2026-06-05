@@ -1,0 +1,101 @@
+---
+import type { OptimizedImage } from "@/lib/projectImages";
+import ProjetItem from "./ProjetItem.astro";
+
+interface BeforeAfterPair {
+  before: OptimizedImage;
+  after: OptimizedImage;
+  name: string;
+}
+
+interface GroupItem {
+  col?: number;
+  span?: number;
+  top?: string;
+  parallax?: number;
+  type?: "video" | "blockquote" | "caption" | "before-after" | "slider";
+  src?: string;
+  aspectRatio?: string;
+  content?: string;
+  author?: string;
+  width?: string;
+  name?: string; // ← Pour identifier quelle paire before/after
+}
+
+interface Props {
+  items: GroupItem[];
+  images: OptimizedImage[];
+  beforeAfterImages: BeforeAfterPair[]; // ← Tableau de paires
+  sliderImages?: OptimizedImage[];
+  baseColor: string;
+  groupIndex: number;
+  startImageIndex: number;
+  debug?: boolean;
+}
+
+const {
+  items = [],
+  images = [],
+  beforeAfterImages = [], // ← Tableau
+  sliderImages = [],
+  baseColor = "#e5e5e5",
+  groupIndex = 0,
+  startImageIndex = 0,
+  debug = false,
+} = Astro.props;
+
+let imageOffset = 0;
+---
+
+<div class="projet-grid lignes" data-group={groupIndex}>
+  {
+    debug && (
+      <div style="grid-column: 1 / -1; background: #333; color: #0f0; padding: 8px; font-family: monospace; font-size: 11px;">
+        Groupe {groupIndex} | Items: {items?.length || 0} | Images:{" "}
+        {images?.length || 0} | BeforeAfter: {beforeAfterImages?.length || 0}
+      </div>
+    )
+  }
+
+  {
+    items &&
+      items.length > 0 &&
+      items.map((item, i) => {
+        const isImage = !item.type;
+        const img = isImage && images ? images[imageOffset] : undefined;
+        const imageIndex = isImage ? startImageIndex + imageOffset : undefined;
+
+        if (isImage && img) {
+          imageOffset++;
+        }
+
+        // Trouver la bonne paire before/after par nom
+        let beforeAfterData = undefined;
+        if (item.type === "before-after") {
+          if (item.name) {
+            // Chercher par nom
+            beforeAfterData = beforeAfterImages.find(
+              (ba) => ba.name === item.name,
+            );
+          } else {
+            // Fallback : prendre la première
+            beforeAfterData = beforeAfterImages[0];
+          }
+        }
+
+        return (
+          <ProjetItem
+            item={item}
+            img={img}
+            imageIndex={imageIndex}
+            beforeAfterData={beforeAfterData}
+            sliderImages={sliderImages}
+            baseColor={baseColor}
+            blockIndex={i}
+            debug={debug}
+            styled={item.styled}
+          />
+        );
+      })
+  }
+</div>

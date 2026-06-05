@@ -1,0 +1,518 @@
+---
+import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
+import { hexToRgba } from "@/helpers/color.ts";
+const { projects } = Astro.props;
+
+// Import dynamique de TOUTES les images du dossier projets
+const allImages = import.meta.glob(
+    "/src/assets/projets/**/*.{jpg,jpeg,png,webp}",
+    { eager: true },
+);
+
+function toUrl(mod: unknown): string {
+    if (mod && typeof mod === "object") {
+        const d = "default" in mod ? (mod as any).default : mod;
+        if (typeof d === "string") return d;
+        if (d && typeof d === "object" && "src" in d)
+            return (d as any).src as string;
+    }
+    return "";
+}
+
+// Pattern de disposition (basé sur colonnes/24)
+const layoutPatterns = {
+    pinterest: [
+        { start: 3, cols: 6 }, // Colonnes 3-8 (1/4)
+        { start: 9, cols: 6 }, // Colonnes 9-14 (1/4)
+        { start: 15, cols: 12 }, // Colonnes 15-26 (1/2)
+        { start: 3, cols: 8 }, // Colonnes 3-10 (1/3)
+        { start: 11, cols: 8 }, // Colonnes 11-18 (1/3)
+        { start: 19, cols: 8 }, // Colonnes 19-26 (1/3)
+        { start: 3, cols: 18 }, // Colonnes 3-20 (3/4)
+        { start: 21, cols: 6 }, // Colonnes 21-26 (1/4)
+    ],
+};
+
+const pattern = layoutPatterns.pinterest;
+
+const projectsWithLayout = await Promise.all(
+    projects.map(async (project, i) => {
+        const patternIndex = i % pattern.length;
+        const layout = pattern[patternIndex];
+
+        // Récupérer le thumbnail
+        const thumbPath = Object.keys(allImages).find(
+            (path) =>
+                path.includes(`/projets/${project.data.folder}/`) &&
+                path.match(/thumb\.(jpg|jpeg|png|webp)$/i),
+        );
+
+        // ✨ Utiliser directement l'objet importé, pas toUrl()
+        const thumbImage = thumbPath ? allImages[thumbPath] : null;
+
+        let optimizedThumb = null;
+        if (thumbImage) {
+            // Récupérer l'objet image depuis le module
+            const imageModule = (thumbImage as any).default || thumbImage;
+
+            optimizedThumb = await getImage({
+                src: imageModule, // ✅ Passer l'objet importé directement
+                width: 800,
+                format: "webp",
+                quality: 80,
+            });
+        }
+
+        // Optimiser les autres images
+        const projectImagePaths = Object.entries(allImages).filter(
+            ([path]) =>
+                path.includes(`/projets/${project.data.folder}/`) &&
+                !path.match(/thumb\.(jpg|jpeg|png|webp)$/i),
+        );
+
+        const optimizedProjectImages = await Promise.all(
+            projectImagePaths.map(async ([_, mod]) => {
+                // ✅ Utiliser l'objet importé
+                const imageModule = (mod as any).default || mod;
+
+                const optimized = await getImage({
+                    src: imageModule,
+                    width: 1600,
+                    format: "webp",
+                    quality: 85,
+                });
+                return optimized.src;
+            }),
+        );
+
+        return {
+            ...project,
+            layout,
+            thumbSrc: optimizedThumb?.src || null,
+            projectImages: optimizedProjectImages,
+            overlayColor: hexToRgba(project.data.color || "#000000", 0.6),
+        };
+    }),
+);
+---
+
+<div class="page-wrapper" data-page-bg>
+    <header class="portfolio-header">
+        <div class="container">
+            <h1>Bonjour</h1>
+            <p>Découvrez mes projets.</p>
+
+            <div class="layout-switcher">
+                <button
+                    class="layout-btn"
+                    data-layout="masonry"
+                    aria-label="Vue Masonry"
+                    title="Masonry (grille variée)"
+                >
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                    >
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="10"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                        <rect x="14" y="17" width="7" height="4"></rect>
+                    </svg>
+                </button>
+
+                <button
+                    class="layout-btn"
+                    data-layout="flex"
+                    aria-label="Vue Liste"
+                    title="Liste (3 colonnes)"
+                >
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                    >
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                        <rect x="3" y="4" width="4" height="4"></rect>
+                        <rect x="3" y="10" width="4" height="4"></rect>
+                        <rect x="3" y="16" width="4" height="4"></rect>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container--full">
+            <section class="grid masonry-projects" data-layout-mode="masonry">
+                {
+                    projectsWithLayout.map((project) => (
+                        <article
+                            class:list={['project-card', 'reveal-on-scroll',{ featured: project.data.featured }]}
+                            style={`
+                            grid-column: ${project.layout.start} / span ${project.layout.cols}; 
+                            --project-color: ${project.data.color};
+                        `}
+                            data-project-id={project.id}
+                            data-folder={project.data.folder}
+                            data-images={JSON.stringify(project.projectImages)}
+                        >
+                            <div class="project-thumbnail">
+                                {project.thumbSrc && (
+                                    <img
+                                        src={project.thumbSrc}
+                                        alt={project.data.title}
+                                        loading="lazy"
+                                    />
+                                )}
+
+                                <div
+                                    class="project-overlay"
+                                    style={`background-color: ${project.overlayColor};`}
+                                >
+                                    {/* <!-- ✨ Bouton + seulement en mode masonry --> */}
+                                    <button
+                                        class="btn-plus btn-expand"
+                                        aria-label="Voir plus d'images"
+                                    >
+                                        <span class="plus-icon">+</span>
+                                    </button>
+
+                                    {/* <!-- ✨ Lien direct, visible dans les 2 modes --> */}
+                                    <a
+                                        href={`/projets/${project.id}`}
+                                        class="btn-view-project"
+                                    >
+                                        Voir le projet
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="project-info">
+                                <h3>{project.data.title}</h3>
+                                {project.data.categories && (
+                                    <p class="categories">
+                                        {project.data.categories.join(" • ")}
+                                    </p>
+                                )}
+                            </div>
+                        </article>
+                    ))
+                }
+            </section>
+        </div>
+    </main>
+</div>
+
+<script>
+  let currentlyExpanded: string | null = null;
+  let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+  let canScrollRemove = false;
+  let currentLayout: "masonry" | "flex" = "flex";
+  let observer: IntersectionObserver;
+
+  // ✨ Fonction pour charger les images avec classe .loaded
+function handleImageLoading() {
+  const images = document.querySelectorAll('.project-thumbnail img');
+  
+  images.forEach((img) => {
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', () => {
+        img.classList.add('loaded');
+      });
+    }
+  });
+}
+
+  // ============================================
+  // FONCTIONS UTILITAIRES
+  // ============================================
+
+  function findLastCardInRow(clickedCard: HTMLElement): HTMLElement {
+    const clickedTop = clickedCard.offsetTop;
+    const allCards = Array.from(
+      document.querySelectorAll(".project-card"),
+    ) as HTMLElement[];
+    const clickedIndex = allCards.indexOf(clickedCard);
+    let lastCardInRow = clickedCard;
+
+    for (let i = clickedIndex + 1; i < allCards.length; i++) {
+      if (allCards[i].offsetTop === clickedTop) {
+        lastCardInRow = allCards[i];
+      } else {
+        break;
+      }
+    }
+
+    return lastCardInRow;
+  }
+
+// ============================================
+  // RÉVÉLATION AU SCROLL (fonctionne dans les 2 modes)
+  // ============================================
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15,
+  };
+
+  const revealOnScroll = (entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  };
+
+  observer = new IntersectionObserver(revealOnScroll, observerOptions);
+
+  function initReveal() {
+    const cardsToReveal = document.querySelectorAll('.reveal-on-scroll');
+    cardsToReveal.forEach((card) => observer.observe(card));
+  }
+
+// Appeler au chargement ET au changement de layout
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initReveal();
+    handleImageLoading();
+  });
+} else {
+  initReveal();
+  handleImageLoading();
+}
+
+  function closeExpandedImages() {
+    const expandedElements = document.querySelectorAll(".expanded-images");
+    const expandedHeaders = document.querySelectorAll(".expanded-project-header");
+    const activeCards = document.querySelectorAll(".project-card.is-expanded");
+    const pageWrapper = document.querySelector("[data-page-bg]") as HTMLElement;
+    const projectsContainer = document.querySelector(".masonry-projects");
+
+    // Retirer les classes
+    activeCards.forEach((card) => card.classList.remove("is-expanded"));
+
+    if (projectsContainer) {
+      projectsContainer.classList.remove("has-expanded");
+    }
+
+    if (pageWrapper) {
+      pageWrapper.style.setProperty("--bg-color", "#ffffff");
+      pageWrapper.classList.remove("project-active");
+    }
+
+    // Animer et supprimer les en-têtes
+    expandedHeaders.forEach((el) => {
+      (el as HTMLElement).style.animation = "fadeOut 0.3s ease-out forwards";
+      setTimeout(() => el.remove(), 300);
+    });
+
+    // Animer et supprimer les images
+    expandedElements.forEach((el) => {
+      (el as HTMLElement).style.animation = "slideOut 0.4s ease-out forwards";
+      setTimeout(() => el.remove(), 400);
+    });
+
+    currentlyExpanded = null;
+    canScrollRemove = false;
+  }
+
+  // ============================================
+  // GESTION DU SWITCH DE LAYOUT
+  // ============================================
+
+  const layoutButtons = document.querySelectorAll(".layout-btn");
+  const projectsGrid = document.querySelector(".masonry-projects") as HTMLElement;
+
+  layoutButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const layout = btn.getAttribute("data-layout") as "masonry" | "flex";
+
+      // Fermer les projets ouverts
+      if (currentlyExpanded) {
+        closeExpandedImages();
+      }
+
+      // Mettre à jour les boutons
+      layoutButtons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      // Changer le mode
+      if (projectsGrid) {
+        projectsGrid.setAttribute("data-layout-mode", layout);
+        currentLayout = layout;
+      }
+
+      // Sauvegarder la préférence
+      localStorage.setItem("preferredLayout", layout);
+    });
+  });
+
+  // Restaurer la préférence au chargement
+  const savedLayout = localStorage.getItem("preferredLayout") as "masonry" | "flex" | null;
+  if (savedLayout && projectsGrid) {
+    projectsGrid.setAttribute("data-layout-mode", savedLayout);
+    currentLayout = savedLayout;
+
+    const activeBtn = document.querySelector(`[data-layout="${savedLayout}"]`);
+    if (activeBtn) {
+      layoutButtons.forEach((b) => b.classList.remove("active"));
+      activeBtn.classList.add("active");
+    }
+  } else {
+    // Activer Masonry par défaut
+    const defaultBtn = document.querySelector('[data-layout="masonry"]');
+    if (defaultBtn) defaultBtn.classList.add("active");
+  }
+
+  // ============================================
+  // GESTION DU CLIC SUR LE BOUTON +
+  // ============================================
+
+  document.addEventListener("click", async (e) => {
+    // Ignorer si mode flex
+    if (currentLayout === "flex") return;
+
+    const expandBtn = (e.target as HTMLElement).closest(".btn-expand");
+    if (!expandBtn) return;
+
+    const card = expandBtn.closest(".project-card") as HTMLElement;
+    const projectId = card.dataset.projectId;
+    const imagesJson = card.dataset.images;
+    const projectColor = getComputedStyle(card)
+      .getPropertyValue("--project-color")
+      .trim();
+
+    if (!projectId || !imagesJson) return;
+
+    // Toggle : fermer si déjà ouvert
+    if (currentlyExpanded === projectId) {
+      closeExpandedImages();
+      return;
+    }
+
+    // Fermer le projet précédent
+    if (currentlyExpanded) {
+      closeExpandedImages();
+    }
+
+    // Marquer la carte comme active
+    card.classList.add("is-expanded");
+
+    // Ajouter la classe au conteneur pour l'effet sur les autres cartes
+    const projectsContainer = document.querySelector(".masonry-projects");
+    if (projectsContainer) {
+      projectsContainer.classList.add("has-expanded");
+    }
+
+    // Changer le fond de page
+    const pageWrapper = document.querySelector("[data-page-bg]") as HTMLElement;
+    if (pageWrapper && projectColor) {
+      pageWrapper.style.setProperty(
+        "--bg-color",
+        `color-mix(in srgb, ${projectColor} 25%, #f8f8f8)`,
+      );
+      pageWrapper.classList.add("project-active");
+    }
+
+    const images = JSON.parse(imagesJson) as string[];
+
+    // Créer l'en-tête du projet
+    const projectHeader = document.createElement("div");
+    projectHeader.className = "expanded-project-header";
+    projectHeader.dataset.projectId = projectId;
+    projectHeader.style.setProperty("--project-color", projectColor);
+
+    const projectInfo = card.querySelector(".project-info");
+    const projectTitle = projectInfo?.querySelector("h3")?.textContent || "";
+    const projectCategories = projectInfo?.querySelector(".categories")?.textContent || "";
+
+    projectHeader.innerHTML = `
+      <h3>${projectTitle}</h3>
+      ${projectCategories ? `<p class="categories">${projectCategories}</p>` : ""}
+    `;
+
+    // Créer le conteneur d'images
+    const expandedDiv = document.createElement("div");
+    expandedDiv.className = "expanded-images";
+    expandedDiv.dataset.projectId = projectId;
+    expandedDiv.style.setProperty("--project-color", projectColor);
+
+    images.slice(0, 3).forEach((imgSrc: string) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "expanded-image loading";
+
+      const img = document.createElement("img");
+      img.src = imgSrc;
+      img.alt = "";
+      img.loading = "lazy";
+      img.decoding = "async";
+
+      img.addEventListener("load", () => {
+        img.classList.add("loaded");
+        wrapper.classList.remove("loading");
+      });
+
+      img.addEventListener("error", () => {
+        wrapper.style.opacity = "0.3";
+      });
+
+      wrapper.appendChild(img);
+      expandedDiv.appendChild(wrapper);
+    });
+
+    // Ajouter le bouton "Voir le projet"
+    const viewProjectBtn = document.createElement("a");
+    viewProjectBtn.href = `/projets/${projectId}`;
+    viewProjectBtn.className = "view-project-btn-expanded";
+    viewProjectBtn.innerHTML = "Voir le projet complet →";
+    expandedDiv.appendChild(viewProjectBtn);
+
+    // Insérer dans le DOM
+    const lastCardInRow = findLastCardInRow(card);
+    lastCardInRow.after(projectHeader);
+    projectHeader.after(expandedDiv);
+
+    currentlyExpanded = projectId;
+
+    // Forcer un reflow puis scroller
+    projectHeader.offsetHeight;
+    
+    setTimeout(() => {
+      const headerTop = projectHeader.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: headerTop - 80,
+        behavior: "smooth",
+      });
+    }, 400);
+
+    // Activer la fermeture au scroll après 1.5s
+    canScrollRemove = false;
+    setTimeout(() => {
+      canScrollRemove = true;
+    }, 1500);
+  });
+
+
+
+  // ============================================
+  // GESTION DE LA TOUCHE ESCAPE
+  // ============================================
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && currentlyExpanded) {
+      closeExpandedImages();
+    }
+  });
+</script>

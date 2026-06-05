@@ -1,0 +1,32 @@
+---
+import Base from "@/layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { loadAllProjects } from "@/lib/projectImages";
+import MosaiqueHome from "@/components/MosaiqueHome.astro";
+// import Masonry from '@/components/Masonry.astro';
+
+// Charger les projets depuis Content Collections
+const allProjects = await getCollection("projets");
+
+// Trier par date (récent d'abord) ou par order si défini
+const sortedProjects = allProjects.sort((a, b) => {
+  // Si order est défini, l'utiliser
+  if (a.data.order !== undefined && b.data.order !== undefined) {
+    return a.data.order - b.data.order;
+  }
+  
+  // Sinon, trier par date (string → Date)
+  const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
+  const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
+  return dateB - dateA;
+});
+
+// Enrichir avec les images optimisées
+const projects = await loadAllProjects(sortedProjects);
+---
+
+<Base>
+  <MosaiqueHome projects={projects} />
+	<!-- <Masonry projects={projects} /> -->
+</Base>
+

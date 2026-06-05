@@ -1,0 +1,113 @@
+  @use 'shared' as *;
+  .citation {
+    margin: 2rem 0;
+    padding: 1.5rem 2rem;
+    // border-left: 1px solid $border-citation;
+    background: $bg-citation;
+    position: relative;
+  }
+   
+  .citation__content {
+    color: get-color(indigo, 500);
+    line-height: 1.2;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .citation__content :global(p:first-child) {
+    margin-top: 0;
+  }
+  
+  .citation__content :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  
+  .citation__footer {
+    margin-top: 1rem;
+    font-style: normal;
+    font-size: 0.9rem;
+    color: get-color(indigo, 500);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .citation__auteur {
+    font-family: $font-titre;
+    font-weight: 600;
+    color: get-color(indigo, 800);
+    font-style: normal;
+  }
+  
+  .citation__auteur::before {
+    content: '- ';
+    color: get-color(indigo, 500);
+  }
+  .citation__auteur::after {
+    content: ' -';
+    color: get-color(indigo, 500);
+  }
+  
+  .citation__source {
+    color: #64748b;
+  }
+  
+  a.citation__source {
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  a.citation__source:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+  }
+  
+  /* Variante highlight - fond coloré */
+  .citation--highlight {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    // border-left-color: $border-citation;
+  }
+  
+  .citation--highlight::before {
+    color: #f59e0b;
+  }
+  
+  /* Variante large - texte plus gros, centré */
+  .citation--large {
+    padding: 2.5rem 3rem;
+    text-align: center;
+    border-left: none;
+    // border-top: 1px solid $border-citation;
+  }
+  
+  .citation--large .citation__content {
+    font-size: 1.25rem;
+    font-weight: 500;
+
+    p::before {
+      content: "« "
+    }
+    p::after {
+      content: " »"
+    }
+  }
+  
+  .citation--large .citation__footer {
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+  
+  @include mq-max(md) {
+    .citation {
+      padding: 1.25rem 1.5rem;
+    }
+    
+    .citation--large {
+      padding: 2rem 1.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .citation::before {
+      font-size: 2.5rem;
+    }
+  }

@@ -1,0 +1,95 @@
+---
+// components/projet/Image.astro
+
+import type { ProjectImage } from "@/lib/projectImages";
+import { varyColor } from "@/lib/projectHelpers";
+
+interface LayoutConfig {
+  col: number;
+  span: number;
+  top: string;
+  parallax: number;
+}
+
+interface Props {
+  img: ProjectImage;
+  config: LayoutConfig;
+  imageIndex: number;
+  baseColor: string;
+  blockIndex: number;
+  debug?: boolean;
+  styled?: boolean; 
+}
+
+const { img, config, imageIndex, baseColor, blockIndex, debug = false, styled= false } = Astro.props;
+
+const isSvg = 'isSvg' in img && img.isSvg === true;
+const placeholderColor = varyColor(baseColor, blockIndex);
+
+// DEBUG
+// console.log(`Image ${imageIndex}:`, {
+//   isSvg,
+//   img,
+//   src: isSvg ? img.src : img.webp,
+// });
+---
+
+<figure
+  class:list={[
+    "projet-item", 
+    { "projet-item--svg": isSvg },
+    { "projet-item--styled": styled }
+    ]}
+  data-parallax={config.parallax}
+  style={`
+    --col-start: ${config.col};
+    --col-span: ${config.span};
+    --margin-top: ${config.top};
+    --placeholder-color: ${placeholderColor};
+    ${!isSvg ? `--aspect-ratio: ${(img as any).width / (img as any).height};` : ''}
+  `}
+>
+  {debug && (
+    <span class="debug-label">
+      {isSvg ? 'svg' : 'img'} {imageIndex} | col {config.col} span {config.span}
+      {isSvg && <br />}
+      {isSvg && `src: ${(img as any).src?.substring(0, 30)}...`}
+    </span>
+  )}
+
+  {isSvg ? (
+    <img
+      src={(img as any).src}
+      alt={`Image ${imageIndex + 1}`}
+      loading="lazy"
+      decoding="async"
+      onload="this.parentElement.classList.add('is-loaded')"
+    />
+  ) : (
+    <picture>
+      <source
+        srcset={(img as any).avifSm
+          ? `${(img as any).avifSm} 800w, ${(img as any).avif} 1200w`
+          : (img as any).avif}
+        type="image/avif"
+        sizes={`(max-width: 768px) 92vw, calc(${config.span} / 28 * 92vw)`}
+      />
+      <source
+        srcset={(img as any).webpSm
+          ? `${(img as any).webpSm} 800w, ${(img as any).webp} 1200w`
+          : (img as any).webp}
+        type="image/webp"
+        sizes={`(max-width: 768px) 92vw, calc(${config.span} / 28 * 92vw)`}
+      />
+      <img
+        src={(img as any).webp}
+        width={(img as any).width}
+        height={(img as any).height}
+        alt={`Image ${imageIndex + 1}`}
+        loading="lazy"
+        decoding="async"
+        onload="this.parentElement.parentElement.classList.add('is-loaded')"
+      />
+    </picture>
+  )}
+</figure>

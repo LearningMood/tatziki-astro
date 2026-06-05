@@ -1,0 +1,30 @@
+---
+// Grille portfolio en colonnes CSS avec effet tuile (masonry-like)
+
+import type { ProjectWithImages } from "@/lib/projectImages";
+import { hexToRgba } from "@/helpers/color";
+import GridControl from "./GridControl.astro";
+import MosaiqueHomeCard from "./MosaiqueHomeCard.astro";
+
+interface Props {
+  projects: ProjectWithImages[];
+  defaultCols?: 2 | 3 | 4 | 7;
+}
+
+const { projects, defaultCols = 3 } = Astro.props;
+---
+
+<section class="portfolio-section">
+  <header class="portfolio-header">
+    <h2 class="portfolio-title">Bonjour</h2>
+    <GridControl defaultCols={defaultCols} />
+  </header>
+
+  <div
+    class="mosaique-home container"
+    id="mosaique-home"
+    style={`--col-count: ${defaultCols};`}
+  >
+    {projects.map((project, index) => <MosaiqueHomeCard project={project} />)}
+  </div>
+</section>

@@ -1,0 +1,69 @@
+---
+import type { ProjectWithImages } from "@/lib/projectImages";
+
+interface Props {
+    project: ProjectWithImages;
+}
+
+const { project } = Astro.props;
+---
+
+<article
+    class="mosaique-home__item"
+    data-slug={project.id}
+    style={`--item-color: ${project.data.color}; --item-ratio: ${project.data.ratio || 1 };`}
+>
+    <a href={`/projets/${project.id}`} class="item-link">
+        <div class="item-inner">
+            <div class="item-placeholder" aria-hidden="true"></div>
+            {
+                project.thumb && (
+                    <picture>
+                        <source srcset={project.thumb.avif} type="image/avif" />
+                        <source srcset={project.thumb.webp} type="image/webp" />
+                        <img
+                            src={project.thumb.webp}
+                            width={project.thumb.width}
+                            height={project.thumb.height}
+                            alt={project.data.title}
+                            // loading="lazy"
+                            decoding="async"
+                            class="item-image"
+                            onload="this.closest('.mosaique-home__item').classList.add('loaded')"
+                        />
+                    </picture>
+                )
+            }
+            <div class="item-overlay">
+                <button
+                    class="btn-plus btn-expand"
+                    aria-label="Voir plus d'images"
+                >
+                    <span class="plus-icon">+</span>
+                </button>
+
+                <div class="item-meta">
+                    {
+                        project.data.client && (
+                            <span class="meta-client-btn">
+                                {project.data.client}
+                            </span>
+                        )
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="item-infos">
+            <h3 class="item-title">{project.data.title}</h3>
+            {
+                project.data.competences && project.data.competences.length > 0 && (
+                    <div class="item-tags">
+                        {project.data.competences.slice(0, 3).map((comp) => (
+                            <span class="item-tag">{comp}</span>
+                        ))}
+                    </div>
+                )
+            }
+        </div>
+    </a>
+</article>

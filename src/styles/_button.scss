@@ -1,0 +1,155 @@
+@use 'sass:color';
+@use 'shared' as *;
+
+.scroll-to-top {
+  position: fixed;
+  bottom: space(8);
+  right: space(8);
+  width: 48px;
+  height: 48px;
+  font-family: $font-titre;
+  background: get-color(indigo, 500);
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: .8rem;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+
+  &:hover {
+    background: get-color(indigo, 800);
+    ;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: translateY(-2px);
+  }
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-to-top {
+    bottom: space(6);
+    right: space(6);
+    width: 44px;
+    height: 44px;
+  }
+}
+
+button {
+  font-family: $font-titre;
+}
+
+// Btn +. overlay
+
+.btn-plus {
+  margin: 0 auto space(4);
+  background: white;
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  .plus-icon {
+    font-size: 2rem;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+    display: block;
+    line-height: 1;
+  }
+
+  &:hover {
+    transform: scale(1.15);
+    background: var(--project-color, #ff6b6b);
+    color: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+
+    .plus-icon {
+      color: white;
+    }
+  }
+}
+
+.btn-view-project {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: none; // Caché par défaut
+
+  &:hover {
+    background: white;
+    color: black;
+  }
+}
+
+.item-overlay::before {
+  z-index: 1;
+  position: absolute;
+  inset: 1rem;
+  opacity: 0;
+  transition: opacity .4s, transform .4s;
+  display: block;
+  content: "";
+  border-top: 1px solid #ffffff46;
+  border-bottom: 1px solid #ffffff46;
+  transform: scaleX(0);
+}
+
+.item-overlay::after {
+  z-index: 1;
+  position: absolute;
+  display: block;
+  inset: 1rem;
+  content: "";
+  opacity: 0;
+  transition: opacity .4s, transform .4s;
+  border-right: 1px solid #ffffff46;
+  border-left: 1px solid #ffffff46;
+  transform: scaleY(0);
+  -webkit-transition: opacity .35s, transform .4s;
+}
+
+// Survol pour afficher les lignes
+.item-inner:hover {
+
+  .item-overlay:before,
+  .item-overlay:after {
+    opacity: 1;
+    transform: scale(1);
+
+  }
+}
+
+.btn--pastille {
+  padding: space(1) space(2);
+  background: #d4f889;
+  color: #34796d;
+  border: none;
+  border-radius: 9999px;
+  font-size: font-size(xxs);
+  font-weight: 500;
+  transition: background 0.3s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: $font-titre;
+  font-weight: 700;
+
+  &:hover {
+    background: $tatziki;
+    color: #fff;
+  }
+}

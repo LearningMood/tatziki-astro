@@ -1,0 +1,129 @@
+---
+import type { OptimizedImage } from "@/lib/projectImages";
+
+interface Props {
+  images: OptimizedImage[];
+}
+
+const { images } = Astro.props;
+---
+
+<div class="horizontal-slider__wrapper" data-slider-wrapper>
+  <div class="horizontal-slider__cursor" data-cursor aria-hidden="true">
+    <svg width="20" height="10" viewBox="0 0 20 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 5H5M5 5L2.5 2.5M5 5L2.5 7.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M20 5H15M15 5L17.5 2.5M15 5L17.5 7.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="horizontal-slider__track" data-track>
+    {images.map((img, i) => (
+      <figure class="horizontal-slider__item">
+        <picture>
+          <source srcset={img.avif} type="image/avif" />
+          <source srcset={img.webp} type="image/webp" />
+          <img
+            src={img.webp}
+            width={img.width}
+            height={img.height}
+            alt={`Slide ${i + 1}`}
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
+      </figure>
+    ))}
+  </div>
+
+  <div class="horizontal-slider__progress">
+    <div class="horizontal-slider__progress-bar" data-progress></div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-slider-wrapper]').forEach(wrapper => {
+    const track = wrapper.querySelector<HTMLElement>('[data-track]');
+    const cursor = wrapper.querySelector<HTMLElement>('[data-cursor]');
+    const progressBar = wrapper.querySelector<HTMLElement>('[data-progress]');
+
+    if (!track) return;
+
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragScrollStart = 0;
+    let velocity = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    let momentumId = 0;
+
+    // Curseur personnalisé
+    document.addEventListener('mousemove', (e) => {
+      if (cursor) {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+      }
+    });
+
+    wrapper.addEventListener('mouseenter', () => cursor?.style.setProperty('opacity', '1'));
+    wrapper.addEventListener('mouseleave', () => {
+      cursor?.style.setProperty('opacity', '0');
+      if (isDragging) stopDrag();
+    });
+
+    // Drag-to-scroll avec tracking de vélocité
+    track.addEventListener('mousedown', (e) => {
+      cancelAnimationFrame(momentumId);
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragScrollStart = track.scrollLeft;
+      lastX = e.clientX;
+      lastTime = performance.now();
+      velocity = 0;
+      track.style.scrollBehavior = 'auto';
+      cursor?.classList.add('is-dragging');
+      document.addEventListener('mousemove', onDragMove);
+      document.addEventListener('mouseup', stopDrag, { once: true });
+    });
+
+    function onDragMove(e: MouseEvent) {
+      if (!isDragging) return;
+      const now = performance.now();
+      const dt = now - lastTime || 16;
+      velocity = ((lastX - e.clientX) / dt) * 16;
+      lastX = e.clientX;
+      lastTime = now;
+      track.scrollLeft = dragScrollStart + (dragStartX - e.clientX);
+    }
+
+    function applyMomentum() {
+      if (Math.abs(velocity) < 0.4) return;
+      track.scrollLeft += velocity;
+      velocity *= 0.92;
+      momentumId = requestAnimationFrame(applyMomentum);
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      track.style.scrollBehavior = '';
+      cursor?.classList.remove('is-dragging');
+      document.removeEventListener('mousemove', onDragMove);
+      momentumId = requestAnimationFrame(applyMomentum);
+    }
+
+    // Molette verticale pour un scroll horizontal merci Claude 🫶
+    wrapper.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; // trackpad horizontal natif
+      e.preventDefault();
+      cancelAnimationFrame(momentumId);
+      track.scrollLeft += e.deltaY * 1.4;
+    }, { passive: false });
+
+    // Barre de progression
+    track.addEventListener('scroll', () => {
+      if (!progressBar) return;
+      const max = track.scrollWidth - track.clientWidth;
+      const ratio = max > 0 ? track.scrollLeft / max : 0;
+      progressBar.style.width = `${ratio * 100}%`;
+    }, { passive: true });
+  });
+</script>

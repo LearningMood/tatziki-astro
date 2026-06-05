@@ -1,0 +1,212 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use "sass:math";
+@use "sass:map";
+
+// ============================================
+// MEDIA QUERIES
+// ============================================
+@mixin mq-min($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @error "Breakpoint `#{$breakpoint}` n'existe pas. Disponibles: #{map.keys($breakpoints)}";
+  }
+}
+
+@mixin mq-max($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (max-width: map.get($breakpoints, $breakpoint) - 1px) {
+      @content;
+    }
+  } @else {
+    @error "Breakpoint `#{$breakpoint}` n'existe pas. Disponibles: #{map.keys($breakpoints)}";
+  }
+}
+
+@mixin mq-between($min-breakpoint, $max-breakpoint) {
+  @if map.has-key($breakpoints, $min-breakpoint) and map.has-key($breakpoints, $max-breakpoint) {
+    @media (min-width: map.get($breakpoints, $min-breakpoint)) and (max-width: map.get($breakpoints, $max-breakpoint) - 1px) {
+      @content;
+    }
+  } @else {
+    @error "Breakpoints invalides. Disponibles: #{map.keys($breakpoints)}";
+  }
+}
+
+// ============================================
+// CONTAINERS
+// ============================================
+@mixin container-base {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+}
+
+@mixin container($size: default) {
+  @include container-base;
+  
+  @if map.has-key($containers, $size) {
+    max-width: map.get($containers, $size);
+  } @else {
+    @error "Container `#{$size}` invalide. Disponibles: #{map.keys($containers)}";
+  }
+}
+
+// ============================================
+// TYPOGRAPHIE
+// ============================================
+@mixin heading-base {
+  font-family: $font-titre;
+  font-weight: font-weight(bold);
+  line-height: line-height(tight);
+  margin-bottom: space(2);
+  letter-spacing: letter-spacing(mini);
+  color: $color-titre-default;
+}
+
+    // font-size: clamp(0.9rem, 1.5vw, 1.25rem);
+@mixin heading($level) {
+  @include heading-base;
+  
+  @if $level == 1 {
+    font-size: font-size(4xl);
+    letter-spacing: letter-spacing(extra-mini);
+    margin-bottom: space(8);
+    @include mq-min(md) {
+      font-size: font-size(5xl);
+    }
+  } @else if $level == 2 {
+    font-size: font-size(3xl);
+    letter-spacing: letter-spacing(extra-mini);
+    @include mq-min(md) {
+      font-size: font-size(4xl);
+    }
+  } @else if $level == 3 {
+    font-size: font-size(xl);
+    @include mq-min(md) {
+      font-size: font-size(xl);
+    }
+  } @else if $level == 4 {
+    font-size: font-size(lg);
+    @include mq-min(md) {
+      font-size: font-size(xl);
+    }
+  } @else if $level == 5 {
+    font-size: font-size(lg);
+    @include mq-min(md) {
+      font-size: font-size(xl);
+    }
+  } @else if $level == 6 {
+    font-size: font-size(base);
+    letter-spacing: letter-spacing(normal);
+    @include mq-min(md) {
+      font-size: font-size(sm);
+    }
+  } @else {
+    @error "heading(): niveau #{$level} invalide. Niveaux acceptés: 1-6";
+  }
+}
+
+@mixin text($size, $lh: null, $weight: null, $ls: null) {
+  font-size: font-size($size);
+  @if $lh { line-height: line-height($lh); }
+  @if $weight { font-weight: font-weight($weight); }
+  @if $ls { letter-spacing: letter-spacing($ls); }
+}
+
+// ============================================
+// ESPACEMENTS
+// ============================================
+@mixin stack($space-key: 4) {
+  > * + * {
+    margin-top: space($space-key);
+  }
+}
+
+@mixin flex-gap($space-key: 4) {
+  display: flex;
+  gap: space($space-key);
+}
+
+@mixin section-spacing {
+  padding-block: space(6);
+  
+  @include mq-min(md) {
+    padding-block: space(8);
+  }
+  
+  @include mq-min(lg) {
+    padding-block: space(12);
+  }
+}
+
+// ============================================
+// GRID
+// ============================================
+@mixin heading-cols($span, $cols: 24) {
+  $start: math.div(($cols - $span), 2) + 1;
+  $end: $start + $span;
+
+  @if $start != math.round($start) {
+    @warn "heading-cols(): span=#{$span} ne centre pas parfaitement sur #{$cols} colonnes.";
+    $start: math.round($start);
+    $end: $start + $span;
+  }
+
+  grid-column: #{$start} / #{$end};
+}
+
+// ============================================
+// MIXIN - Titre avec filet
+// ============================================
+@mixin heading-underline(
+  $size: 2rem,   
+  $color: $indigo-700, 
+  $weight: 700,
+  $mt: space(12),
+  $mb: space(4),
+  
+  // Options du filet
+  $filet: true,             // Activer/désactiver
+  $filet-color: $indigo-200,
+  $filet-width: 60px,       // Largeur du filet (ou 100%)
+  $filet-height: 3px,
+  $filet-style: solid,      // solid, dotted, dashed
+  $filet-centered: false,   // Centrer le filet
+  $filet-gap: space(3)      // Espace entre titre et filet
+) {
+  font-size: $size;
+  font-family: $font-titre;
+  font-weight: $weight;
+  line-height: 1.2;
+  color: $color;
+  margin-top: $mt;
+  margin-bottom: $mb;
+
+  @if $filet {
+    &::after {
+      content: "";
+      display: block;
+      width: $filet-width;
+      height: $filet-height;
+      background-color: $filet-color;
+      margin-top: $filet-gap;
+      
+      @if $filet-style == dotted or $filet-style == dashed {
+        background: none;
+        border-bottom: $filet-height $filet-style $filet-color;
+        height: 0;
+      }
+      
+      @if $filet-centered {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+}

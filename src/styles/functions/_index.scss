@@ -1,0 +1,40 @@
+// _functions/_index.scss
+@use '../variables' as *;
+@use "sass:map";
+
+// ============================================
+// FONCTION GÉNÉRIQUE (privée)
+// ============================================
+@function _get($map, $key, $name) {
+  @if map.has-key($map, $key) {
+    @return map.get($map, $key);
+  }
+  @error '#{$name}(): la clé "#{$key}" est inconnue. Clés valides: #{map.keys($map)}';
+}
+
+// ============================================
+// FONCTIONS TYPOGRAPHIE
+// ============================================
+@function font-size($key) {
+  @return _get($font-sizes, $key, 'font-size');
+}
+
+@function line-height($key) {
+  @return _get($line-heights, $key, 'line-height');
+}
+
+@function font-weight($key) {
+  @return _get($font-weights, $key, 'font-weight');
+}
+
+@function letter-spacing($key) {
+  @return _get($letter-spacing, $key, 'letter-spacing');
+}
+
+// ============================================
+// FONCTION ESPACEMENT
+// ============================================
+@function space($key) {
+  @return _get($spacing, $key, 'space');
+}
+

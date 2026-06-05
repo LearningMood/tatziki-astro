@@ -1,0 +1,106 @@
+// _css-vars.scss
+@use '../variables' as *;
+@use "sass:map";
+
+:root {
+  // Couleurs INDIGO
+  --indigo-50: #{$indigo-50};
+  --indigo-100: #{$indigo-100};
+  --indigo-200: #{$indigo-200};
+  --indigo-300: #{$indigo-300};
+  --indigo-400: #{$indigo-400};
+  --indigo-500: #{$indigo-500};
+  --indigo-600: #{$indigo-600};
+  --indigo-700: #{$indigo-700};
+  --indigo-800: #{$indigo-800};
+  --indigo-900: #{$indigo-900};
+  
+  --azul-50: #{$azul-50};
+  --azul-100: #{$azul-100};
+  --azul-500: #{$azul-500};
+  --azul-900: #{$azul-900};
+  
+  --tomato-50: #{$tomato-50};
+  --tomato-100: #{$tomato-100};
+  --tomato-200: #{$tomato-200};
+  --tomato-300: #{$tomato-300};
+  --tomato-400: #{$tomato-400};
+  --tomato-500: #{$tomato-500};
+  --tomato-600: #{$tomato-600};
+  --tomato-700: #{$tomato-700};
+  --tomato-800: #{$tomato-800};
+  --tomato-900: #{$tomato-900};
+  
+  // Couleurs simples
+  --color-main: #{$azul-500};
+  --color-tatziki: #{$tatziki};
+  --color-typo: #{$typo};
+  --color-recherche: #{$recherche};
+    
+  
+  // ============================================
+  // TYPOGRAPHIE
+  // ============================================
+  --font-base: #{$font-family-base};
+  --font-slab: #{$font-slab};
+  --font-sans: #{$font-sans};
+  --font-manuscrite: #{$font-manuscrite};
+  --font-narrow: #{$font-narrow};
+  --font-texte: #{$font-texte};
+  --font-titre: #{$font-titre};
+  
+  // Tailles
+  @each $name, $size in $font-sizes {
+    --text-#{$name}: #{$size};
+  }
+  
+  // Line-heights
+  @each $name, $value in $line-heights {
+    --leading-#{$name}: #{$value};
+  }
+  
+  // Weights
+  @each $name, $weight in $font-weights {
+    --font-#{$name}: #{$weight};
+  }
+  
+  // Letter-spacing
+  @each $name, $value in $letter-spacing {
+    --tracking-#{$name}: #{$value};
+  }
+  
+  // ============================================
+  // ESPACEMENT
+  // ============================================
+  @each $name, $size in $spacing {
+    --space-#{$name}: #{$size};
+  }
+  
+  // ============================================
+  // CONTAINERS
+  // ============================================
+  --container-mini: #{map.get($containers, mini)};
+  --container-default: #{map.get($containers, default)};
+  --container-maxi: #{map.get($containers, maxi)};
+  --container-padding: #{$container-padding};
+  
+  // ============================================
+  // LAYOUT & AUTRES
+  // ============================================
+  --grid-cols: 12;
+  --grid-gap: 3rem;
+  
+  --radius: 4px;
+  --radius-sm: 2px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+  
+  --transition-fast: 0.2s ease;
+  --transition-mid: 0.4s ease;
+  --transition-slow: 0.6s ease;
+  --transition-grid: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}

@@ -1,0 +1,93 @@
+---
+import Logo from "@/components/Logo.astro";
+
+interface Props {
+  color?: string;
+}
+
+const { color = '#000000' } = Astro.props;
+---
+
+<header class="site-header" data-header>
+  <div class="header-inner">
+    <a href="/" class="logo" aria-label="Accueil">
+      <Logo variant="desktop" />
+      <Logo variant="mobile" />
+    </a>
+
+    <nav class="nav-desktop">
+      <ul>
+        <li><a href="/">Projets</a></li>
+        <li><a href="/a-propos">À propos</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <button 
+      class="burger" 
+      aria-label="Menu" 
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-burger
+    >
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+    </button>
+  </div>
+
+  <!-- Version mobile fullscreen -->
+  <nav class="nav-mobile" id="mobile-menu" data-mobile-menu>
+    <ul>
+      <li><a href="/projets">Projets</a></li>
+      <li><a href="/a-propos">À propos</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+  const mobileMenu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+
+  const scrollThreshold = 50;
+
+  function handleScroll() {
+    if (window.scrollY > scrollThreshold) {
+      header?.classList.add('is-scrolled');
+    } else {
+      header?.classList.remove('is-scrolled');
+    }
+  }
+
+  function toggleMenu() {
+    const isOpen = burger?.classList.toggle('is-open');
+    mobileMenu?.classList.toggle('is-open');
+    burger?.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('menu-open', isOpen);
+  }
+
+  function closeMenu() {
+    burger?.classList.remove('is-open');
+    mobileMenu?.classList.remove('is-open');
+    burger?.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  }
+
+  function handleKeydown(e: KeyboardEvent) {
+    if (e.key === 'Escape' && mobileMenu?.classList.contains('is-open')) {
+      closeMenu();
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  burger?.addEventListener('click', toggleMenu);
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+  document.addEventListener('keydown', handleKeydown);
+
+  handleScroll();
+</script>

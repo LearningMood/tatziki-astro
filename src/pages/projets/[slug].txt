@@ -1,0 +1,335 @@
+---
+import { getCollection } from "astro:content";
+import { loadProjectImages } from "@/lib/projectImages";
+import Base from "@/layouts/Base.astro";
+import Hero from "@/components/Hero.astro";
+import BeforeAfter from "@/components/BeforeAfter.astro";
+import HorizontalSlider from "@/components/HorizontalSlider.astro";
+// import VideoBlock from "@/components/VideoBlock.astro";
+import ProjectNav from "@/components/ProjectNav.astro";
+import VideoBlock from "@/components/VideoBlock.astro";
+
+export async function getStaticPaths() {
+  const projets = await getCollection("projets");
+  const projetsAvecImages = await Promise.all(
+    projets.map((projet) => loadProjectImages(projet)),
+  );
+  return projetsAvecImages.map((projet, index) => ({
+    params: { slug: projet.slug },
+    props: {
+      projet,
+      prevProject: projetsAvecImages[index - 1] || null,
+      nextProject: projetsAvecImages[index + 1] || null,
+    },
+  }));
+}
+
+const { projet, prevProject, nextProject } = Astro.props;
+const { hero, galleryBlocks, data } = projet;
+// Récupérer les textes intercalés depuis le frontmatter
+const blockquotes = data.blockquotes || [];
+const captions = data.captions || [];
+const videos = data.videos || [];
+
+// Configuration de placement pour chaque image
+// Tu peux stocker ça dans le frontmatter du projet pour personnaliser par projet
+//co = colStart, span = colSpan
+const defaultLayout = [
+  { col: 1, span: 12, top: "2vw", parallax: -150 },
+  { col: 16, span: 10, top: "8vw", parallax: -280 },
+  { col: 5, span: 11, top: "6vw", parallax: -100 },
+  { col: 18, span: 9, top: "4vw", parallax: -120 },
+  { col: 2, span: 7, top: "6vw", parallax: -250 },
+  { col: 11, span: 14, top: "6vw", parallax: -180 },
+  { col: 3, span: 9, top: "10vw", parallax: -200 },
+  { col: 15, span: 11, top: "2vw", parallax: -100 },
+];
+// Si j'ajoute une layout personnalisée dans le frontmatter
+const layout = data.layout || defaultLayout;
+
+// Fonction pour varier la couleur
+function varyColor(hexColor: string, index: number): string {
+  // Convertir hex en HSL
+  const hex = hexColor.replace("#", "");
+  const r = parseInt(hex.substring(0, 2), 16) / 255;
+  const g = parseInt(hex.substring(2, 4), 16) / 255;
+  const b = parseInt(hex.substring(4, 6), 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0,
+    s = 0,
+    l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r:
+        h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+        break;
+      case g:
+        h = ((b - r) / d + 2) / 6;
+        break;
+      case b:
+        h = ((r - g) / d + 4) / 6;
+        break;
+    }
+  }
+
+  // Variations basées sur l'index
+  const variations = [
+    { s: -0.05, l: 0.03 },
+    { s: 0.05, l: -0.02 },
+    { s: -0.03, l: -0.04 },
+    { s: 0.08, l: 0.05 },
+  ];
+  const v = variations[index % variations.length];
+
+  const newS = Math.max(0, Math.min(1, s + v.s));
+  const newL = Math.max(0, Math.min(1, l + v.l));
+
+  return `hsl(${Math.round(h * 360)}, ${Math.round(newS * 100)}%, ${Math.round(newL * 100)}%)`;
+}
+
+const baseColor = data.color || "#e5e5e5";
+const DEBUG = true;
+---
+
+<Base title={data.title}>
+  <Hero hero={hero} data={data} />
+
+  <header class="projet-header">
+    <span class="projet-category">{data.category}</span>
+    <h1>{data.title}</h1>
+    <p class="projet-baseline">{data.description}</p>
+  </header>
+
+  <section class="grid-projets lignes">
+    {
+      galleryBlocks.map((block, i) => {
+        // BEFORE/AFTER
+        if (block.type === "before-after") {
+          return (
+            <div class="debug-wrapper" style="grid-column: 1 / -1;">
+              {DEBUG && (
+                <span class="debug-label debug-label--special">
+                  #{i} before-after
+                </span>
+              )}
+              <BeforeAfter
+                before={block.before}
+                after={block.after}
+                name={block.name}
+                width={data.beforeAfterWidth || "65"}
+              />
+            </div>
+          );
+        }
+
+        // SLIDER
+        if (block.type === "slider") {
+          return (
+            <div class="debug-wrapper" style="grid-column: 1 / -1;">
+              {DEBUG && (
+                <span class="debug-label debug-label--special">
+                  #{i} slider ({block.images.length} images)
+                </span>
+              )}
+              <HorizontalSlider
+                images={block.images}
+                speed={data.sliderSpeed || "normal"}
+              />
+            </div>
+          );
+        }
+
+        // IMAGE
+        if (block.type === "image") {
+          const imageIndex = galleryBlocks
+            .slice(0, i)
+            .filter((b) => b.type === "image").length;
+
+          const videoAfter = videos.find((v) => v.afterImage === imageIndex);
+          const blockquoteAfter = blockquotes.find(
+            (b) => b.afterImage === imageIndex,
+          );
+          const captionAfter = captions.find(
+            (c) => c.afterImage === imageIndex,
+          );
+
+          const aspectRatio = block.img.width / block.img.height;
+          const placeholderColor = varyColor(baseColor, i);
+
+          return (
+            <>
+              {/* IMAGE */}
+              <figure
+                class="projet-item"
+                data-parallax={block.config.parallax}
+                style={`
+                --col-start: ${block.config.col};
+                --col-span: ${block.config.span};
+                --margin-top: ${block.config.top};
+                --aspect-ratio: ${aspectRatio};
+                --placeholder-color: ${placeholderColor};
+              `}
+              >
+                {DEBUG && (
+                  <span class="debug-label">
+                    img {imageIndex} | col {block.config.col} span{" "}
+                    {block.config.span}
+                  </span>
+                )}
+                <picture>
+                  <source srcset={block.img.avif} type="image/avif" />
+                  <source srcset={block.img.webp} type="image/webp" />
+                  <img
+                    src={block.img.webp}
+                    width={block.img.width}
+                    height={block.img.height}
+                    alt={`${data.title} – image ${imageIndex + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    onload="this.parentElement.parentElement.classList.add('is-loaded')"
+                  />
+                </picture>
+              </figure>
+
+              {/* VIDÉO */}
+              {videoAfter && (
+                <VideoBlock video={videoAfter} />
+                <figure
+                  class="projet-item projet-item--video"
+                  style={`
+                    --col-start: ${videoAfter.col ?? 8};
+                    --col-span: ${videoAfter.span ?? 6};
+                    --margin-top: ${videoAfter.top ?? "4vw"};
+                    --aspect-ratio: ${videoAfter.aspectRatio ?? "9/16"};
+                `}
+                >
+                  {DEBUG && (
+                    <span class="debug-label debug-label--video">
+                      video après img {imageIndex} | col {videoAfter.col} span{" "}
+                      {videoAfter.span}
+                    </span>
+                  )}
+                  <video autoplay loop muted playsinline>
+                    <source
+                      src={`/videos/${videoAfter.src}.webm`}
+                      type="video/webm"
+                    />
+                    <source
+                      src={`/videos/${videoAfter.src}.mp4`}
+                      type="video/mp4"
+                    />
+                  </video>
+                </figure>
+              )}
+
+              {/* BLOCKQUOTE */}
+              {blockquoteAfter && (
+                <blockquote
+                  class="gallery-text"
+                  style={`
+                  --col-start: ${blockquoteAfter.col};
+                  --col-span: ${blockquoteAfter.span};
+                  --margin-top: ${blockquoteAfter.top};
+                `}
+                >
+                  {DEBUG && (
+                    <span class="debug-label debug-label--text">
+                      texte après img {imageIndex} | col {blockquoteAfter.col}{" "}
+                      span {blockquoteAfter.span}
+                    </span>
+                  )}
+                  <p>{blockquoteAfter.content}</p>
+                </blockquote>
+              )}
+
+              {/* CAPTION */}
+              {captionAfter && (
+                <figure
+                  class="gallery-caption"
+                  style={`
+                  --col-start: ${captionAfter.col};
+                  --col-span: ${captionAfter.span};
+                  --margin-top: ${captionAfter.top};
+                `}
+                >
+                  {DEBUG && (
+                    <span class="debug-label debug-label--text">
+                      caption après img {imageIndex} | col {captionAfter.col}{" "}
+                      span {captionAfter.span}
+                    </span>
+                  )}
+                  <blockquote>{captionAfter.content}</blockquote>
+                  {captionAfter.author && (
+                    <figcaption>{captionAfter.author}</figcaption>
+                  )}
+                </figure>
+              )}
+            </>
+          );
+        }
+      })
+    }
+  </section>
+
+  <!-- ÉTAPE 4 : Navigation entre projets -->
+  <ProjectNav prev={prevProject} next={nextProject} />
+</Base>
+
+<script>
+  // Parallaxe images
+  const items = document.querySelectorAll<HTMLElement>(".projet-item");
+  const hero = document.querySelector<HTMLElement>(".projet-hero");
+  const heroImg = hero?.querySelector("img");
+  const heroAmplitude = parseFloat(hero?.dataset.parallaxHero || "-100");
+
+  const currentTransforms = new Map<HTMLElement, number>();
+  items.forEach((item) => currentTransforms.set(item, 0));
+  let heroCurrentY = 0;
+
+  function lerp(start: number, end: number, factor: number): number {
+    return start + (end - start) * factor;
+  }
+
+  function updateParallax() {
+    const viewportHeight = window.innerHeight;
+    // const scrollY = window.scrollY;
+
+    // Parallaxe hero
+    if (heroImg && hero) {
+      const heroRect = hero.getBoundingClientRect();
+      const heroProgress = -heroRect.top / viewportHeight;
+      const heroTargetY = heroProgress * heroAmplitude;
+      heroCurrentY = lerp(heroCurrentY, heroTargetY, 0.1);
+      heroImg.style.transform = `translateY(${heroCurrentY}px)`;
+    }
+
+    items.forEach((item) => {
+      const rect = item.getBoundingClientRect();
+      const amplitude = parseFloat(item.dataset.parallax || "0");
+
+      // Calcul du progress : 0 quand l'élément entre en bas, 1 quand il sort en haut
+      const elementCenter = rect.top + rect.height / 2;
+      const progress = 1 - elementCenter / viewportHeight;
+
+      // Cible de translation
+      const targetY = progress * amplitude;
+
+      // Interpolation pour un mouvement fluide
+      const currentY = currentTransforms.get(item) || 0;
+      const newY = lerp(currentY, targetY, 0.1);
+      currentTransforms.set(item, newY);
+
+      item.style.transform = `translateY(${newY}px)`;
+    });
+
+    requestAnimationFrame(updateParallax);
+  }
+
+  // Démarre l'animation
+  requestAnimationFrame(updateParallax);
+</script>

@@ -1,0 +1,88 @@
+---
+// components/VideoBlock.astro
+
+interface Props {
+  src: string;
+  col?: number;
+  span?: number;
+  top?: string;
+  aspectRatio?: string;
+  autoplay?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  debug?: boolean;
+  imageIndex?: number;
+}
+
+const { 
+  src,
+  col = 8,
+  span = 6,
+  top = "4vw",
+  aspectRatio = "9/16",
+  autoplay = true,
+  loop = true,
+  muted = true,
+  debug = false,
+  imageIndex,
+} = Astro.props;
+---
+
+<figure
+  class="video-block"
+  style={`
+    --col-start: ${col};
+    --col-span: ${span};
+    --margin-top: ${top};
+    --aspect-ratio: ${aspectRatio};
+  `}
+>
+  {debug && (
+    <span class="video-block__debug">
+      video {imageIndex !== undefined ? `après img ${imageIndex}` : ''} | col {col} span {span}
+    </span>
+  )}
+  
+  <video
+    class="video-block__video"
+    autoplay={autoplay}
+    loop={loop}
+    muted={muted}
+    playsinline
+    preload="metadata"
+  >
+    <source src={`/videos/${src}.webm`} type="video/webm" />
+    <source src={`/videos/${src}.mp4`} type="video/mp4" />
+  </video>
+
+  <button class="video-block__toggle" data-video-toggle aria-label="Play/Pause">
+    <span class="video-block__icon video-block__icon--play">▶</span>
+    <span class="video-block__icon video-block__icon--pause">❚❚</span>
+  </button>
+</figure>
+
+
+<script>
+  document.querySelectorAll('.video-block').forEach(container => {
+    const video = container.querySelector('video');
+    const toggle = container.querySelector('[data-video-toggle]');
+
+    if (!video || !toggle) return;
+
+    // Marquer comme playing si autoplay
+    if (!video.paused) {
+      container.classList.add('is-playing');
+    }
+
+    video.addEventListener('play', () => container.classList.add('is-playing'));
+    video.addEventListener('pause', () => container.classList.remove('is-playing'));
+
+    toggle.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    });
+  });
+</script>

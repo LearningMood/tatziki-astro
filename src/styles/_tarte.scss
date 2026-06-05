@@ -1,0 +1,18 @@
+@use 'shared' as *;
+#tarteaucitronRoot #tarteaucitronAlertBig {
+ 	background: $indigo-500!important;
+    color: get-color(indigo, 800)!important;
+    font-family: $font-texte;
+ }
+
+#tarteaucitronRoot button {
+    font-family: $font-titre;
+    font-weight: bold;
+    color: get-color(indigo, 800)!important;
+ }
+button.tarteaucitronCTAButton.tarteaucitronAllow{
+    background: $pomme-500!important;
+}
+button.tarteaucitronCTAButton.tarteaucitronDeny{
+    background: #91abd4!important;
+}

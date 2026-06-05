@@ -1,0 +1,29 @@
+@use 'shared' as *;
+@use 'tokens/custom-properties';
+// mixins et variables chargés automatiquement via astro.config.mjs
+@use 'reset';
+
+@use 'bg';
+@use 'container';
+@use 'grid';
+@use 'mosaique-home';
+@use 'projet';
+@use 'meta';
+// @use 'layout-switcher';
+@use 'nav';
+@use 'hero';
+@use 'typo-headings';
+@use 'typo';
+@use 'liens';
+@use 'horizontal-slider';
+@use 'before-after';
+@use 'video';
+@use 'nav-project';
+@use 'lightbox';
+@use 'footer';
+@use 'footer-global';
+@use 'button';
+@use 'tarte';
+@use 'debug';
+
+//   @include mq-max(md)

@@ -1,0 +1,12 @@
+@use 'shared' as *;
+
+.meta-label {
+    font-family: $font-titre;
+    font-size: font-size(sm);
+    font-weight: 700;
+
+    span {
+        font-family: $font-titre;
+        font-weight: 400;
+    }
+}

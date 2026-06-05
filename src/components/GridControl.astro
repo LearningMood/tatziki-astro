@@ -1,0 +1,76 @@
+---
+interface Props {
+  defaultCols?: 2 | 3 | 4 | 6;
+  columnOptions?: number[];
+}
+
+const { 
+  defaultCols = 3,
+  columnOptions = [2, 3, 4, 6]
+} = Astro.props;
+
+const defaultSliderIndex = columnOptions.indexOf(defaultCols);
+---
+
+<div class="grid-control">
+  <span class="control-label">Colonnes</span>
+  <div class="slider-container">
+    <input
+      type="range"
+      id="grid-slider"
+      min="0"
+      max={columnOptions.length - 1}
+      value={defaultSliderIndex >= 0 ? defaultSliderIndex : 1}
+      step="1"
+      aria-label="Ajuster le nombre de colonnes"
+    />
+    <div class="slider-track">
+      <div class="slider-progress"></div>
+    </div>
+    <div class="slider-ticks">
+      {columnOptions.map((n) => <span data-cols={n}>{n}</span>)}
+    </div>
+  </div>
+  <span class="cols-indicator" id="cols-indicator">{defaultCols} cols</span>
+</div>
+
+<script>
+  const COLUMN_OPTIONS = [2, 3, 4, 6];
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const slider = document.getElementById("grid-slider") as HTMLInputElement;
+    const grid = document.getElementById("mosaique-home");
+    const indicator = document.getElementById("cols-indicator");
+    const progress = document.querySelector(".slider-progress") as HTMLElement;
+    const ticks = document.querySelectorAll(".slider-ticks span");
+
+    if (!slider || !grid || !indicator || !progress) return;
+
+    function updateGrid(index: number) {
+      const cols = COLUMN_OPTIONS[index];
+
+      grid!.style.setProperty("--col-count", cols.toString());
+      indicator!.textContent = `${cols} cols`;
+
+      const progressWidth = (index / (COLUMN_OPTIONS.length - 1)) * 100;
+      progress.style.width = `${progressWidth}%`;
+
+      ticks.forEach((tick, i) => {
+        tick.classList.toggle("active", i <= index);
+      });
+    }
+
+    updateGrid(parseInt(slider.value));
+
+    slider.addEventListener("input", (e) => {
+      updateGrid(parseInt((e.target as HTMLInputElement).value));
+    });
+
+    ticks.forEach((tick, index) => {
+      tick.addEventListener("click", () => {
+        slider.value = index.toString();
+        updateGrid(index);
+      });
+    });
+  });
+</script>

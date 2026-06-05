@@ -1,0 +1,121 @@
+---
+import type { OptimizedImage } from "@/lib/projectImages";
+
+interface Props {
+  before: OptimizedImage;
+  after: OptimizedImage;
+  name: string;
+  width?: "50" | "65" | "75" | "85" | "100";
+  labelAvant?: string;
+  labelApres?: string;
+}
+
+const { before, after, name, width = "50", labelAvant, labelApres } = Astro.props;
+const aspectRatio = before.width / before.height;
+---
+
+<div 
+  class="before-after" 
+  data-before-after
+  style={`--ba-width: ${width}%; --aspect-ratio: ${aspectRatio};`}
+>
+  <div class="before-after__container">
+    <!-- after = bg -->
+    <picture class="before-after__image before-after__after">
+      <source srcset={after.avif} type="image/avif" />
+      <source srcset={after.webp} type="image/webp" />
+      <img 
+        src={after.webp} 
+        width={before.width} 
+        height={before.height} 
+        alt={`${name} - après`} 
+        loading="lazy" 
+        decoding="async" 
+      />
+    </picture>
+    
+    <div class="before-after__reveal" data-reveal>
+      <picture class="before-after__image before-after__before">
+        <source srcset={before.avif} type="image/avif" />
+        <source srcset={before.webp} type="image/webp" />
+        <img 
+          src={before.webp} 
+          width={before.width} 
+          height={before.height} 
+          alt={`${name} - avant`} 
+          loading="lazy" 
+          decoding="async" 
+        />
+      </picture>
+    </div>
+    
+    <div class="before-after__slider" data-slider>
+      <div class="before-after__handle">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8L22 12L18 16" />
+          <path d="M6 8L2 12L6 16" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  { labelAvant && labelApres && (
+    <div class="before-after__labels">
+      <span>{labelAvant}</span>
+      <span>{labelApres}</span>
+    </div>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-before-after]').forEach(container => {
+    const wrapper = container.querySelector<HTMLElement>('.before-after__container');
+    const reveal = container.querySelector<HTMLElement>('[data-reveal]');
+    const slider = container.querySelector<HTMLElement>('[data-slider]');
+    const beforeImg = reveal?.querySelector<HTMLElement>('.before-after__image img');
+    
+    if (!reveal || !slider || !wrapper || !beforeImg) return;
+
+    // Stocker la largeur du container pour l'image before
+    function updateContainerWidth() {
+      const width = wrapper!.getBoundingClientRect().width;
+      beforeImg!.style.minWidth = `${width}px`;
+    }
+
+    updateContainerWidth();
+    window.addEventListener('resize', updateContainerWidth);
+
+    let isDragging = false;
+
+    function updatePosition(clientX: number) {
+      const bounds = wrapper!.getBoundingClientRect();
+      const percent = Math.max(0, Math.min(100, ((clientX - bounds.left) / bounds.width) * 100));
+      reveal!.style.width = `${percent}%`;
+      slider!.style.left = `${percent}%`;
+    }
+
+    wrapper.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      updatePosition(e.clientX);
+    });
+
+    wrapper.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      updatePosition(e.touches[0].clientX);
+    }, { passive: true });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) updatePosition(e.clientX);
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (isDragging) {
+        e.preventDefault();
+        updatePosition(e.touches[0].clientX);
+      }
+    }, { passive: false });
+
+    window.addEventListener('mouseup', () => isDragging = false);
+    window.addEventListener('touchend', () => isDragging = false);
+  });
+</script>

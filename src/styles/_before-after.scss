@@ -1,0 +1,106 @@
+
+//TODO
+@use 'shared' as *;
+  .before-after {
+    grid-column: 1 / -1;
+    width: var(--ba-width);
+    margin: 6vw auto;
+  }
+
+  .before-after__container {
+    position: relative;
+    aspect-ratio: var(--aspect-ratio);
+    overflow: hidden;
+    cursor: ew-resize;
+    user-select: none;
+    background-color: #e5e5e5;
+  }
+
+  /* Les deux images en position absolue, même taille */
+  .before-after__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .before-after__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .before-after__after {
+    z-index: 1;
+  }
+
+  /* Le reveal masque une partie */
+  .before-after__reveal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  /* L'image before doit garder la taille du container parent, pas du reveal */
+  .before-after__reveal .before-after__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+
+  .before-after__reveal .before-after__image img {
+    height: 100%;
+    width: auto;
+    min-width: var(--container-width, 100vw);
+    max-width: none;
+    object-fit: cover;
+    object-position: left center;
+  }
+
+  .before-after__slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    background: white;
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+    z-index: 3;
+  }
+
+  .before-after__handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    color: #333;
+  }
+
+  .before-after__labels  {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    
+    span {
+      font-family: $font-manuscrite;
+      letter-spacing: letter-spacing(medium);
+    }
+  }

@@ -1,0 +1,163 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import { loadProjectImages } from "@/lib/projectImages";
+import { getProjectGroups, countImagesInGroup } from "@/lib/defaultLayout";
+import Base from "@/layouts/Base.astro";
+import Hero from "@/components/Hero.astro";
+import ProjetGroup from "@/components/projet/ProjetGroup.astro";
+import ProjectNav from "@/components/ProjectNav.astro";
+
+export async function getStaticPaths() {
+  const projets = await getCollection('projets');
+
+// DEBUG : voir ce qu'on récupère
+  // console.log('=== DEBUG getStaticPaths ===');
+  // console.log('Nombre de projets:', projets.length);
+  projets.forEach(p => console.log('- id:', p.id, typeof p.id));
+
+
+  const projetsAvecImages = await Promise.all(
+    projets.map(projet => loadProjectImages(projet))
+  );
+
+  projetsAvecImages.sort((a, b) => { // plus simple avec number
+    return (b.data.date ?? 0) - (a.data.date ?? 0);
+  });
+
+  return projetsAvecImages.map((projet, index) => ({
+    params: { slug: projet.id },
+    props: { 
+      projet,
+      prevProject: projetsAvecImages[index - 1] || null,
+      nextProject: projetsAvecImages[index + 1] || null,
+    },
+  }));
+}
+
+const { projet, prevProject, nextProject } = Astro.props;
+const { hero, images = [], beforeAfterImages = [], sliderImages = [], data } = projet;
+
+// Récupérer les groupes (frontmatter ou auto-générés)
+const groups = getProjectGroups(
+  data.groups,
+  images.length,
+  beforeAfterImages.length,
+  sliderImages.length
+);
+
+const baseColor = data.color || '#e5e5e5';
+const DEBUG = false;
+
+const technologiesData = data.technologies
+  ? (await Promise.all(data.technologies.map(id => getEntry('technologies', id)))).filter(c => c !== undefined)
+  : [];
+const competencesData = data.competences
+  ? (await Promise.all(data.competences.map(id => getEntry('competences', id)))).filter(c => c !== undefined)
+  : [];
+---
+
+<Base title={data.title}> 
+
+  <header class="projet-header">
+    {competencesData.length > 0 && (
+        <div class="projet-competences">
+          {competencesData.map((comp) => (
+            <a class="btn--pastille" href={`/competences/${comp.id}`}>{comp.data.label} </a>
+          ))}
+        </div>
+      )}
+    <h1>{data.title}</h1>
+    <div class="projet-infos">
+      <p class="projet-baseline">{data.description}</p>
+      <div class="projet-meta">
+        {data.date && <p class="meta-label">Année : <span>{data.date}</span></p>}
+        {data.client && <p class="meta-label">Client : <span>{data.client}</span></p>}
+        {technologiesData.length > 0 && (
+            <p class="meta-label">Technologies : 
+            {technologiesData.map((tech, index) => (
+              // <a href={`/technologies/${tech.id}`}>{tech.data.label}</a>
+              <span>{tech.data.label} {index < technologiesData.length - 1 ? " | " : ""}</span>
+            ))}
+            </p>
+       
+        )}
+
+      </div>
+     </div>
+  </header>
+
+  <Hero hero={hero} data={data} />
+  <section class="projet-gallery">
+    {DEBUG && (
+      <div style="background: #222; color: #0f0; padding: 10px; font-family: monospace; font-size: 12px; margin-bottom: 20px;">
+        Images: {images.length} | Groups: {groups.length} | 
+        Auto: {!data.groups ? 'oui' : 'non'} | 
+        BeforeAfter: {beforeAfterImages.length} | 
+        Slider: {sliderImages.length}
+      </div>
+    )}
+
+    {groups.map((group, groupIndex) => {
+      if (!group || !Array.isArray(group)) return null;
+
+      const startImageIndex = groups
+        .slice(0, groupIndex)
+        .reduce((acc, g) => acc + countImagesInGroup(g), 0);
+      
+      const groupImageCount = countImagesInGroup(group);
+      const groupImages = images.slice(startImageIndex, startImageIndex + groupImageCount);
+      
+      return (
+        <ProjetGroup
+          items={group}
+          images={groupImages}
+          beforeAfterImages={beforeAfterImages}
+          sliderImages={sliderImages}
+          baseColor={baseColor}
+          groupIndex={groupIndex}
+          startImageIndex={startImageIndex}
+          debug={DEBUG}
+        />
+      );
+    })}
+  </section>
+
+  <ProjectNav prev={prevProject} next={nextProject} />
+  
+</Base>
+
+<script>
+  const items = document.querySelectorAll<HTMLElement>('[data-parallax]');
+  const currentTransforms = new Map<HTMLElement, number>();
+  items.forEach(item => currentTransforms.set(item, 0));
+
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const mobileFactor = 0.25;
+
+  function lerp(start: number, end: number, factor: number): number {
+    return start + (end - start) * factor;
+  }
+
+  function updateParallax() {
+    const viewportHeight = window.innerHeight;
+
+    items.forEach((item) => {
+      const rawAmplitude = parseFloat(item.dataset.parallax || '0');
+      if (rawAmplitude === 0) return;
+
+      const amplitude = isMobile ? rawAmplitude * mobileFactor : rawAmplitude;
+      const rect = item.getBoundingClientRect();
+      const elementCenter = rect.top + rect.height / 2;
+      const progress = 1 - elementCenter / viewportHeight;
+      const targetY = progress * amplitude;
+      const currentY = currentTransforms.get(item) || 0;
+      const newY = lerp(currentY, targetY, 0.1);
+      currentTransforms.set(item, newY);
+      item.style.transform = `translateY(${newY}px)`;
+    });
+
+    requestAnimationFrame(updateParallax);
+  }
+
+  requestAnimationFrame(updateParallax);
+</script>

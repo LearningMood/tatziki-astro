@@ -1,0 +1,25 @@
+---
+const { hero, data } = Astro.props;
+const color = data.color || "#000000";
+
+// TODO : parallaxe
+---
+{
+    hero && (
+      <section class="projet-hero" data-parallax-hero="-100" style={`--project-color: ${color};`}>
+        <picture>
+          <source srcset={hero.avif} type="image/avif" />
+          <source srcset={hero.webp} type="image/webp" />
+          <img
+            src={hero.webp}
+            width={hero.width}
+            height={hero.height}
+            alt={data.title}
+            decoding="async"
+            fetchpriority="high"
+            onload="this.closest('.projet-hero').classList.add('is-loaded')"
+          />
+        </picture>
+      </section>
+    )
+  }

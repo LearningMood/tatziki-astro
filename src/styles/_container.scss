@@ -1,0 +1,16 @@
+// ============================================
+// CLASSES - Containers
+// ============================================
+@use 'shared' as *;
+
+.container {
+  @include container(default);
+}
+
+.container--mini {
+  @include container(mini);
+}
+
+.container--full {
+  @include container(full);
+}
