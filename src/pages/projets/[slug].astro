@@ -24,14 +24,15 @@ export async function getStaticPaths() {
     return (b.data.date ?? 0) - (a.data.date ?? 0);
   });
 
-  return projetsAvecImages.map((projet, index) => ({
-    params: { slug: projet.id },
-    props: { 
-      projet,
-      prevProject: projetsAvecImages[index - 1] || null,
-      nextProject: projetsAvecImages[index + 1] || null,
-    },
-  }));
+  return projetsAvecImages.map((projet, index) => {
+    const prev = projetsAvecImages[index - 1] || null;
+    const next = projetsAvecImages[index + 1] || null;
+    const excludeIds = new Set([projet.id, prev?.id, next?.id].filter(Boolean));
+    return {
+      params: { slug: projet.id },
+      props: { projet, prevProject: prev, nextProject: next },
+    };
+  });
 }
 
 const { projet, prevProject, nextProject } = Astro.props;
@@ -62,7 +63,8 @@ const competencesData = data.competences
     {competencesData.length > 0 && (
         <div class="projet-competences">
           {competencesData.map((comp) => (
-            <a class="btn--pastille" href={`/competences/${comp.id}`}>{comp.data.label} </a>
+            // <a class="btn--pastille" href={`/competences/${comp.id}`}>{comp.data.label} </a>
+           <span  class="btn--pastille">{comp.data.label}</span>  
           ))}
         </div>
       )}
@@ -131,21 +133,41 @@ const competencesData = data.competences
   const currentTransforms = new Map<HTMLElement, number>();
   items.forEach(item => currentTransforms.set(item, 0));
 
+  const heroEl = document.querySelector<HTMLElement>('[data-parallax-hero]');
+  const heroImg = heroEl?.querySelector<HTMLElement>('img');
+  const heroAmplitude = parseFloat(heroEl?.dataset.parallaxHero || '0');
+
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  const mobileFactor = 0.25;
+
+  if (isMobile) {
+    const revealItems = document.querySelectorAll<HTMLElement>('.projet-item, .gallery-text, .gallery-caption');
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) { (e.target as HTMLElement).classList.add('is-visible'); observer.unobserve(e.target); } }),
+      { threshold: 0.1 }
+    );
+    revealItems.forEach(el => observer.observe(el));
+  }
 
   function lerp(start: number, end: number, factor: number): number {
     return start + (end - start) * factor;
   }
 
   function updateParallax() {
+    if (isMobile) return;
+
     const viewportHeight = window.innerHeight;
+
+    if (heroEl && heroImg) {
+      const rect = heroEl.getBoundingClientRect();
+      const progress = 1 - (rect.top + rect.height) / (viewportHeight + rect.height);
+      heroImg.style.transform = `translateY(${progress * heroAmplitude}px)`;
+    }
 
     items.forEach((item) => {
       const rawAmplitude = parseFloat(item.dataset.parallax || '0');
       if (rawAmplitude === 0) return;
 
-      const amplitude = isMobile ? rawAmplitude * mobileFactor : rawAmplitude;
+      const amplitude = rawAmplitude;
       const rect = item.getBoundingClientRect();
       const elementCenter = rect.top + rect.height / 2;
       const progress = 1 - elementCenter / viewportHeight;

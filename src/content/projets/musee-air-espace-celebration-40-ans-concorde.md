@@ -6,6 +6,9 @@ folder: "musee-air-espace"
 thumbnail_alt: "Tatziki - Musée de l'Air et de l'Espace"
 tags: ["Direction artistique"] 
 client: "Musée de l'Air et de l'Espace"
+competences: []
+technologies: []
 color: "#56bfe5ff"
+actif: false
 
 ---

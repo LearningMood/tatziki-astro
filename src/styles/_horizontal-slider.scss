@@ -52,9 +52,10 @@
 }
 
 .horizontal-slider__item img {
-  height: 60vh;
+  height: auto;
+  max-height: 60vh;
   width: auto;
-  max-width: none;
+  max-width: 75vw;
   display: block;
   border-radius: 3px;
   pointer-events: none;
@@ -75,7 +76,7 @@
   transition: width 0.08s linear;
 }
 
-@media (max-width: 768px) {
+@include mq-max(md) {
   .horizontal-slider__wrapper {
     cursor: auto;
   }
@@ -85,6 +86,7 @@
   }
 
   .horizontal-slider__item img {
-    height: 45vw;
+    max-height: 45vw;
+    max-width: 75vw;
   }
 }

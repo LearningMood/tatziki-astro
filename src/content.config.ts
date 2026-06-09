@@ -9,7 +9,8 @@ const groupItemSchema = z.object({
   span: z.number().optional(),
   top: z.string().optional(),
   parallax: z.number().optional(),
-  styled: z.boolean().optional(),  // ← Nouveau : bord arrondi + ombre
+  zIndex: z.number().optional(),
+  styled: z.boolean().optional(),
 
   // Type de l'élément (si absent = image)
   type: z.enum(["video", "blockquote", "caption", "before-after", "slider"]).optional(),
@@ -41,7 +42,6 @@ const projets = defineCollection({
 
     category: z.string().optional(),
     client: z.string().optional(),
-    order: z.number().optional(),
 
     // Médias
     folder: z.string().optional(),
@@ -49,24 +49,14 @@ const projets = defineCollection({
     ratio: z.string().optional(),
     color: z.string().optional(),
     featured: z.boolean().optional(),
-    
-    tags: z.array(z.string()).default([]),
+    actif: z.boolean().default(true),
 
-    // NOUVELLE STRUCTURE : Groupes
-    // Chaque groupe = une rangée où les éléments peuvent se superposer
+
+    // NOUVELLE STRUCTURE : Chaque groupe = une rangée où les éléments peuvent se superposer
     groups: z.array(
       z.array(groupItemSchema)
     ).optional(),
 
-    // ANCIENNE STRUCTURE (pour rétrocompatibilité)
-    layout: z.array(
-      z.object({
-        col: z.number(),
-        span: z.number(),
-        top: z.string(),
-        parallax: z.number().optional(),
-      })
-    ).optional(),
 
     // Positions des blocs spéciaux (ancienne méthode)
     beforeAfterPosition: z.number().optional(),
@@ -97,17 +87,6 @@ const projets = defineCollection({
       })
     ).optional(),
 
-    // Captions (ancienne méthode)
-    captions: z.array(
-      z.object({
-        content: z.string(),
-        author: z.string().optional(),
-        afterImage: z.number(),
-        col: z.number(),
-        span: z.number(),
-        top: z.string(),
-      })
-    ).optional(),
   }),
 });
 

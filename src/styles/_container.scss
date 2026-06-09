@@ -11,6 +11,9 @@
   @include container(mini);
 }
 
+.container--maxi {
+  @include container(maxi);
+}
 .container--full {
   @include container(full);
 }

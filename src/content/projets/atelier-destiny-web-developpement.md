@@ -8,9 +8,11 @@ featured: true
 featuredOrder: 7 
 thumbnail_alt: "Webdesign & développement du site de l'Atelier DesTiny, conception de Tiny Houses sur-mesure"
 color: "#ffe167ff"
-tags: ["Développement front-end", "Direction artistique", "Wedesign | UX Design"]
+competences: [webdesign, demarche-ux, developpement-web]
+technologies: ["wordpress", "figma", javascript, node-js]
 client: "Atelier Destiny"
 ratio: "9/16"
+actif: false
 
 --- 
 

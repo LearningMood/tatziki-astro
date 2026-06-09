@@ -33,6 +33,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="stylesheet" href="https://use.typekit.net/yzs3igk.css">
     <slot name="head" />
 
+    <!-- GTA -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4G8DRFZJP7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4G8DRFZJP7');
+  </script>
+
   </head>
   <body>
     <Nav />

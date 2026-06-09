@@ -8,6 +8,8 @@ thumbnail: "depliant-03.jpg"
 thumbnail_alt: "Charte graphique et communication imprimée du Centre Maritime Hendaye Txingudi - Section voile"
 tags: ["Photographie", "Mise en page", "Identitité visuelle"]
 client: "Association du CMHT"
-
+competences: []
+technologies: []
 color: "#741526ff"
+actif: false
 --- 

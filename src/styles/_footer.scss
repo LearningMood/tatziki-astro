@@ -1,8 +1,8 @@
 @use 'shared' as *;
 
 .footer {
-  background: get-color(indigo, 800);
-  color: get-color(indigo, 200);
+  background: $indigo-800;
+  color: $indigo-200;
   padding: space(12);
 }
 .footer__infos {
@@ -22,4 +22,10 @@
   text-align: center;
   background-color: #000;
   color: get-color(indigo, 400);
+}
+
+@include mq-max(md) {
+  .footer {
+    padding: 0;
+  }
 }

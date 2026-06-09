@@ -3,7 +3,7 @@ title: "Bellevue, site hôtelier sur mesure"
 description: "Développement d'un thème WordPress sur mesure pour un établissement hôtelier. Le site présente la gamme de services, les caractéristiques des chambres et la richesse du cadre environnant. Intégration d'une API channel manager pour la gestion des réservations et mise en place d'une architecture multilingue."
 date: 2022
 competences: [webdesign, demarche-ux, developpement-web]
-technologies : [wordpress, php, html-css, javascript, figma]
+technologies: [wordpress, php, html-css, javascript, figma]
 slug: "creation-site-de-hotel-bellevue"
 folder: "hotel-bellevue"
 thumbnail_alt: "Webdesign et développement du site de l'Hôtel Bellevue Hendaye"

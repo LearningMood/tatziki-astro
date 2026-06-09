@@ -3,28 +3,39 @@
 
 import type { ProjectWithImages } from "@/lib/projectImages";
 import { hexToRgba } from "@/helpers/color";
-import GridControl from "./GridControl.astro";
 import MosaiqueHomeCard from "./MosaiqueHomeCard.astro";
 
 interface Props {
   projects: ProjectWithImages[];
-  defaultCols?: 2 | 3 | 4 | 7;
 }
 
-const { projects, defaultCols = 3 } = Astro.props;
+const { projects } = Astro.props;
 ---
 
 <section class="portfolio-section">
   <header class="portfolio-header">
     <h2 class="portfolio-title">Bonjour</h2>
-    <GridControl defaultCols={defaultCols} />
+    <p>Voici un aperçu de mon travail</p>
   </header>
 
   <div
-    class="mosaique-home container"
+    class="mosaique-home container--maxi"
     id="mosaique-home"
-    style={`--col-count: ${defaultCols};`}
   >
     {projects.map((project, index) => <MosaiqueHomeCard project={project} />)}
   </div>
 </section>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('.mosaique-home__item');
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => {
+      if (e.isIntersecting) {
+        (e.target as HTMLElement).classList.add('is-visible');
+        observer.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.08 }
+  );
+  cards.forEach(el => observer.observe(el));
+</script>

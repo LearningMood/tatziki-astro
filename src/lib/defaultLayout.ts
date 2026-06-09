@@ -32,8 +32,8 @@ const DEFAULT_PATTERNS: LayoutItem[][] = [
   ],
   // Pattern C : 1 grande image centrée
   [
-    { col: 5, span: 16, top: "4vw", parallax: -160 },
-    { col: 20, span: 7, top: "22vw", parallax: 10 },
+    { col: 4, span: 16, top: "4vw", parallax: -160 },
+    { col: 19, span: 9, top: "22vw", parallax: -20 },
   ],
   // Pattern D : 2 images décalées
   [
@@ -78,7 +78,7 @@ export function generateDefaultGroups(
 
     // Insérer un before/after après le 2e groupe
     if (groups.length === 2 && beforeAfterInserted < beforeAfterCount) {
-      groups.push([{ type: "before-after", width: "75" }]);
+      groups.push([{ type: "before-after" }]);
       beforeAfterInserted++;
     }
 
@@ -90,14 +90,14 @@ export function generateDefaultGroups(
 
     // Insérer d'autres before/after espacés
     if (groups.length % 4 === 0 && beforeAfterInserted < beforeAfterCount) {
-      groups.push([{ type: "before-after", width: "65" }]);
+      groups.push([{ type: "before-after" }]);
       beforeAfterInserted++;
     }
   }
 
   // Ajouter les before/after restants à la fin
   while (beforeAfterInserted < beforeAfterCount) {
-    groups.push([{ type: "before-after", width: "75" }]);
+    groups.push([{ type: "before-after"}]);
     beforeAfterInserted++;
   }
 

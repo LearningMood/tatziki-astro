@@ -18,10 +18,11 @@ interface Props {
   baseColor: string;
   blockIndex: number;
   debug?: boolean;
-  styled?: boolean; 
+  styled?: boolean;
+  zIndex?: number;
 }
 
-const { img, config, imageIndex, baseColor, blockIndex, debug = false, styled= false } = Astro.props;
+const { img, config, imageIndex, baseColor, blockIndex, debug = false, styled= false, zIndex } = Astro.props;
 
 const isSvg = 'isSvg' in img && img.isSvg === true;
 const placeholderColor = varyColor(baseColor, blockIndex);
@@ -47,6 +48,7 @@ const placeholderColor = varyColor(baseColor, blockIndex);
     --margin-top: ${config.top};
     --placeholder-color: ${placeholderColor};
     ${!isSvg ? `--aspect-ratio: ${(img as any).width / (img as any).height};` : ''}
+    ${zIndex !== undefined ? `--z-index: ${zIndex};` : ''}
   `}
 >
   {debug && (

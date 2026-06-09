@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
+const { actif = true } = project.data;
 ---
 
 <article
@@ -13,7 +14,11 @@ const { project } = Astro.props;
     data-slug={project.id}
     style={`--item-color: ${project.data.color}; --item-ratio: ${project.data.ratio || 1 };`}
 >
-    <a href={`/projets/${project.id}`} class="item-link">
+
+<a
+    href={actif ? `/projets/${project.id}` : undefined}
+    class:list={["item-link", { "item-link--inactive": !actif }]}
+>
         <div class="item-inner">
             <div class="item-placeholder" aria-hidden="true"></div>
             {
@@ -66,4 +71,5 @@ const { project } = Astro.props;
             }
         </div>
     </a>
+
 </article>

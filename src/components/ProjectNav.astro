@@ -7,58 +7,52 @@ interface Props {
 }
 
 const { prev, next } = Astro.props;
+
+function thumb(p: ProjectWithImages) {
+  return p.thumb ?? null;
+}
 ---
 
 <nav aria-label="Navigation entre projets">
-  <div class="container">
-    <div class="project-nav">
+
+    <div class="projet-nav">
       {prev ? (
-        <a href={`/projets/${prev.id}`} class="project-nav__link project-nav__link--prev">
-          {prev.thumb && (
-            <picture class="project-nav__thumb">
-              <source srcset={prev.thumb.avif} type="image/avif" />
-              <source srcset={prev.thumb.webp} type="image/webp" />
-              <img 
-                src={prev.thumb.webp} 
-                width={prev.thumb.width} 
-                height={prev.thumb.height}
-                alt=""
-                loading="lazy"
-              />
+        <a href={`/projets/${prev.id}`} class="projet-nav__link projet-nav__link--prev">
+          {thumb(prev) && (
+            <picture class="projet-nav__thumb">
+              <source srcset={prev.thumb!.avif} type="image/avif" />
+              <source srcset={prev.thumb!.webp} type="image/webp" />
+              <img src={prev.thumb!.webp} width={prev.thumb!.width} height={prev.thumb!.height} alt="" loading="lazy" />
             </picture>
-            <span class="project-nav__label">Projet précédent</span>
-          <h4 class="project-nav__title">{prev.data.client}</h4>
           )}
+          <span class="projet-nav__label">Projet précédent</span>
+          <h4 class="projet-nav__title">{prev.data.client}</h4>
         </a>
       ) : (
-        <div class="project-nav__link project-nav__link--empty"></div>
+        <div class="projet-nav__link projet-nav__link--empty"></div>
       )}
-
-      <a href="/" class="project-nav__home">
-        Tous les projets
-      </a>
 
       {next ? (
-        <a href={`/projets/${next.id}`} class="project-nav__link project-nav__link--next">
-          {next.thumb && (
-            <picture class="project-nav__thumb">
-              <source srcset={next.thumb.avif} type="image/avif" />
-              <source srcset={next.thumb.webp} type="image/webp" />
-              <img 
-                  src={next.thumb.webp} 
-                  width={next.thumb.width} 
-                height={next.thumb.height}
-                alt=""
-                loading="lazy"
-              />
+        <a href={`/projets/${next.id}`} class="projet-nav__link projet-nav__link--next">
+          {thumb(next) && (
+            <picture class="projet-nav__thumb">
+              <source srcset={next.thumb!.avif} type="image/avif" />
+              <source srcset={next.thumb!.webp} type="image/webp" />
+              <img src={next.thumb!.webp} width={next.thumb!.width} height={next.thumb!.height} alt="" loading="lazy" />
             </picture>
-            <span class="project-nav__label">Projet suivant</span>
-            <h4 class="project-nav__title">{next.data.client}</h4>
           )}
+          <span class="projet-nav__label">Projet suivant</span>
+          <h4 class="projet-nav__title">{next.data.client}</h4>
         </a>
       ) : (
-        <div class="project-nav__link project-nav__link--empty"></div>
+        <div class="projet-nav__link projet-nav__link--empty"></div>
       )}
-      </div>
+        
+        <a href="/" class="">
+          <span class="projet-nav__label">Tous les projets</span>
+          <h4>Accueil</h4>
+        </a>
     </div>
+
+
 </nav>

@@ -15,6 +15,7 @@ interface GroupItem {
   span?: number;
   top?: string;
   parallax?: number;
+  zIndex?: number;
   type?: "video" | "blockquote" | "caption" | "before-after" | "slider";
   src?: string;
   aspectRatio?: string;
@@ -64,6 +65,7 @@ const itemType = item.type || "image";
       top: item.top!,
       parallax: item.parallax || 0,
     }}
+    zIndex={item.zIndex}
     imageIndex={imageIndex!}
     baseColor={baseColor}
     blockIndex={blockIndex}
@@ -113,7 +115,7 @@ const itemType = item.type || "image";
     before={beforeAfterData.before}
     after={beforeAfterData.after}
     name={beforeAfterData.name}
-    width={item.width || "65"} 
+    width={item.width || "50"} 
     labelAvant={item.labelAvant}
     labelApres={item.labelApres}
   />

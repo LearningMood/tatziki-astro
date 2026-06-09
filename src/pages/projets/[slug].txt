@@ -1,3 +1,21 @@
+Exemple destructuration
+// Ces deux lignes sont équivalentes :
+const actif = project.data.actif;
+const { actif } = project.data;
+
+// On peut en extraire plusieurs à la fois :
+const { actif, title, client } = project.data;
+// équivaut à :
+const actif  = project.data.actif;
+const title  = project.data.title;
+const client = project.data.client;
+
+// On peut aussi renommer :
+const { actif: estActif } = project.data;
+// → crée la variable estActif avec la valeur de project.data.actif
+
+
+
 ---
 import { getCollection } from "astro:content";
 import { loadProjectImages } from "@/lib/projectImages";

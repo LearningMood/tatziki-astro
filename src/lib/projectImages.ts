@@ -52,11 +52,11 @@ export interface ProjectWithImages {
 // ============ CONFIG ============
 
 const IMAGE_CONFIG = {
-  thumb:      { width: 800,  quality: 75 },
-  hero:       { width: 1920, quality: 75 },
-  gallery:    { width: 1200, quality: 72 },
-  gallery_sm: { width: 800,  quality: 70 },
-  slider:     { width: 1600, quality: 78 },
+  thumb:      { width: 800,  quality: 78 },
+  hero:       { width: 1920, quality: 78 },
+  gallery:    { width: 1600, quality: 80 },
+  gallery_sm: { width: 900,  quality: 75 },
+  slider:     { width: 1800, quality: 82 },
 } as const;
 
 // ============ HELPERS ============
