@@ -20,9 +20,10 @@ interface Props {
   debug?: boolean;
   styled?: boolean;
   zIndex?: number;
+  mobileWidth?: string;
 }
 
-const { img, config, imageIndex, baseColor, blockIndex, debug = false, styled= false, zIndex } = Astro.props;
+const { img, config, imageIndex, baseColor, blockIndex, debug = false, styled= false, zIndex, mobileWidth } = Astro.props;
 
 const isSvg = 'isSvg' in img && img.isSvg === true;
 const placeholderColor = varyColor(baseColor, blockIndex);
@@ -49,6 +50,7 @@ const placeholderColor = varyColor(baseColor, blockIndex);
     --placeholder-color: ${placeholderColor};
     ${!isSvg ? `--aspect-ratio: ${(img as any).width / (img as any).height};` : ''}
     ${zIndex !== undefined ? `--z-index: ${zIndex};` : ''}
+    ${isSvg && mobileWidth ? `--svg-mobile-width: ${mobileWidth};` : ''}
   `}
 >
   {debug && (

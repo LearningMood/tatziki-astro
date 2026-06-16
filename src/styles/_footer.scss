@@ -4,6 +4,10 @@
   background: $indigo-800;
   color: $indigo-200;
   padding: space(12);
+
+  h4 {
+    color: $indigo-200;
+  }
 }
 .footer__infos {
   display: grid;

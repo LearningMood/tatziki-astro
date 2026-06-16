@@ -9,7 +9,6 @@ client: "Decathlon - Subea"
 tags: ["Direction artistique", "Illustration"]
 color: "#0cb4ce"
 thumbnail_alt: "Projet SUBEA - PADI illustration extrait"
-actif: false
 url: "https://www.padi.com/fr/padi-decathlon"
 # const layoutConfigs = [
 #   { colStart: 2,  colSpan: 12, marginTop: '5vw',  parallax: -150 },

@@ -7,9 +7,8 @@ folder: "takuma"
 thumbnail_alt: "Charlotte CASTERS - Graphisme - Catalogue DECATHLON Efoil Takuma"
 
 client: "Decathlon"
-competences: []
-technologies: []
+competences: [direction-artistique, print,]
+technologies: [indesign]
 color: "#279c79ff"
 ratio: "4/3"
-actif: false
 ---

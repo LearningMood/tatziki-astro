@@ -4,7 +4,6 @@
      SECTION
      ═══════════════════════════════════════════════════════════ */
 .portfolio-section {
-  margin-top: space(24);
   background: var(--color-bg);
   min-height: 100vh;
   padding: space(16);
@@ -13,19 +12,29 @@
 
 .portfolio-header {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 2rem;
-  margin-bottom: clamp(2rem, 4vw, 4rem);
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--color-border);
+  margin: space(12) 0;
+  padding: 0 space(12);
+
 }
 
 .portfolio-title {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2.5rem, 6vw, 5rem);
   color: var(--color-text);
   margin: 0;
+  line-height: .8;
+}
+
+.portfolio-baseline {
+  font-size: font-size(lg);
+  color: $tatziki;
+
+  &::selection {
+    color: #fff;
+    background: $indigo-500;
+  }
 }
 
 
@@ -61,6 +70,24 @@
 }
 .item-link--inactive {
   cursor: default;
+
+  .item-overlay {
+    opacity: 1;
+    background: color-mix(in srgb, var(--item-color) 60%, transparent);
+  }
+}
+
+.item-soon {
+  align-self: center;
+  font-size: font-size(sm);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: bold;
+  // border: 1px solid var(--item-color);;
+  padding: space(12);
+  border-radius: 2px;
+  opacity: 0.8;
 }
 
 .item-inner {
@@ -228,8 +255,7 @@
     padding: space(4);
   }
   .portfolio-header {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
   .mosaique-home {
     column-count: min(var(--col-count), 2);

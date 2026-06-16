@@ -5,7 +5,7 @@ date: 2017
 slug: "festival-jeunesse-txikiekin"
 thumbnail_alt: "Promotion du festoval de livre jeunesse Txikiekin, édition 2017 à Hendaye"
 competences: [direction-artistique, developpement-web, webmarketing, print]
-technologies: [Association Txikiekin, html-css, indesign, wordpress]
+technologies: [html-css, indesign, wordpress]
 couleur: "#3085a3"
 folder: "txikiekin"
 client: "Association Txikiekin"

@@ -21,8 +21,16 @@ export interface GroupItem {
 const DEFAULT_PATTERNS: LayoutItem[][] = [
   // Pattern A : 2 images côte à côte
   [
-    { col: 3, span: 12, top: "4vw", parallax: -150 },
+    { col: 3, span: 12, top: "8vw", parallax: -150 },
     { col: 16, span: 10, top: "12vw", parallax: -200 },
+  ],
+  // image unique centrée
+  [
+    { col: 8, span: 12, top: "4vw", parallax: -150 },
+  ],
+  [
+    { col: 3, span: 8, top: "4vw", parallax: -150 },
+    { col: 12, span: 12, top: "12vw", parallax: -200 },
   ],
   // Pattern B : 3 images en escalier
   [
@@ -51,6 +59,14 @@ const DEFAULT_PATTERNS: LayoutItem[][] = [
     { col: 1, span: 16, top: "4vw", parallax: -170 },
     { col: 19, span: 8, top: "14vw", parallax: -120 },
   ],
+  // Pattern G : 4 images 
+  [
+    { col: 7, span: 3, top: "2vw", parallax: -80 },
+    { col: 11, span: 3, top: "2vw", parallax: -90 },
+    { col: 15, span: 3, top: "2vw", parallax: -100 },
+    { col: 19, span: 3, top: "2vw", parallax: -90 },
+    { col: 23, span: 3, top: "2vw", parallax: -80 }
+  ]
 ];
 
 /**

@@ -5,6 +5,7 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.tatziki.fr',
+  cacheDir: './.astro/cache',
   integrations: [mdx()],
   image: {
     // Service d'optimisation (Sharp par défaut)
@@ -14,8 +15,6 @@ export default defineConfig({
         limitInputPixels: 268402689, // ~16k x 16k max
       }
     },
-    // Formats de sortie
-    formats: ['webp', 'avif'],
     // Qualité par défaut
     quality: 80,
   },

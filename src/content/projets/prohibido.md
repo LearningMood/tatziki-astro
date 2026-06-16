@@ -20,9 +20,11 @@ groups:
     - { col: 20,  span: 5, top: "4vw", parallax: -200 }
     - { type: "blockquote", content: "Publications chaque semaine de présentation des événements culturels avec mise en avant des artistes", col: 20, span: 6, top: "30vw" }
 
-  - - { col: 6, span: 7, top: "13vw", parallax: -20 }
-    - { col: 13, span: 7, top: "14vw", parallax: -120 }
-    - { col: 20, span: 7, top: "13vw", parallax: -80 }
+  - - { type: "video", src: "prohibido/concert", col: 10, span: 6, top: "0vw", aspectRatio: "9/16" }
+
+  - - { col: 6, span: 7, top: "8vw", parallax: -20 }
+    - { col: 13, span: 7, top: "10vw", parallax: -120 }
+    - { col: 20, span: 7, top: "9vw", parallax: -80 }
 
   - - { col: 1,  span: 8, top: "12vw",  parallax: -180 }
     - { col: 9, span: 8,  top: "12vw", parallax: -200 }
@@ -35,9 +37,9 @@ groups:
   - - { col: 13, span: 6, top: "4vw", parallax: -70 }
     - { col: 19, span: 6, top: "4vw", parallax: -80 }
 
-
-  # - - { type: "video", src: "prohibido/saint-valentin", col: 16, span: 6, top: "4vw", aspectRatio: "9/16" }
-    
+   
+  - - { type: "video", src: "prohibido/saint-valentin", col: 8, span: 6, top: "4vw", aspectRatio: "9/16" }
+    - { type: "video", src: "prohibido/saint-valentin-after", col: 16, span: 6, top: "4vw", aspectRatio: "9/16" }
 
   - - { type: "before-after", name: "bedoune", width: "65" }
   - - { type: "slider" }

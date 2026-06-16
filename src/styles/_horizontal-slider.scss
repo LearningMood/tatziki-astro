@@ -53,26 +53,29 @@
 
 .horizontal-slider__item img {
   height: auto;
-  max-height: 60vh;
+  max-height: var(--slider-max-height, 300px);
   width: auto;
-  max-width: 75vw;
+  max-width: var(--slider-max-width, 75vw);
   display: block;
   border-radius: 3px;
   pointer-events: none;
 }
 
 .horizontal-slider__progress {
-  margin: 0 4vw;
-  height: 1px;
-  background: rgba(0, 0, 0, 0.12);
-  border-radius: 1px;
+  width: 30%;
+  margin: space(12) auto 0;
+  height: 3px;
+  // background: rgba(141, 244, 160, 0.12);
+  background: rgb(111 191 177 / 31%);
+  border-radius: 10px;
   overflow: hidden;
 }
 
 .horizontal-slider__progress-bar {
   height: 100%;
   width: 0%;
-  background: rgba(0, 0, 0, 0.45);
+  // background: rgba(0, 0, 0, 0.45);
+  background: var(--projet-color, $tatziki);
   transition: width 0.08s linear;
 }
 

@@ -10,6 +10,7 @@ const groupItemSchema = z.object({
   top: z.string().optional(),
   parallax: z.number().optional(),
   zIndex: z.number().optional(),
+  mobileWidth: z.string().optional(),
   styled: z.boolean().optional(),
 
   // Type de l'élément (si absent = image)
@@ -18,6 +19,10 @@ const groupItemSchema = z.object({
   // Vidéo
   src: z.string().optional(),
   aspectRatio: z.string().optional(),
+  controls: z.boolean().optional(),
+  muted: z.boolean().optional(),
+  loop: z.boolean().optional(),
+  autoplay: z.boolean().optional(),
 
   // Texte (blockquote, caption)
   content: z.string().optional(),
@@ -25,6 +30,10 @@ const groupItemSchema = z.object({
 
   // Before/After
   width: z.enum(["50", "65", "75", "85", "100"]).optional(),
+
+  // Slider
+  maxHeight: z.string().optional(),
+  maxWidth: z.string().optional(),
   name: z.string().optional(),
   labelAvant: z.string().optional(),
   labelApres: z.string().optional(),
@@ -71,6 +80,7 @@ const projets = defineCollection({
         afterImage: z.number(),
         col: z.number(),
         span: z.number(),
+        controls: z.boolean().optional(),
         top: z.string().optional(),
         aspectRatio: z.string().optional(),
       })
@@ -95,7 +105,7 @@ const competences = defineCollection({
   schema: z.object({
     label: z.string(),
     icon: z.string().optional(),
-    description: z.string().optional(),
+    infos: z.string().optional(),
     category: z.string(),
   }),
 });

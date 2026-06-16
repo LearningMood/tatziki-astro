@@ -2,7 +2,7 @@
 title: "Conception du programme 2026 d'Illustrator"
 description: "Conception de l'itinéraire, de la progression et du support de la formation"
 date: 2023
-folder: "cegos-illustrator"
+folder: "illustrator-cegos"
 client: "Cegos"
 competences: ["ingenierie-pedagogique", "innovation-didactique"]
 technologies: ["illustrator", "indesign"]

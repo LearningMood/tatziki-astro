@@ -7,7 +7,7 @@ technologies: [after-effects, illustrator, photoshop]
 client: "Manpower"
 folder: "manpower"
 thumbnail_alt: "Tatziki - Manpower"
-color: "a0d4f4"
+color: "#80a47b"
 
 groups: 
   #  crayonnés iles

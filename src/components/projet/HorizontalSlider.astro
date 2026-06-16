@@ -3,12 +3,21 @@ import type { OptimizedImage } from "@/lib/projectImages";
 
 interface Props {
   images: OptimizedImage[];
+  maxHeight?: string;
+  maxWidth?: string;
 }
 
-const { images } = Astro.props;
+const { images, maxHeight, maxWidth } = Astro.props;
 ---
 
-<div class="horizontal-slider__wrapper" data-slider-wrapper>
+<div
+  class="horizontal-slider__wrapper"
+  data-slider-wrapper
+  style={[
+    maxHeight && `--slider-max-height: ${maxHeight}`,
+    maxWidth && `--slider-max-width: ${maxWidth}`,
+  ].filter(Boolean).join('; ') || undefined}
+>
   <div class="horizontal-slider__cursor" data-cursor aria-hidden="true">
     <svg width="20" height="10" viewBox="0 0 20 10" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 5H5M5 5L2.5 2.5M5 5L2.5 7.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>

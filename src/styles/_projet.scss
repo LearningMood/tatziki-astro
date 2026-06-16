@@ -77,6 +77,10 @@
     overflow: hidden;
   }
 
+  .projet-item--video {
+    background-color: transparent;
+  }
+
   /* Bitmap : utilise aspect-ratio */
   .projet-item:not(.projet-item--svg) {
     aspect-ratio: var(--aspect-ratio);
@@ -215,6 +219,12 @@
     .gallery-caption {
       grid-column: 1 / -1;
       margin-top: space(6) !important;
+    }
+
+    .projet-item--svg {
+      max-width: var(--svg-mobile-width, 60%);
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .projet-item,

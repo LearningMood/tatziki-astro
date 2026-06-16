@@ -40,12 +40,16 @@ const { actif = true } = project.data;
                 )
             }
             <div class="item-overlay">
-                <button
-                    class="btn-plus btn-expand"
-                    aria-label="Voir plus d'images"
-                >
-                    <span class="plus-icon">+</span>
-                </button>
+                {actif ? (
+                    <button
+                        class="btn-plus btn-expand"
+                        aria-label="Voir plus d'images"
+                    >
+                        <span class="plus-icon">+</span>
+                    </button>
+                ) : (
+                    <span class="item-soon">En cours...</span>
+                )}
 
                 <div class="item-meta">
                     {
