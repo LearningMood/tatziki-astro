@@ -6,11 +6,9 @@ interface Props {
   after: OptimizedImage;
   name: string;
   width?: "50" | "65" | "75" | "85" | "100";
-  labelAvant?: string;
-  labelApres?: string;
 }
 
-const { before, after, name, width = "50", labelAvant, labelApres } = Astro.props;
+const { before, after, name, width = "50" } = Astro.props;
 const aspectRatio = before.width / before.height;
 ---
 
@@ -59,12 +57,6 @@ const aspectRatio = before.width / before.height;
     </div>
   </div>
 
-  { labelAvant && labelApres && (
-    <div class="before-after__labels">
-      <span>{labelAvant}</span>
-      <span>{labelApres}</span>
-    </div>
-  )}
 </div>
 
 <script>

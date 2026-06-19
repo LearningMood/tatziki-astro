@@ -1,5 +1,5 @@
 ---
-title: "Animation Areva"
+title: "Areva : motion design"
 description: "Réalisation d'une séquence animée de présentation des nouvelles orientations stratégiques du Groupe Areva. Du storyboarding à l'animation finale, une narration visuelle synthétique et percutante pour accompagner la communication interne du changement."
 date: 2016
 folder: "areva"

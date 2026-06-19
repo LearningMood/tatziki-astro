@@ -25,8 +25,10 @@ function thumb(p: ProjectWithImages) {
               <img src={prev.thumb!.webp} width={prev.thumb!.width} height={prev.thumb!.height} alt="" loading="lazy" />
             </picture>
           )}
-          <span class="projet-nav__label">Projet précédent</span>
-          <h4 class="projet-nav__title">{prev.data.client}</h4>
+          <div class="projet-nav-infos">
+            <span class="projet-nav__label">Projet précédent</span>
+            <h4 class="projet-nav__title">{prev.data.title}</h4>
+          </div>
         </a>
       ) : (
         <div class="projet-nav__link projet-nav__link--empty"></div>
@@ -41,16 +43,21 @@ function thumb(p: ProjectWithImages) {
               <img src={next.thumb!.webp} width={next.thumb!.width} height={next.thumb!.height} alt="" loading="lazy" />
             </picture>
           )}
-          <span class="projet-nav__label">Projet suivant</span>
-          <h4 class="projet-nav__title">{next.data.client}</h4>
+          <div class="projet-nav-infos">
+            <span class="projet-nav__label">Projet suivant</span>
+            <h4 class="projet-nav__title">{next.data.title}</h4>
+          </div>
         </a>
       ) : (
         <div class="projet-nav__link projet-nav__link--empty"></div>
       )}
         
-        <a href="/" class="">
-          <span class="projet-nav__label">Tous les projets</span>
-          <h4>Accueil</h4>
+        <a href="/" class="projet-nav__link projet-nav-back">
+          <div class="projet-nav__thumb"></div>
+          <div class="projet-nav-infos">
+            <span class="projet-nav__label">Tous les projets</span>
+            <h4>Accueil</h4>
+          </div>
         </a>
     </div>
 

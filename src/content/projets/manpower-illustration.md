@@ -1,5 +1,5 @@
 ---
-title: "Manpower, Illustration"
+title: "Manpower : illustration"
 description: "Création de l'univers graphique d'un dispositif de formation pour Manpower. Conception d'un système d'illustrations isométriques évolutif, adapté aux différentes étapes du parcours de formation. Définition des règles graphiques et adaptation des évolutions visuelles en fonction de la progression des apprenants."
 date: 2016
 competences: [motion-design, illustration, storyboarding, ingenierie-pedagogique, identite-visuelle]

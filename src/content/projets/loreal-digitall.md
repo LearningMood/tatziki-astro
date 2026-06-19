@@ -1,5 +1,5 @@
 ---
-title: "L'Oréal Digitall Programme"
+title: "L'Oréal : DA Digitall Programme"
 description: "Définition de l'identité visuelle du dispositif de digitalisation de L'Oréal. Assurer la cohésion des différentes opérations de formation, décliner les supports de communication multi-supports et élaborer la scénographie des séminaires de présentation. Veille et inventaire des actions de communication des marques du Groupe."
 date: 2018
 folder: "loreal"

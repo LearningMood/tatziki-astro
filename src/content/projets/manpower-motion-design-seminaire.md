@@ -1,5 +1,5 @@
 ---
-title: "Manpower, Motion design séminaire"
+title: "Manpower : motion design séminaire"
 description: "Conception de l'animation d'ouverture du séminaire annuel Manpower. Illustration simple et didactique des concepts-clés de l'entreprise à travers une animation fluide mêlant typographie animée et motion graphics. Un format court et percutant pour capter l'attention dès les premières secondes."
 date: 2016
 competences: [motion-design, illustration, storyboarding]

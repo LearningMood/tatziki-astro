@@ -1,5 +1,5 @@
 ---
-title: "Open Kitchen, Dark kitchen multi-concepts"
+title: "Open Kitchen : direction artistique & webmarketing"
 description: "Élaboration des identités visuelles de trois cuisines distinctes (basque, street food, asiatique) pour un concept de dark kitchen. Déploiement de la présence digitale : création et animation du compte Instagram, mise en place de la page Google Business. Conception des supports imprimés : affiches et dépliants de présentation des menus."
 date: 2026
 competences: [identite-visuelle, community-management, print, webdesign]

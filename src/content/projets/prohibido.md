@@ -1,5 +1,5 @@
 ---
-title: "Prohibido, bar de Jazz, Biarritz"
+title: "Prohibido : identité & webmarketing"
 description: "Création et déploiement de l'identité visuelle d'un club de jazz biarrot. De la charte graphique à l'animation des réseaux sociaux (stories, posts, reels, Facebook), j'ai assuré la communication globale du lieu : coordination avec les partenaires de diffusion (office de tourisme, billetterie, TVPI, Shotgun, Fnac), promotion des artistes programmés et conception des visuels événementiels. En parallèle, suivi des performances de vente et optimisation continue du site de billetterie."
 date: 2025
 folder: "prohibido"

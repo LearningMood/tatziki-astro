@@ -1,6 +1,6 @@
 ---
 
-title: "Création de l'identité de la Société HYGGE"
+title: "Hygge Conseil : identité & webdesign"
 description: "Création de l'identité visuelle de la société Hygge Conseil et Coaching. Webdesign et développement d'un thème WordPress sur mesure en responsive web design. Définition des gabarits de supports d'animation pour assurer la cohérence de la marque sur tous les points de contact."
 date: 2018
 slug: "creation-identite-hygge"

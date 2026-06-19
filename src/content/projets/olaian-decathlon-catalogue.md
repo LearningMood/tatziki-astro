@@ -1,5 +1,5 @@
 ---
-title: "Olaian, Catalogue produits 2022"
+title: "Decathlon Olaian : Catalogue produits"
 description: "Conception du catalogue annuel de la marque Olaian (Decathlon), couvrant les gammes surf, néoprène et bodyboard. Mise en forme homogène et dynamique valorisant l'innovation et l'ingénierie des produits phares de la marque. Mise en page optimisée pour une consultation multi-supports, du print au digital."
 date: 2022
 competences: [identite-visuelle, direction-artistique, print]

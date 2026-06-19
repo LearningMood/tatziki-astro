@@ -4,11 +4,9 @@ interface Props {
   col: number;
   span: number;
   top: string;
-  debug?: boolean;
-  imageIndex?: number;
 }
 
-const { content, col, span, top, debug = false, imageIndex } = Astro.props;
+const { content, col, span, top } = Astro.props;
 ---
 
 <blockquote
@@ -19,24 +17,5 @@ const { content, col, span, top, debug = false, imageIndex } = Astro.props;
     --margin-top: ${top};
   `}
 >
-  {debug && (
-    <span class="debug-label debug-label--text">
-      texte après img {imageIndex} | col {col} span {span}
-    </span>
-  )}
   <p>{content}</p>
 </blockquote>
-
-<style>
-  .debug-label--text {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(0, 150, 0, 0.9);
-    color: white;
-    padding: 4px 8px;
-    font-size: 11px;
-    font-family: monospace;
-    z-index: 100;
-  }
-</style>

@@ -11,6 +11,7 @@ const groupItemSchema = z.object({
   parallax: z.number().optional(),
   zIndex: z.number().optional(),
   mobileWidth: z.string().optional(),
+  preset: z.string().optional(),
   styled: z.boolean().optional(),
 
   // Type de l'élément (si absent = image)
@@ -26,7 +27,6 @@ const groupItemSchema = z.object({
 
   // Texte (blockquote, caption)
   content: z.string().optional(),
-  author: z.string().optional(),
 
   // Before/After
   width: z.enum(["50", "65", "75", "85", "100"]).optional(),
@@ -35,8 +35,6 @@ const groupItemSchema = z.object({
   maxHeight: z.string().optional(),
   maxWidth: z.string().optional(),
   name: z.string().optional(),
-  labelAvant: z.string().optional(),
-  labelApres: z.string().optional(),
 });
 
 const projets = defineCollection({
@@ -67,12 +65,6 @@ const projets = defineCollection({
     ).optional(),
 
 
-    // Positions des blocs spéciaux (ancienne méthode)
-    beforeAfterPosition: z.number().optional(),
-    beforeAfterWidth: z.enum(["50", "65", "75", "85", "100"]).optional(),
-    sliderPosition: z.number().optional(),
-    sliderSpeed: z.enum(["slow", "normal", "fast"]).optional(),
-
     // Vidéos (ancienne méthode)
     videos: z.array(
       z.object({
@@ -83,17 +75,6 @@ const projets = defineCollection({
         controls: z.boolean().optional(),
         top: z.string().optional(),
         aspectRatio: z.string().optional(),
-      })
-    ).optional(),
-
-    // Blockquotes (ancienne méthode)
-    blockquotes: z.array(
-      z.object({
-        content: z.string(),
-        afterImage: z.number(),
-        col: z.number(),
-        span: z.number(),
-        top: z.string(),
       })
     ).optional(),
 

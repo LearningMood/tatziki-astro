@@ -92,15 +92,3 @@
     color: #333;
   }
 
-  .before-after__labels  {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.75rem;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    
-    span {
-      font-family: $font-manuscrite;
-      letter-spacing: letter-spacing(medium);
-    }
-  }

@@ -1,5 +1,5 @@
 ---
-title: "Cofely Ineo : Projet Smart City"
+title: "Cofely Ineo : dispositif Smart City"
 description: "Réalisation du design d'interface et déclinaison du dispositif sur supports imprimés. Présenter de façon didactique les innovations et opportunités des villes connectées. Faciliter la compréhension des solutions à l'aide d'animations. Prolonger l'expérience interactive sur supports imprimés"
 date: 2014
 thumbnail_alt: "Tatziki - Cofely Ineo"
