@@ -2,7 +2,7 @@
 // Grille portfolio en colonnes CSS avec effet tuile (masonry-like)
 
 import type { ProjectWithImages } from "@/lib/projectImages";
-import { hexToRgba } from "@/helpers/color";
+import { getCollection } from "astro:content";
 import MosaiqueHomeCard from "./MosaiqueHomeCard.astro";
 
 interface Props {
@@ -10,6 +10,13 @@ interface Props {
 }
 
 const { projects } = Astro.props;
+
+// Compétences uniques utilisées par les projets, avec leurs labels
+const usedCompIds = [...new Set(projects.flatMap(p => p.data.competences || []))];
+const allComps = await getCollection('competences');
+const usedComps = allComps
+  .filter(c => usedCompIds.includes(c.id))
+  .sort((a, b) => a.data.label.localeCompare(b.data.label));
 ---
 
 <section class="portfolio-section">
@@ -18,15 +25,31 @@ const { projects } = Astro.props;
     <p class="portfolio-baseline">Voici un aperçu de mon travail...</p>
   </header>
 
-  <div
-    class="mosaique-home container--maxi"
-    id="mosaique-home"
-  >
-    {projects.map((project, index) => <MosaiqueHomeCard project={project} />)}
+  {usedComps.length > 0 && (
+    <div class="home-competences">
+      <div class="competences-list">
+        <button class="btn--pastille btn-pastille--max comp-filter-btn comp-reset is-active" data-comp-id="">
+          Tout voir
+        </button>
+        {usedComps.map(comp => (
+          <button
+            class="btn--pastille btn-pastille--max comp-filter-btn"
+            data-comp-id={comp.id}
+          >
+            {comp.data.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <div class="mosaique-home container--maxi" id="mosaique-home">
+    {projects.map(project => <MosaiqueHomeCard project={project} />)}
   </div>
 </section>
 
 <script>
+  // ── Scroll reveal ──────────────────────────────────────────
   const cards = document.querySelectorAll<HTMLElement>('.mosaique-home__item');
   const observer = new IntersectionObserver(
     (entries) => entries.forEach(e => {
@@ -38,4 +61,53 @@ const { projects } = Astro.props;
     { threshold: 0.08 }
   );
   cards.forEach(el => observer.observe(el));
+
+  // ── Filtrage par compétence ────────────────────────────────
+  const filterBtns = document.querySelectorAll<HTMLElement>('.comp-filter-btn');
+  const resetBtn = document.querySelector<HTMLElement>('.comp-reset');
+  const activeFilters = new Set<string>();
+
+  function applyFilters() {
+    const hasFilter = activeFilters.size > 0;
+
+    cards.forEach(card => {
+      if (!hasFilter) {
+        card.classList.remove('is-filtered-out');
+        return;
+      }
+      const cardComps = (card.dataset.competences || '').split(',').filter(Boolean);
+      const matches = [...activeFilters].some(f => cardComps.includes(f));
+      if (matches) {
+        card.classList.remove('is-filtered-out');
+        card.classList.add('is-visible');
+      } else {
+        card.classList.add('is-filtered-out');
+      }
+    });
+
+    // Bouton "Tout voir" : actif seulement si aucun filtre
+    resetBtn?.classList.toggle('is-active', !hasFilter);
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const compId = btn.dataset.compId || '';
+
+      if (compId === '') {
+        // Réinitialiser tous les filtres
+        activeFilters.clear();
+        filterBtns.forEach(b => b.classList.remove('is-active'));
+      } else {
+        if (activeFilters.has(compId)) {
+          activeFilters.delete(compId);
+          btn.classList.remove('is-active');
+        } else {
+          activeFilters.add(compId);
+          btn.classList.add('is-active');
+        }
+      }
+
+      applyFilters();
+    });
+  });
 </script>

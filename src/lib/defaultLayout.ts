@@ -159,20 +159,23 @@ const DEFAULT_PATTERNS: LayoutItem[][] = [
     { col: 16, span: 10, top: "12vw", parallax: -200 },
   ],
   [
-    { col: 8, span: 12, top: "4vw", parallax: -150 },
+    { col: 8, span: 14, top: "4vw", parallax: -150 },
   ],
   [
-    { col: 3, span: 8, top: "4vw", parallax: -150 },
-    { col: 12, span: 12, top: "12vw", parallax: -200 },
+    { col: 4, span: 8, top: "4vw", parallax: -150 },
+    { col: 13, span: 11, top: "12vw", parallax: -200 },
   ],
   [
-    { col: 2, span: 10, top: "2vw", parallax: -120 },
-    { col: 13, span: 7, top: "10vw", parallax: -180 },
-    { col: 21, span: 7, top: "6vw", parallax: -10 },
+    { col: 8, span: 14, top: "4vw", parallax: -150 },
   ],
   [
-    { col: 4, span: 16, top: "4vw", parallax: -160 },
-    { col: 19, span: 9, top: "22vw", parallax: -20 },
+    { col: 3, span: 8, top: "2vw", parallax: -120 },
+    { col: 12, span: 8, top: "2vw", parallax: -180 },
+    { col: 21, span: 8, top: "0vw", parallax: -10 },
+  ],
+  [
+    { col: 4, span: 14, top: "4vw", parallax: -160 },
+    { col: 17, span: 9, top: "16vw", parallax: -20 },
   ],
   [
     { col: 1, span: 10, top: "8vw", parallax: -180 },

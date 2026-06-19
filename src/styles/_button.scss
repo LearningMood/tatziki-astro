@@ -136,20 +136,24 @@ button {
 
 .btn--pastille {
   padding: space(1) space(2);
-  background: #d4f889;
-  color: #34796d;
+  background: $tatziki;
+  color: #d8fff8;
   border: none;
   border-radius: 9999px;
   font-size: font-size(xxs);
-  font-weight: 500;
-  transition: background 0.3s ease;
+  transition: background var(--transition-slow), color var(--transition-fast);;
   cursor: pointer;
   text-transform: uppercase;
   font-family: $font-titre;
   font-weight: 700;
 
   &:hover {
-    background: $tatziki;
+    background: #d4f889;
     color: #fff;
   }
+}
+
+.btn-pastille--max {
+  font-size: font-size(xs);
+  padding: space(2) space(4);
 }

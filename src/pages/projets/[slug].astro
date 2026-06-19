@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 // DEBUG : voir ce qu'on récupère
   // console.log('=== DEBUG getStaticPaths ===');
   // console.log('Nombre de projets:', projets.length);
-  projets.forEach(p => console.log('- id:', p.id, typeof p.id));
+  // projets.forEach(p => console.log('- id:', p.id, typeof p.id));
 
 
   const projetsAvecImages = await Promise.all(
@@ -47,7 +47,6 @@ const groups = getProjectGroups(
 );
 
 const baseColor = data.color || '#e5e5e5';
-const DEBUG = false;
 
 const technologiesData = data.technologies
   ? (await Promise.all(data.technologies.map(id => getEntry('technologies', id)))).filter(c => c !== undefined)
@@ -90,14 +89,6 @@ const competencesData = data.competences
 
   <Hero hero={hero} data={data} />
   <section class="projet-gallery">
-    {DEBUG && (
-      <div style="background: #222; color: #0f0; padding: 10px; font-family: monospace; font-size: 12px; margin-bottom: 20px;">
-        Images: {images.length} | Groups: {groups.length} | 
-        Auto: {!data.groups ? 'oui' : 'non'} | 
-        BeforeAfter: {beforeAfterImages.length} | 
-        Slider: {sliderImages.length}
-      </div>
-    )}
 
     {groups.map((group, groupIndex) => {
       if (!group || !Array.isArray(group)) return null;
@@ -118,7 +109,6 @@ const competencesData = data.competences
           baseColor={baseColor}
           groupIndex={groupIndex}
           startImageIndex={startImageIndex}
-          debug={DEBUG}
         />
       );
     })}

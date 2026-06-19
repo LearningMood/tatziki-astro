@@ -2,7 +2,7 @@
 
 /* ═══════════════════════════════════════════════════════════
      SECTION
-     ═══════════════════════════════════════════════════════════ */
+ ═══════════════════════════════════════════════════════════ */
 .portfolio-section {
   background: var(--color-bg);
   min-height: 100vh;
@@ -15,7 +15,7 @@
   flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin: space(12) 0;
+  margin-bottom: space(12);
   padding: 0 space(12);
 
 }
@@ -37,6 +37,42 @@
   }
 }
 
+// BLOC COMPETENCES
+.home-competences {
+ margin-bottom: space(12);
+ width: 50%;
+ max-width: 560px;
+  @include mq-max(md) {
+    width: 100%;
+  }
+}
+
+.competences-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: space(2);
+}
+
+.comp-filter-btn.is-active {
+  background: $framboise;
+  color: #fff;
+  transition: background var(--transition-fast), color var(--transition-fast);
+
+  &:hover {
+    background: $framboise-500;
+  }
+}
+.comp-filter-btn.comp-reset.is-active {
+  background: $noir-800;
+  color: $noir-100;
+  transition: background var(--transition-fast), color var(--transition-fast);
+
+}
+
+.mosaique-home__item.is-filtered-out {
+  display: none;
+}
 
 .mosaique-home {
   column-count: var(--col-count);

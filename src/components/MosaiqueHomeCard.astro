@@ -12,6 +12,7 @@ const { actif = true } = project.data;
 <article
     class="mosaique-home__item"
     data-slug={project.id}
+    data-competences={(project.data.competences || []).join(',')}
     style={`--item-color: ${project.data.color}; --item-ratio: ${project.data.ratio || 1 };`}
 >
 

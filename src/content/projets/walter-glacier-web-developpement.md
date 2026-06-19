@@ -2,7 +2,7 @@
 title: "Walter Glacier : site vitrine gourmand"
 description: "Développement d'un site vitrine à l'univers coloré et gourmand, fidèle à l'état d'esprit de l'enseigne. Le site facilite le choix parmi une gamme étendue de parfums de glaces et sorbets grâce à une navigation intuitive et des illustrations dédiées. Mise en valeur de la qualité des produits et de l'exigence artisanale de confection."
 date: 2022
-competences: [webdesign, demarche-ux, developpement-web, illustration]
+competences: [webdesign, demarche-ux, developpement-web]
 technologies: [wordpress, php, html-css, javascript, illustrator, figma]
 slug: "developpement-glacier"
 folder: "walter-glacier"

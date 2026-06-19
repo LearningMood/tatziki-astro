@@ -140,9 +140,10 @@
 .nav-mobile {
   position: fixed;
   inset: 0;
-  background-color: #ffffff;
+  background-color: $tatziki;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: space(16);
   justify-content: center;
   opacity: 0;
   visibility: hidden;
@@ -185,7 +186,7 @@
     padding: space(4) 0;
     font-size: clamp(2rem, 8vw, 4rem);
     font-weight: 500;
-    color: inherit;
+    color: #fff;
     text-decoration: none;
     transition: opacity 0.2s ease;
 
@@ -202,6 +203,18 @@ body.menu-open {
 
 // Mobile
 @media (max-width: 768px) {
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #ffffff;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+    // Force les couleurs du header indépendamment de la page
+    color: #111111;
+  }
+
   .header-inner {
     padding: space(4) space(6);
   }
@@ -212,6 +225,7 @@ body.menu-open {
 
   .burger {
     display: flex;
+    color: #111111;
   }
 
   // Logo mini par défaut sur mobile
@@ -223,5 +237,12 @@ body.menu-open {
     position: static;
     opacity: 1;
     transform: none;
+  }
+}
+
+// Compenser le header fixe sur mobile
+@media (max-width: 768px) {
+  body {
+    padding-top: 72px;
   }
 }
